@@ -1,9 +1,30 @@
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
+const dotenv = require('dotenv');
 const cors = require('cors')
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const mongoose = require('mongoose');
+
+
+dotenv.config();
+// db
+mongoose.connect(process.env.MONGODB,function(err){
+  if(!err){
+    console.log('connected sucessfully');
+  }
+  else{
+    console.log('error');
+  }
+});
+
+//models
+const Users = require('./models/Users');
+const Categories = require('./models/Categories');
+const Courses = require('./models/Courses');
+const videos = require('./models/Videos');
+
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
