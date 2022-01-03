@@ -7,6 +7,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 
+var route = require('./routes/index');
+
 
 dotenv.config();
 // db
@@ -42,6 +44,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+route(app);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
