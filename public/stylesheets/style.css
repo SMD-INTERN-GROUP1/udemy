@@ -154,7 +154,7 @@ a:hover{
   width: 30px;
 }
 .nav-username{
-  min-width: 30px;
+  max-width: 80px;
   cursor: pointer;
   position: relative;
 }
