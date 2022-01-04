@@ -1,7 +1,2 @@
-*.log
-node_modules/
-package-lock.json
-.env
-env.js
-uploads/*
-.vscode/*
+node_modules
+
