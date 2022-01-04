@@ -234,7 +234,7 @@ a:hover{
   }
   .nav-item{
       position: fixed;
-      width: 40%;
+      width: 50%;
       background-color: white;
       box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
       top: 0;
@@ -271,7 +271,7 @@ a:hover{
       transition: 0.5s;
   }
   .nav-close.active{
-      left: 42%;
+      left: 52%;
       z-index: 999;
   }
   .black-bg.active{
