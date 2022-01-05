@@ -6,9 +6,10 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
-require("dotenv").config();
-
 dotenv.config();
+
+var route = require("./routes/index");
+
 // db
 mongoose.connect(process.env.MONGODB, function (err) {
   if (!err) {
@@ -19,15 +20,13 @@ mongoose.connect(process.env.MONGODB, function (err) {
 });
 
 //models
-const Users = require("./models/Users");
-const Categories = require("./models/Categories");
-const Courses = require("./models/Courses");
-const videos = require("./models/Videos");
+const Users = require("./database/models/Users");
+const Categories = require("./database/models/Categories");
+const Courses = require("./database/models/Courses");
+const videos = require("./database/models/Videos");
 
-const adminRouter = require("./routes/admin");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
-const coursesRouter = require("./routes/courses");
 
 const app = express();
 
@@ -42,10 +41,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+route(app);
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-app.use("/courses", coursesRouter);
-app.use("/admin", adminRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

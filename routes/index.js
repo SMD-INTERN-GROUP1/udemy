@@ -1,10 +1,12 @@
-const express = require('express');
+const coursesRouter = require("./courses");
+const adminRouter = require("./admin");
+const homeRouter = require("./home");
 
-const router = express.Router();
+function route(app) {
+  //write URL here
+  app.use("/", homeRouter);
+  app.use("/courses", coursesRouter);
+  app.use("/admin", adminRouter);
+}
 
-/* GET home page. */
-router.get('/', (req, res, next) => {
-  res.render('index', { title: 'Express' });
-});
-
-module.exports = router;
+module.exports = route;

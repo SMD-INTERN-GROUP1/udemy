@@ -1,12 +1,15 @@
 const express = require("express");
 
 const router = express.Router();
+const Categories = require("../database/models/Categories");
 
 /* GET admin page. */
-router.get("/", (req, res, next) => {
+router.get("/", async (req, res, next) => {
+  const categories = await Categories.find();
   res.render("template/master", {
     title: "Admin page",
     content: "../admin_view/index",
+    categories,
   });
 });
 
@@ -18,9 +21,22 @@ router.get("/categories", (req, res, next) => {
   });
 });
 
-router.post("/createCategory", (req, res, next) => {
-  // res.render("categories/create", { title: "Categories page" });
-  ``;
+router.post("/createCategory", async (req, res, next) => {
+  let category;
+  const { id_category, title } = req.body;
+  category = { id_category, title };
+
+  const createCategory = new Categories(category);
+  await createCategory.save();
+  // res.send({ category });
+  res.redirect("/admin");
+});
+
+router.get("/viewCategory", (req, res, next) => {
+  res.render("template/master", {
+    title: "Category page",
+    content: "../categories/view",
+  });
 });
 
 module.exports = router;
