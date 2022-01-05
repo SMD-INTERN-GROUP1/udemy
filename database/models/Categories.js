@@ -2,10 +2,6 @@ const mongoose = require("mongoose");
 
 const category = new mongoose.Schema(
   {
-    id_category: {
-      type: String,
-      default: "",
-    },
     title: {
       type: String,
       default: "",
