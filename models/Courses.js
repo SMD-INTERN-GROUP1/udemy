@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-
+const { Schema } = mongoose;
 const course = new mongoose.Schema({
+    _id: mongoose.SchemaTypes.ObjectId,
     image:{
         type:String,
         default:''
@@ -8,6 +9,10 @@ const course = new mongoose.Schema({
     title:{
         type:String,
         default:''
+    },
+    author: {
+        type: String,
+        default: ''
     },
     description:{
         type:String,
@@ -29,6 +34,7 @@ const course = new mongoose.Schema({
         type:String,
         default:''
     },
+    categories: [{type:mongoose.Schema.Types.ObjectId, ref: 'category'}]
     // kids: [{type:mongoose.Schema.Types.ObjectId}]
 },{timestamps:true}
 );
