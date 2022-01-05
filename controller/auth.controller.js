@@ -21,7 +21,7 @@ const authController ={
             const user = await newUser.save();
             res.status(200).json(user);
         }catch(err){
-            res.status(500).json(err);
+            res.status(400).json(err);
         }
     },
     //login
@@ -49,6 +49,7 @@ const authController ={
                 );
                 
                 res.status(200).json({user,accessToken});
+                res.render('login');
             }
         }catch(err){
             res.status(500).json(err);

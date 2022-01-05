@@ -6,8 +6,7 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
-
-var route = require('./routes/index');
+const route = require('./routes/index');
 
 
 dotenv.config();
@@ -22,15 +21,13 @@ mongoose.connect(process.env.MONGODB,function(err){
 });
 
 //models
-const Users = require('./models/Users');
-const Categories = require('./models/Categories');
-const Courses = require('./models/Courses');
-const videos = require('./models/Videos');
+// const Users = require('./models/Users');
+// const Categories = require('./models/Categories');
+// const Courses = require('./models/Courses');
+// const videos = require('./models/Videos');
 
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const authRouter = require('./routes/auth.route');
+
 
 const app = express();
 
@@ -47,9 +44,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 route(app);
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/auth', authRouter);
+
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
