@@ -6,11 +6,11 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
-
+var route = require('./routes/index');
 
 dotenv.config();
 // db
-mongoose.connect(process.env.MONGODB,function(err){
+mongoose.connect(process.env.DB_MONGO ,function(err){
   if(!err){
     console.log('connected sucessfully');
   }
@@ -42,6 +42,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+route(app);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
