@@ -39,5 +39,5 @@ router.get("/viewCategory", (req, res, next) => {
   });
 });
 
-router.get("/update", (req, res, next) => {});
+// router.get("/update", (req, res, next) => {});
 module.exports = router;
