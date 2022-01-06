@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const category = new mongoose.Schema(
+const banner = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -12,7 +12,7 @@ const category = new mongoose.Schema(
       default: "",
       required: true,
     },
-    image: {
+    img: {
       type: String,
       required: true,
     },
@@ -20,4 +20,4 @@ const category = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Categories", category);
+module.exports = mongoose.model("Banners", banner);

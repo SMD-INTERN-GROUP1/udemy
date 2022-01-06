@@ -1,7 +1,7 @@
-const categoryService = require("../services/category.services");
+const CategoriesModel = require("../database/models/Categories");
 
 const renderAdminPage = async (req, res, next) => {
-  const categories = await categoryService.findAll();
+  const categories = await CategoriesModel.find();
   res.render("template/master", {
     title: "Admin page",
     content: "../admin_view/index",

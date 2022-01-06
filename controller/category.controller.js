@@ -1,7 +1,7 @@
-const categoryService = require("../services/category.services");
+const CategoriesModel = require("../database/models/Categories");
 
 const renderIndex = async (req, res, next) => {
-  const categories = await categoryService.findAll(data);
+  const categories = await CategoriesModel.find();
   res.render("template/master", {
     title: "Admin page",
     content: "../admin_view/index",
@@ -22,7 +22,8 @@ const create = async (req, res, next) => {
     const { description, category } = req.body;
     data = { description, category };
 
-    const createCategory = categoryService.create(data);
+    const createCategory = new CategoriesModel(data);
+    await createCategory.save();
     // res.send({ category });
     res.redirect("/admin");
   } catch (error) {
@@ -36,7 +37,7 @@ const create = async (req, res, next) => {
 
 const renderUpdateView = async (req, res, next) => {
   const { id } = req.params;
-  const category = await categoryService.findOneById(id);
+  const category = await CategoriesModel.findById(id);
   // res.send({ category });
   res.render("template/master", {
     title: "Category page",
@@ -45,13 +46,20 @@ const renderUpdateView = async (req, res, next) => {
   });
 };
 
-const destroy = async function (req, res) {
+// Method PUT update category
+const update = (req, res, next) => {
+  CategoriesModel.updateOne({ _id: req.params.id }, req.body)
+    .then(() => res.redirect("/admin"))
+    .catch(next);
+};
+
+const destroy = async function (req, res, next) {
   try {
     let data;
     const { id } = req.params;
     const { category, description } = req.body;
     data = { category, description };
-    const deleteCategory = await categoryService.deleteCategory(id, data);
+    const deleteCategory = await CategoriesModel.findByIdAndDelete(id, data);
     res.redirect("/admin");
   } catch (error) {
     res.status(500).send(error);
@@ -63,5 +71,6 @@ module.exports = {
   renderCreateView,
   create,
   renderUpdateView,
+  update,
   destroy,
 };
