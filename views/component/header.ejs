@@ -33,12 +33,9 @@
               <span>My Learning</span>
         </a>
          </div>
-          <li><a href="">Development</a><i class="fas fa-chevron-right"></i></li>
-          <li><a href="">Business</a><i class="fas fa-chevron-right"></i></li>
-          <li><a href="">Design</a><i class="fas fa-chevron-right"></i></li>
-          <li><a href="">Marketing</a><i class="fas fa-chevron-right"></i></li>
-          <li><a href="">Pesonal Development</a><i class="fas fa-chevron-right"></i></li>
-          <li><a href="">Music</a><i class="fas fa-chevron-right"></i></li>
+         <% categories.forEach(category=> { %>
+          <li><a href=""><%= category.category%></a><i class="fas fa-chevron-right"></i></li>
+          <% }) %>
           <a class="menu-logout active">
             <span>Đăng xuất</i></span>
           </a>
