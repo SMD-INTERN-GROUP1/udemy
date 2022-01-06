@@ -26,19 +26,19 @@ router.get("/updatecategories/:id", async (req, res, next) => {
   });
 });
 
-router.post("/updatecategories/:id", async (req, res, next) => {
-  try {
-    let data;
-    const { id } = req.params.id;
-    const { category, description } = req.body;
-    data = { category, description };
-    const updateCategory = await Categories.findByIdAndUpdate(id, data);
-    await updateCategory.save();
-    res.send(updateCategory);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
+// router.post("/updatecategories/:id", async (req, res, next) => {
+//   try {
+//     let data;
+//     const { id } = req.params.id;
+//     const { category, description } = req.body;
+//     data = { category, description };
+//     const updateCategory = await Categories.findByIdAndUpdate(id, data);
+//     await updateCategory.save();
+//     res.send(updateCategory);
+//   } catch (error) {
+//     res.status(500).send(error);
+//   }
+// });
 
 router.get("/deletecategories/:id", async function (req, res) {
   try {
