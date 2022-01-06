@@ -24,12 +24,13 @@
     <nav class="category">
       <div class="category-content">
         <ul class="category-menu">
+          <% categories.forEach(category=> { %>
           <li class="category-item">
             <a class="category-link" href="/courses/development"
-              >Development
+              ><%= category.category%>
             </a>
           </li>
-          <li class="category-item">
+          <!-- <li class="category-item">
             <a class="category-link" href="#">Business</a>
           </li>
           <li class="category-item">
@@ -43,7 +44,8 @@
           </li>
           <li class="category-item">
             <a class="category-link" href="#">Music</a>
-          </li>
+          </li> -->
+          <% }) %>
         </ul>
       </div>
     </nav>

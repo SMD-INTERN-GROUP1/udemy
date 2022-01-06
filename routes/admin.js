@@ -2,42 +2,54 @@ const express = require("express");
 
 const router = express.Router();
 const Categories = require("../database/models/Categories");
+const adminController = require("../controller/admin.controler");
+const categoriesController = require("../controller/category.controller");
 
 /* GET admin page. */
-router.get("/", async (req, res, next) => {
-  const categories = await Categories.find();
-  res.render("template/master", {
-    title: "Admin page",
-    content: "../admin_view/index",
-    categories,
-  });
-});
+router.get("/", adminController.renderAdminPage);
 
 // Categories section
-router.get("/categories", (req, res, next) => {
-  res.render("template/master", {
-    title: "Categories page",
-    content: "../categories/create",
-  });
-});
+// Render Create category page -> Route: /admin/categories
+router.get("/categories", categoriesController.renderCreateView);
 
-router.post("/createCategory", async (req, res, next) => {
-  let category;
-  const { id_category, title } = req.body;
-  category = { id_category, title };
+// Add category
+router.post("/createcategories", categoriesController.create);
 
-  const createCategory = new Categories(category);
-  await createCategory.save();
+router.get("/updatecategories/:id", async (req, res, next) => {
+  const { id } = req.params;
+  const category = await Categories.findById(id);
   // res.send({ category });
-  res.redirect("/admin");
-});
-
-router.get("/viewCategory", (req, res, next) => {
   res.render("template/master", {
     title: "Category page",
-    content: "../categories/view",
+    content: "../categories/update",
+    category,
   });
 });
 
-// router.get("/update", (req, res, next) => {});
+router.post("/updatecategories/:id", async (req, res, next) => {
+  try {
+    let data;
+    const { id } = req.params.id;
+    const { category, description } = req.body;
+    data = { category, description };
+    const updateCategory = await Categories.findByIdAndUpdate(id, data);
+    await updateCategory.save();
+    res.send(updateCategory);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+router.get("/deletecategories/:id", async function (req, res) {
+  try {
+    const deleteCategory = await Categories.findByIdAndDelete(
+      req.params.id,
+      req.body
+    );
+    res.redirect("/admin");
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 module.exports = router;
