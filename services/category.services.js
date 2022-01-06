@@ -12,4 +12,14 @@ const create = async (data) => {
   return createCategory;
 };
 
-module.exports = { findAll, create };
+const findOneById = async (id) => {
+  const findCategory = await CategoriesModel.findById(id);
+
+  return findCategory;
+};
+
+const deleteCategory = async (id, data) => {
+  const deleteCategory = await CategoriesModel.findByIdAndDelete(id, data);
+};
+
+module.exports = { findAll, create, findOneById, deleteCategory };

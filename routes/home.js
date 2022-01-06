@@ -1,12 +1,9 @@
 const express = require("express");
 
 const router = express.Router();
-const Categories = require("../database/models/Categories");
+const homeController = require("../controller/home.controller");
 
 /* GET home page. */
-router.get("/", async (req, res, next) => {
-  const categories = await Categories.find();
-  res.render("index", { title: "Express", categories });
-});
+router.get("/", homeController.renderHomePage);
 
 module.exports = router;

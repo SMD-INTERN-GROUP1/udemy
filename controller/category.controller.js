@@ -34,4 +34,34 @@ const create = async (req, res, next) => {
   }
 };
 
-module.exports = { renderIndex, renderCreateView, create };
+const renderUpdateView = async (req, res, next) => {
+  const { id } = req.params;
+  const category = await categoryService.findOneById(id);
+  // res.send({ category });
+  res.render("template/master", {
+    title: "Category page",
+    content: "../categories/update",
+    category,
+  });
+};
+
+const destroy = async function (req, res) {
+  try {
+    let data;
+    const { id } = req.params;
+    const { category, description } = req.body;
+    data = { category, description };
+    const deleteCategory = await categoryService.deleteCategory(id, data);
+    res.redirect("/admin");
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+module.exports = {
+  renderIndex,
+  renderCreateView,
+  create,
+  renderUpdateView,
+  destroy,
+};

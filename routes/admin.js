@@ -15,16 +15,8 @@ router.get("/categories", categoriesController.renderCreateView);
 // Add category
 router.post("/createcategories", categoriesController.create);
 
-router.get("/updatecategories/:id", async (req, res, next) => {
-  const { id } = req.params;
-  const category = await Categories.findById(id);
-  // res.send({ category });
-  res.render("template/master", {
-    title: "Category page",
-    content: "../categories/update",
-    category,
-  });
-});
+// Render update category page
+router.get("/updatecategories/:id"), categoriesController.renderUpdateView;
 
 router.post("/updatecategories/:id", async (req, res, next) => {
   try {
@@ -40,16 +32,6 @@ router.post("/updatecategories/:id", async (req, res, next) => {
   }
 });
 
-router.get("/deletecategories/:id", async function (req, res) {
-  try {
-    const deleteCategory = await Categories.findByIdAndDelete(
-      req.params.id,
-      req.body
-    );
-    res.redirect("/admin");
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
+router.get("/deletecategories/:id", categoriesController.destroy);
 
 module.exports = router;
