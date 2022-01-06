@@ -1,0 +1,84 @@
+/*style of top courses in homepage by Dung, Nguyen Anh*/
+.image-slider {
+    padding-bottom: 50px;
+  }
+.course-link {
+    text-decoration: none;
+    color: black;
+}
+.course-link:hover {
+    color: black;
+}
+.image {
+    height: 200px;
+    margin-bottom: 20px;
+}
+.image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+.image-title {
+    font-size: 20px;
+    font-weight: 600;
+
+}
+.slick-initialized .slick-slide {
+    margin: 0 10px;
+}
+.slick-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    line-height: 1;
+    z-index: 5;
+    transition: all 0.2s linear;
+}
+.slick-arrow:hover {
+    background-color: #2cccff;
+    color: white;
+}
+.slick-prev {
+    left: 0;
+    top: 100px;
+}
+.slick-next {
+    right: 0;
+    top: 100px;
+}
+.slick-dots {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0 20px;
+}
+.slick-dots button {
+    font-size: 0;
+    width: 15px;
+    height: 15px;
+    border-radius: 100rem;
+    background-color: #eee;
+    border: none;
+    outline: none;
+    transition: all 0.2s linear;
+}
+.slick-dots .slick-active button {
+    background-color: #2cccff;
+}
+
+.author {
+    font-weight: 600;
+    opacity: 0.8;
+}
