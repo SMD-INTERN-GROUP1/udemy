@@ -1,3 +1,4 @@
+
 /* Start footer*/
 .footer-section {
   font-family: sf pro text,-apple-system,BlinkMacSystemFont,Roboto,segoe ui,Helvetica,Arial,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol;
@@ -186,10 +187,12 @@
   outline: none;
   box-sizing: border-box;
 }
+
 /* header */
 header{
   width: 100%;
   z-index: 9;
+
 }
 i{
   color: black;
@@ -201,6 +204,7 @@ a{
 }
 a:hover{
   color: #A435F0 !important;
+
 }
 .black-bg{display: none;}
 .nav-close{display: none; }
@@ -336,7 +340,9 @@ a:hover{
   width: 30px;
 }
 .nav-username{
+
   max-width: 80px;
+
   cursor: pointer;
   position: relative;
 }
@@ -490,6 +496,7 @@ a:hover{
       display: flex;
   }
 }
+
 /* end header */
 
 
@@ -537,4 +544,5 @@ a:hover{
   }
 }
 /* end banner */
+
 
