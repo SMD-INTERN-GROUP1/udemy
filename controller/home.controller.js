@@ -1,18 +1,15 @@
+
+const Banner = require("../database/models/banners");
 const Course = require('../database/models/Courses');
 
-function getHomePage(req, res, next) {
+const getHomePage = async (req, res, next) => {
+    const banners = await Banner.find();
+    const courses = await Course.find();
+    res.render('index', {banners, courses});
 
-    Course.find({}, function(err, courses){
-        if(!err) {
-            res.render('index', {courses});
-        }
-        else {
-           console.log('This is err: ', err);
-       }
-    })
-    
 }
 
 module.exports = {
     getHomePage
-}
+} 
+
