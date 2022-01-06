@@ -1,6 +1,7 @@
 const express = require("express");
+const homeController = require('../controller/home.controller');
 const router = express.Router();
-var banners =require('../controller/home.controller')
+
 /* GET home page. */
-router.get("/", banners.bannerdata);
+router.get("/", homeController.getHomePage);
 module.exports = router;

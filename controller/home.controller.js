@@ -1,17 +1,11 @@
-const banners = require("../database/models/banners");
-/* function getHomePage(req, res, next) {
-    banners.find({})
-    .then(banner => res.render('index', {banner,title: "Group1 SMD Number one"}))
-    .catch(next);
+const Banner = require("../database/models/banners");
+
+const getHomePage = async (req, res, next) => {
+    const banners = await Banner.find();
+    console.log(banners);
+    res.render('index', {banners});
 }
 
 module.exports = {
-getHomePage
-} */
-function bannerdata(req, res, next) {
-    banners.find({})
-    .then(banner => res.render('index', {banner,title: "Group1 SMD Number one"}))
-    .catch(next);
-   
-}
-module.exports = {bannerdata} 
+    getHomePage
+} 
