@@ -2,7 +2,7 @@
     <div class="slides">
      <div id="carouselId" class="carousel slide" data-ride="carousel">
        <div class="carousel-inner" role="listbox">
-        <%var isActive = false;  banner.forEach(function(data) { %>
+        <%var isActive = false;  banners.forEach(function(data) { %>
             <div class="carousel-item <% if (!isActive) {%> <%isActive= true;%> active <%}%>">
                 <img src="<%= data.img %>" alt="First slide">
                 <div class="caption ">
