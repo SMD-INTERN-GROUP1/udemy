@@ -6,7 +6,11 @@ const router = require('express').Router();
 router.post('/register',authController.registerUser);
 
 //login
-// router.post('/login',authController.loginUser);
-router.use('/login',authController.loginUser);
+
+
+router.get("/", (req, res, next) => {
+  res.render('component/login');
+})
+router.post('/login',authController.loginUser);
 
 module.exports = router;

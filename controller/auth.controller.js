@@ -1,4 +1,4 @@
-const User = require("../models/Users");
+const User = require("../database/models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const authController ={
@@ -19,25 +19,29 @@ const authController ={
 
             //Save DB
             const user = await newUser.save();
-            res.status(200).json(user);
+            return   res.status(200).json(user);
+            // res.render('./component/login')
         }catch(err){
-            res.status(400).json(err);
+            return   res.status(400).json(err);
         }
     },
     //login
     loginUser: async(req,res)=>{
         const {email , password} = req.body;
         try{
-            const user =await User.findOne({email:email});
+            const user = await User.findOne({email : email});
             if(!user){
-                res.status(404).json("Sai tài khoản!");
+                // json('Sai tài khoản!');
+                return res.status(404).render('component/login');
+ 
             }
             const validPassword = await bcrypt.compare(
                 password,
                 user.password
             );
             if(!validPassword){
-                res.status(404).json('Sai mật khẩu!');
+                // json('Sai mật khẩu!');
+                return res.status(404).render('component/login');
             }
             if(user && validPassword){
                 const accessToken = jwt.sign({
@@ -47,12 +51,21 @@ const authController ={
                 },process.env.JWT_ACCESS_KEY,
                 {expiresIn:"2h"}
                 );
-                
-                res.status(200).json({user,accessToken});
-                res.render('login');
+                 const refreshToken=jwt.sign({
+                    username: user.username,
+                    createdAt:user.createdAt,
+                    updatedAt:user.updatedAt,
+                },process.env.JWT_REFRESHTOKEN_KEY,
+                {expiresIn:"365d"}
+                );
+                // res.status(200).json({user,accessToken,refreshToken});
+                delete user.password;
+                req.session.isAuthenticated=true;
+                req.session.authUser=user;
+                res.redirect("/");
             }
         }catch(err){
-            res.status(500).json(err);
+            return   res.status(500).json(err);
         }
     }
 }
