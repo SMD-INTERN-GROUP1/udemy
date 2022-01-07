@@ -34,6 +34,13 @@
               <h6 class="font-weight-light">Signing up is easy. It only takes a few steps</h6>
               <form action="register" class="pt-3" method="post">
                 <div class="form-group">
+                  <% if(errs) { %>
+                    <% errs.forEach(function(err){ %>
+                        <div class="alert alert-danger" role="alert">
+                            <%- err %>
+                        </div>
+                    <% }); %>
+                  <% } %>
                   <input type="text" name="username" class="form-control form-control-lg" id="exampleInputUsername1" placeholder="Username" required>
                 </div>
                 <div class="form-group">
@@ -43,12 +50,12 @@
                   <input type="password" name="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password" required>
                 </div>
                 <div class="form-group">
-                  <input type="password" class="form-control form-control-lg" id="exampleInputPassword2" placeholder="Confirm Password" required>
+                  <input type="password" name="confirmPassword" class="form-control form-control-lg" id="exampleInputPassword2" placeholder="Confirm Password" required>
                 </div>
                 <div class="mb-4">
                   <div class="form-check">
                     <label class="form-check-label text-muted">
-                      <input type="checkbox" class="form-check-input">
+                      <input type="checkbox" class="form-check-input" required>
                       I agree to all Terms & Conditions
                     </label>
                   </div>

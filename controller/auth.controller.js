@@ -3,28 +3,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const authController ={
     //register
-
-    registerUser: async(req,res)=>{ 
-        try{
-            const salt =  await bcrypt.genSalt(10);
-            const hashed = await bcrypt.hash(req.body.password,salt);
-
-            //Create new account
-            const {username , email} = req.body;
-            const newUser = await new User({
-                username:username,
-                email:email,
-                password:hashed,
-            });
-
-            //Save DB
-            const user = await newUser.save();
-            return   res.status(200).json(user);
-            // res.render('./component/login')
-        }catch(err){
-            return   res.status(400).json(err);
-        }
-    },
     //login
     loginUser: async(req,res)=>{
         const {email , password} = req.body;
