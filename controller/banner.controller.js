@@ -1,4 +1,4 @@
-const BannersModel = require("../database/models/Banners");
+const BannersModel = require("../database/models/banners");
 
 const renderBannerPage = async (req, res, next) => {
   const banners = await BannersModel.find();
