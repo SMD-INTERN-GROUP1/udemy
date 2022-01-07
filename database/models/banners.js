@@ -1,17 +1,23 @@
 const mongoose = require("mongoose");
-const banners = new mongoose.Schema({
-  img: {
-    type: String,
-    default: "",
-  },
-  title: {
-    type: String,
-    default: "",
-  },
-  content: {
-    type: String,
-    default: "",
-  },
-});
 
-module.exports = mongoose.model("banners", banners);
+const banner = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      default: "",
+      required: true,
+    },
+    content: {
+      type: String,
+      default: "",
+      required: true,
+    },
+    img: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
+
+module.exports = mongoose.model("Banners", banner);
