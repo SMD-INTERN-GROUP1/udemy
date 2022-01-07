@@ -1,12 +1,11 @@
-const coursesRouter = require("./courses");
+const homeRouter = require('./home');
+const courseDetailRoute = require('./courses_detail');
 const adminRouter = require("./admin");
-const homeRouter = require("./home");
 
 function route(app) {
   //write URL here
-  app.use("/", homeRouter);
-  app.use("/courses", coursesRouter);
+  app.use('/course', courseDetailRoute);
   app.use("/admin", adminRouter);
+  app.use('/', homeRouter);
 }
-
 module.exports = route;
