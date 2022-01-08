@@ -1,43 +1,41 @@
 const express = require("express");
 
 const router = express.Router();
-const Categories = require("../database/models/Categories");
+const adminController = require("../controller/admin.controler");
+const categoriesController = require("../controller/category.controller");
+const topicController = require("../controller/topic.controller");
+const courseController = require("../controller/course.controller");
+const userController = require("../controller/user.controller");
+const bannerController = require("../controller/banner.controller");
 
 /* GET admin page. */
-router.get("/", async (req, res, next) => {
-  const categories = await Categories.find();
-  res.render("template/master", {
-    title: "Admin page",
-    content: "../admin_view/index",
-    categories,
-  });
-});
+router.get("/", adminController.renderAdminPage);
+
+// Users section
+router.get("/users", userController.renderUserPage);
 
 // Categories section
-router.get("/categories", (req, res, next) => {
-  res.render("template/master", {
-    title: "Categories page",
-    content: "../categories/create",
-  });
-});
+// Render Create category page -> Route: /admin/categories
+router.get("/categories", categoriesController.renderCreateView);
 
-router.post("/createCategory", async (req, res, next) => {
-  let category;
-  const { id_category, title } = req.body;
-  category = { id_category, title };
+// Add category
+router.post("/createcategories", categoriesController.create);
 
-  const createCategory = new Categories(category);
-  await createCategory.save();
-  // res.send({ category });
-  res.redirect("/admin");
-});
+// Render update category page
+router.get("/updatecategories/:id", categoriesController.renderUpdateView);
 
-router.get("/viewCategory", (req, res, next) => {
-  res.render("template/master", {
-    title: "Category page",
-    content: "../categories/view",
-  });
-});
+router.put("/editcategories/:id", categoriesController.update);
 
-// router.get("/update", (req, res, next) => {});
+router.get("/deletecategories/:id", categoriesController.destroy);
+
+// Topics section
+router.get("/topics", topicController.renderTopicPage);
+
+// Courses section
+router.get("/courses", courseController.renderCoursePage);
+
+// Banner section
+// GET /admin/banners
+router.get("/banners", bannerController.renderBannerPage);
+
 module.exports = router;

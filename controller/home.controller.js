@@ -1,6 +1,5 @@
-
-const Banner = require("../database/models/banners");
-const Course = require('../database/models/Courses');
+const Banner = require("../database/models/Banner");
+const Course = require('../database/models/Course');
 
 const getHomePage = async (req, res, next) => {
     const banners = await Banner.find();
@@ -12,4 +11,3 @@ const getHomePage = async (req, res, next) => {
 module.exports = {
     getHomePage
 } 
-

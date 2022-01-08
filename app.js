@@ -7,6 +7,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+const methodOverride = require("method-override");
 dotenv.config();
 
 var route = require("./routes/index");
@@ -42,6 +43,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+// override using a query value
+app.use(methodOverride("_method"));
 
 route(app);
 // catch 404 and forward to error handler

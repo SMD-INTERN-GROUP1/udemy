@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-const banners = new mongoose.Schema({
-    img:{
+
+const video = new mongoose.Schema({
+    video_url:{
         type:String,
         default:''
     },
@@ -8,11 +9,12 @@ const banners = new mongoose.Schema({
         type:String,
         default:''
     },
-    content:{
+    time:{
         type:String,
         default:''
     },
-}
+    kids: [{type:mongoose.Schema.Types.ObjectId}]
+},{timestamps:true}
 );
 
-module.exports=mongoose.model("banners",banners);
+module.exports=mongoose.model("Video",video);

@@ -1,30 +1,12 @@
-const User = require('..database/models/Users');
+const UsersModel = require("../database/models/User");
 
-const userController={
+const renderUserPage = async (req, res, next) => {
+  const users = await UsersModel.find();
+  res.render("template/master", {
+    title: "Admin page",
+    content: "../user/index",
+    users,
+  });
+};
 
-    getAllUsers: async(req,res)=>{
-        try{
-            const user = await User.find();
-            res.status(200).json(user);
-        }catch(err)
-        {
-            res.status(500).json(err);
-        }
-    },
-
-    deleteUser: async(req,res)=>{
-        const {id}=req.params;
-        try{
-            const user =await User.findById(id);
-            
-            res.status(200).json("Xóa thành công");
-        }catch(err)
-        {
-            res.status(500).json(err);
-        }
-    }
-}
-
-module.exports=userController;
-
-
+module.exports = { renderUserPage };
