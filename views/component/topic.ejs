@@ -19,31 +19,38 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
+    <%- include('_head')%>
   </head>
   <body>
-    <nav class="category">
-      <div class="category-content">
-        <ul class="category-menu">
-          <li class="category-item">
-            <a class="category-link" href="#">Development </a>
-          </li>
-          <li class="category-item">
-            <a class="category-link" href="#">Business</a>
-          </li>
-          <li class="category-item">
-            <a class="category-link" href="#">Design</a>
-          </li>
-          <li class="category-item">
-            <a class="category-link" href="#">Marketing</a>
-          </li>
-          <li class="category-item">
-            <a class="category-link" href="#">Pesonal Development</a>
-          </li>
-          <li class="category-item">
-            <a class="category-link" href="#">Music</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+    <header>
+      <%- include('header')%>
+      <nav class="category">
+        <div class="category-content">
+          <ul class="category-menu">
+            <li class="category-item">
+              <a class="category-link" href="#">Web Development </a>
+            </li>
+            <li class="category-item">
+              <a class="category-link" href="#">Mobile Development </a>
+            </li>
+            <li class="category-item">
+              <a class="category-link" href="#">Game Development</a>
+            </li>
+            <li class="category-item">
+              <a class="category-link" href="#">Database Design</a>
+            </li>
+            <li class="category-item">
+              <a class="category-link" href="#">Data Science</a>
+            </li>
+            <li class="category-item">
+              <a class="category-link" href="#">Software Engineer</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div class="banner"></div>
+    </header>
+
+    <footer class=""><%- include('footer')%></footer>
   </body>
 </html>
