@@ -1,5 +1,4 @@
 const express = require("express");
-
 const router = express.Router();
 const adminController = require("../controller/admin.controler");
 const categoriesController = require("../controller/category.controller");
@@ -15,8 +14,10 @@ router.get("/", adminController.renderAdminPage);
 router.get("/users", userController.renderUserPage);
 
 // Categories section
+router.get("/categories", categoriesController.renderCategoriesPage);
+
 // Render Create category page -> Route: /admin/categories
-router.get("/categories", categoriesController.renderCreateView);
+router.get("/addcategories", categoriesController.renderCreateView);
 
 // Add category
 router.post("/createcategories", categoriesController.create);

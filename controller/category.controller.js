@@ -1,10 +1,10 @@
 const CategoriesModel = require("../database/models/Categories");
 
-const renderIndex = async (req, res, next) => {
+const renderCategoriesPage = async (req, res, next) => {
   const categories = await CategoriesModel.find();
   res.render("template/master", {
     title: "Admin page",
-    content: "../admin_view/index",
+    content: "../categories/index",
     categories,
   });
 };
@@ -67,7 +67,7 @@ const destroy = async function (req, res, next) {
 };
 
 module.exports = {
-  renderIndex,
+  renderCategoriesPage,
   renderCreateView,
   create,
   renderUpdateView,
