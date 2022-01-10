@@ -19,15 +19,15 @@
     })
 })()
 
-var myInput = document.getElementById("exampleInputPassword1");
-var inputUsername = document.getElementById("exampleInputUsername1");
-var inputPassword = document.getElementById("exampleInputPassword1");
-var inputConfirmPassword = document.getElementById("exampleInputPassword2");
+var myInput = document.getElementById("password");
+var inputUsername = document.getElementById("username");
+var inputPassword = document.getElementById("password");
+var inputConfirmPassword = document.getElementById("confirm-password");
 
 //validation username
 $('#usercheck').hide();
 inputUsername.onkeyup = function() {
-  var usernameValue = $('#exampleInputUsername1').val();
+  var usernameValue = $('#username').val();
 
   if((usernameValue.length < 6)||
         (usernameValue.length > 15)) {
@@ -41,10 +41,10 @@ inputUsername.onkeyup = function() {
     }
 }
 
-//Password
+//validation password
 $('#usercheck-password').hide();
 inputPassword.onkeyup = function() {
-  var usernameValue = $('#exampleInputPassword1').val();
+  var usernameValue = $('#password').val();
 
   if((usernameValue.length < 8)) {
       $('#usercheck-password').show();
@@ -65,9 +65,9 @@ inputConfirmPassword.onkeyup = (function () {
 
 function validateConfirmPasswrd() {
   let confirmPasswordValue =
-    $('#exampleInputPassword2').val();
+    $('#confirm-password').val();
   let passwrdValue =
-    $('#exampleInputPassword1').val();
+    $('#password').val();
   if (passwrdValue != confirmPasswordValue) {
     $('#usercheck-confirm-password').show();
     $('#usercheck-confirm-password').html("* Password didn't Match");
@@ -79,11 +79,13 @@ function validateConfirmPasswrd() {
   }
 }
 
+//validation email
 const email = document.getElementById('email');
 email.addEventListener('blur', ()=>{
-  let regex = /^([_\-\.0-9a-zA-Z]+)@([_\-\.0-9a-zA-Z]+)\.([a-zA-Z]){2,7}$/;
-  let s = email.value;
-  if(regex.test(s)){
+  // let regex = /^([_\-\.0-9a-zA-Z]+)@([_\-\.0-9a-zA-Z]+)\.([a-zA-Z]){2,7}$/;
+  let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+  let valueEmail = email.value;
+  if(regex.test(valueEmail)){
     email.classList.remove(
         'is-invalid');
     emailError = true;
