@@ -1,9 +1,9 @@
 const CategoriesModel = require("../database/models/Categories");
 
-const findAll = async () => {
+const getListCategories = async () => {
   const categories = await CategoriesModel.find();
 
   return categories;
 };
 
-module.exports = { findAll };
+module.exports = { getListCategories };
