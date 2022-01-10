@@ -4,7 +4,7 @@ const renderCategoriesPage = async (req, res, next) => {
   const categories = await CategoriesModel.find();
   res.render("template/master", {
     title: "Admin page",
-    content: "../categories/index",
+    content: "../categories/category_index",
     categories,
   });
 };
