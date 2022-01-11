@@ -25,7 +25,7 @@ const create = async (req, res, next) => {
     const createCategory = new CategoriesModel(data);
     await createCategory.save();
     // res.send({ category });
-    res.redirect("/admin");
+    res.redirect("/admin/categories");
   } catch (error) {
     console.log(error);
     res
@@ -49,7 +49,7 @@ const renderUpdateView = async (req, res, next) => {
 // Method PUT update category
 const update = (req, res, next) => {
   CategoriesModel.updateOne({ _id: req.params.id }, req.body)
-    .then(() => res.redirect("/admin"))
+    .then(() => res.redirect("/admin/categories"))
     .catch(next);
 };
 
@@ -60,7 +60,7 @@ const destroy = async function (req, res, next) {
     const { category, description } = req.body;
     data = { category, description };
     const deleteCategory = await CategoriesModel.findByIdAndDelete(id, data);
-    res.redirect("/admin");
+    res.redirect("/admin/categories");
   } catch (error) {
     res.status(500).send(error);
   }

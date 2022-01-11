@@ -16,7 +16,7 @@ router.get("/users", userController.renderUserPage);
 // Categories section
 router.get("/categories", categoriesController.renderCategoriesPage);
 
-// Render Create category page -> Route: /admin/categories
+// Render Create category page -> Route: /admin/addcategories
 router.get("/addcategories", categoriesController.renderCreateView);
 
 // Add category
@@ -25,18 +25,29 @@ router.post("/createcategories", categoriesController.create);
 // Render update category page
 router.get("/updatecategories/:id", categoriesController.renderUpdateView);
 
+// Update categories /admin/editcategories
 router.put("/editcategories/:id", categoriesController.update);
 
-router.get("/deletecategories/:id", categoriesController.destroy);
+// Delete categories
+router.delete("/deletecategories/:id", categoriesController.destroy);
 
 // Topics section
-router.get("/topics", topicController.renderTopicPage);
+router.get("/topics", topicController.getListTopics);
+
+// Render Create category page  /admin/addtopic
+router.get("/addtopic", topicController.renderCreateView);
+
+// Delete topic
+router.delete("/deletetopic/:id", topicController.destroy);
+
+// Add topic
+router.post("/createtopic", topicController.create);
 
 // Courses section
 router.get("/courses", courseController.renderCoursePage);
 
 // Banner section
-// GET /admin/banners
+// GET List banners /admin/banners
 router.get("/banners", bannerController.renderBannerPage);
 
 module.exports = router;
