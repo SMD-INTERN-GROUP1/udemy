@@ -1,4 +1,3 @@
-// Example starter JavaScript for disabling form submissions if there are invalid fields
 (function () {
   'use strict'
 
@@ -19,7 +18,6 @@
     })
 })()
 
-var myInput = document.getElementById("password");
 var inputUsername = document.getElementById("username");
 var inputPassword = document.getElementById("password");
 var inputConfirmPassword = document.getElementById("confirm-password");
@@ -29,12 +27,9 @@ $('#usercheck').hide();
 inputUsername.onkeyup = function() {
   var usernameValue = $('#username').val();
 
-  if((usernameValue.length < 6)||
-        (usernameValue.length > 15)) {
+  if((usernameValue.length < 6)|| (usernameValue.length > 15)) {
       $('#usercheck').show();
       $('#usercheck').html("* Length of username must be between 6 and 15");
-      usernameError = false;
-      return false;
     }
     else {
       $('#usercheck').hide();
@@ -49,8 +44,6 @@ inputPassword.onkeyup = function() {
   if((usernameValue.length < 8)) {
       $('#usercheck-password').show();
       $('#usercheck-password').html("* Length of password must be 8");
-      usernameError = false;
-      return false;
     }
     else {
       $('#usercheck-password').hide();
@@ -64,16 +57,12 @@ inputConfirmPassword.onkeyup = (function () {
 });
 
 function validateConfirmPasswrd() {
-  let confirmPasswordValue =
-    $('#confirm-password').val();
-  let passwrdValue =
-    $('#password').val();
+  let confirmPasswordValue = $('#confirm-password').val();
+  let passwrdValue = $('#password').val();
   if (passwrdValue != confirmPasswordValue) {
     $('#usercheck-confirm-password').show();
     $('#usercheck-confirm-password').html("* Password didn't Match");
     $('#usercheck-confirm-password');
-    confirmPasswordError = false;
-    return false;
   } else {
     $('#usercheck-confirm-password').hide();
   }
@@ -86,13 +75,9 @@ email.addEventListener('blur', ()=>{
   let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
   let valueEmail = email.value;
   if(regex.test(valueEmail)){
-    email.classList.remove(
-        'is-invalid');
-    emailError = true;
+    email.classList.remove('is-invalid');
     }
     else{
-      email.classList.add(
-        'is-invalid');
-      emailError = false;
+      email.classList.add('is-invalid');
     }
 });
