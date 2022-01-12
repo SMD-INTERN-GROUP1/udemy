@@ -46,6 +46,28 @@ const create = async (req, res, next) => {
     });
 };
 
+const renderUpdateView = (req, res, next) => {
+  Promise.all([
+    TopicsModel.findById({ _id: req.params.id }).populate("category_id"),
+    categoryService.getListCategory(),
+  ]).then(([topic, categories]) => {
+    res.render("template/master", {
+      title: "Category page",
+      content: "../topic/update",
+      topic,
+      categories,
+    });
+  });
+};
+
+const update = (req, res, next) => {
+  TopicsModel.updateOne({ _id: req.params.id }, req.body)
+    .then(() => res.redirect("/admin/topics"))
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+};
+
 const destroy = async function (req, res, next) {
   const deleteTopic = await TopicsModel.delete({ _id: req.params.id })
     .then(() => {
@@ -67,7 +89,7 @@ const forceDestroy = async (req, res, next) => {
 };
 
 const renderTrashTopics = async (req, res, next) => {
-  const getTopicsdeleted = await TopicsModel.findDeleted({})
+  const getTopicsDeleted = await TopicsModel.findDeleted({})
     .populate("category_id")
     .then((topicsdeleted) => {
       res.render("template/master", {
@@ -94,6 +116,8 @@ const restore = async (req, res, next) => {
 module.exports = {
   renderCreateView,
   create,
+  renderUpdateView,
+  update,
   getListTopics,
   destroy,
   renderTrashTopics,

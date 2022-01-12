@@ -1,23 +1,34 @@
 <table class="table" id="table_2">
-  <div class="">
-    <a
-      href="/admin/addcategories"
-      class="btn btn-success rounded-pill"
-      style="margin-bottom: 20px"
-      >Create category</a
-    >
-  </div>
+  <div class="d-flex flex-row mt-3">
+    <div class="mr-3">
+      <a
+        href="/admin/addcategories"
+        class="btn btn-success rounded-pill"
+        style="margin-bottom: 20px"
+        >Create category</a
+      >
+    </div>
+    <div class="">
+      <a
+        href="/admin/trash/categories"
+        class="btn btn-success rounded-pill"
+        style="margin-bottom: 20px"
+        ><i class="fas fa-trash-restore"></i
+      ></a>
+    </div>
   </div>
   <thead class="table-dark text-center">
     <tr>
-      <th scope="col">Category</th> 
-      <th scope="col">Description</th> 
+      <th scope="col">#</th>
+      <th scope="col">Category</th>
+      <th scope="col">Description</th>
       <th scope="col" class="text-center">Action</th>
     </tr>
   </thead>
   <tbody class="text-center">
-    <% categories.forEach(category=> { %>
+    <% categories.forEach((category,index)=> { %>
     <tr>
+      <th scope="row"><%= index+1 %></th>
       <td><%= category.category%></td>
       <td><%= category.description%></td>
       <td style="text-align: center">
@@ -95,7 +106,8 @@
 
   btnDeleteCategory.onclick = function () {
     // alert(topicId);
-    deleteForm.action = "/admin/deletecategories/" + categoryId + "?_method=DELETE";
+    deleteForm.action =
+      "/admin/deletecategories/" + categoryId + "?_method=DELETE";
     deleteForm.submit();
   };
 </script>

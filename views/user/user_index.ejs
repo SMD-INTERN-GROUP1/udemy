@@ -4,6 +4,7 @@
   <table class="table" id="table_1">
     <thead class="table-dark text-center">
       <tr>
+        <th scope="col">#</th>
         <th scope="col">Username</th>
         <th scope="col">Email</th>
         <th scope="col">Fullname</th>
@@ -11,8 +12,9 @@
       </tr>
     </thead>
     <tbody class="text-center">
-      <% users.forEach(user=> { %>
+      <% users.forEach((user, index)=> { %>
       <tr>
+        <th scope="row"><%= index+1 %></th>
         <td><%= user.username%></td>
         <td><%= user.email%></td>
         <td><%= user.fullname%></td>

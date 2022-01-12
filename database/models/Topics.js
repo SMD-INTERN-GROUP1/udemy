@@ -22,4 +22,4 @@ const topic = new mongoose.Schema(
 // Add plugins
 topic.plugin(mongooseDelete, { deletedAt: true, overrideMethods: "all" });
 
-module.exports = mongoose.model("Topics", topic);
+module.exports = mongoose.model("Topic", topic);

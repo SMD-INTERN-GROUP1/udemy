@@ -15,33 +15,19 @@ router.get("/users", userController.renderUserPage);
 
 // Categories section
 router.get("/categories", categoriesController.renderCategoriesPage);
-
-// Render Create category page -> Route: /admin/addcategories
 router.get("/addcategories", categoriesController.renderCreateView);
-
-// Add category
 router.post("/createcategories", categoriesController.create);
-
-// Render update category page
 router.get("/updatecategories/:id", categoriesController.renderUpdateView);
-
-// Update categories /admin/editcategories
 router.put("/editcategories/:id", categoriesController.update);
-
-// Delete categories
 router.delete("/deletecategories/:id", categoriesController.destroy);
 
 // Topics section
 router.get("/topics", topicController.getListTopics);
-
-// Render Create category page  /admin/addtopic
 router.get("/addtopic", topicController.renderCreateView);
-
-// Delete topic
-router.delete("/deletetopic/:id", topicController.destroy);
-
-// Add topic
 router.post("/createtopic", topicController.create);
+router.get("/updatetopic/:id", topicController.renderUpdateView);
+router.put("/edittopic/:id", topicController.update);
+router.delete("/deletetopic/:id", topicController.destroy);
 
 // Courses section
 router.get("/courses", courseController.renderCoursePage);
