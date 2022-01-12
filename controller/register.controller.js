@@ -1,15 +1,18 @@
 const UserModel = require('../models/Users');
+const bcrypt = require("bcrypt");
 
 let errs = [];
 
-module.exports.renderRegisterPage = (req, res, next) => {
+function renderRegisterPage (req, res, next) {
   res.render('component/register', { title: 'Register page' , errs: errs});
 };
 
-module.exports.renderUserRegister = (req, res, next) => {
+async function renderUserRegister (req, res, next) {
+  const salt =  await bcrypt.genSalt(10);
+  const hashed = await bcrypt.hash(req.body.password,salt);
   let username = req.body.username;
   let email = req.body.email;
-  let password = req.body.password;
+  let password = hashed;
   errs = [];
   
   // console.log(req.body);
@@ -45,7 +48,7 @@ module.exports.renderUserRegister = (req, res, next) => {
     })
     .then(data => {
       //redirect login form
-      res.json('Tạo tài khoản thành công');
+      res.redirect("/auth");
     })
     .catch(err => {
       // res.json('Tạo tài khoản thất bại');
@@ -56,3 +59,5 @@ module.exports.renderUserRegister = (req, res, next) => {
     });
   }
 };
+
+module.exports = { renderRegisterPage, renderUserRegister };
