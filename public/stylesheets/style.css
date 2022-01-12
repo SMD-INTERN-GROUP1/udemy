@@ -191,9 +191,6 @@ header{
   width: 100%;
   z-index: 9;
 }
-i{
-  color: black;
-}
 a{
   color: black !important;
   cursor: pointer;
