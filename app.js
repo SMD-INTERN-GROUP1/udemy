@@ -12,15 +12,14 @@ dotenv.config();
 const route = require("./routes/index");
 
 // db
-mongoose.connect(process.env.MONGODB, function (err) {
-  if (!err) {
-    console.log("connected sucessfully");
-  } else {
-    console.log("error");
+mongoose.connect(process.env.MONGO_DB ,function(err){
+  if(!err){
+    console.log('connected sucessfully');
+  }
+  else{
+    console.log('error');
   }
 });
-
-//models
 
 //payment
 
@@ -42,6 +41,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+// override using a query value
+// app.use(methodOverride("_method"));
 
 route(app);
 

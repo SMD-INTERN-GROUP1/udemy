@@ -10,7 +10,6 @@ const authController ={
             if(!user){
                 // json('Sai tài khoản!');
                 return res.status(404).render('component/login');
- 
             }
             const validPassword = await bcrypt.compare(
                 password,
@@ -23,6 +22,7 @@ const authController ={
             if(user && validPassword){
                 const accessToken = jwt.sign({
                     username: user.username,
+                    isTeacher:user.isTeacher,
                     createdAt:user.createdAt,
                     updatedAt:user.updatedAt,
                 },process.env.JWT_ACCESS_KEY,
@@ -30,15 +30,18 @@ const authController ={
                 );
                  const refreshToken=jwt.sign({
                     username: user.username,
+                    isTeacher:user.isTeacher,
                     createdAt:user.createdAt,
                     updatedAt:user.updatedAt,
                 },process.env.JWT_REFRESHTOKEN_KEY,
                 {expiresIn:"365d"}
                 );
+                res.cookie('user',user.username)
                 // res.status(200).json({user,accessToken,refreshToken});
-                delete user.password;
-                req.session.isAuthenticated=true;
-                req.session.authUser=user;
+                // delete user.password;
+                // req.session.isAuthenticated=true;
+                // req.session.authUser=user;
+                // console.log(user)
                 res.redirect("/");
             }
         }catch(err){

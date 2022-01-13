@@ -72,9 +72,8 @@
 
   </style>
   <body>
-    <%- include('./component/header')%>
     <p class="title">Log In to Your Udemy Account!</p>
-    <form method="POST" action="/auth/login">
+    <form method="POST" action="login">
       <a href="#" class="form-link">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/20px-Facebook_f_logo_%282019%29.svg.png" alt="Facebook">
         <span>Continue with Facebook</span>
@@ -87,16 +86,15 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/20px-Apple_logo_black.svg.png" alt="Apple">
         <span>Continue with Apple</span>
       </a>
-        <input type="text" name="email" placeholder="Email">
-        <input type="password" name="password" placeholder="password">
+        <input type="email" name="email" placeholder="Email">
+        <input type="password" name="password" placeholder="password"> 
         <button type="submit" class="btn">Log In</button>
     </form>
     <div class="text">
       <p>or <a href="" class="text-link">Forgot Password</a></p>
-      <p>Don't have an account ?<a href="" class="text-link"> Sign up</a></p>
+      <p>Don't have an account ?<a href="/register" class="text-link"> Sign up</a></p>
       <p><a href="" class="text-link">Log in with your organization</a></p>
     </div>
-    <%- include('./component/footer')%>
     <script
     src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

@@ -342,5 +342,27 @@
     <script src="<%= process.env.BASE_URL %>js/dashboard.js"></script>
     <script src="<%= process.env.BASE_URL %>js/Chart.roundedBarCharts.js"></script>
     <!-- End custom js for this page-->
+    <!-- Data Table  -->
+    <script
+      type="text/javascript"
+      charset="utf8"
+      src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"
+    ></script>
+    <script>
+      $(document).ready(function () {
+        $("#table_1").DataTable({
+          language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Search records",
+          },
+          reponsive: true,
+          pagingType: "full_numbers",
+          lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"],
+          ],
+        });
+      });
+    </script>
   </body>
 </html>
