@@ -1,0 +1,114 @@
+/* Start footer*/
+.footer-section {
+  font-family: sf pro text, -apple-system, BlinkMacSystemFont, Roboto, segoe ui,
+    Helvetica, Arial, sans-serif, apple color emoji, segoe ui emoji,
+    segoe ui symbol;
+  font-weight: 400;
+  line-height: 1.4;
+  background-color: #1c1d1f;
+  border-top: 1px solid #3e4143;
+  color: #fff;
+  padding: 0 2.4rem 0 2.4rem;
+  padding-top: 2rem;
+}
+.language-selector-container .udlite-btn {
+  color: #fff;
+  background-color: transparent;
+  border: 1px solid #fff;
+  height: 2.5rem;
+  position: relative;
+  align-items: center;
+  display: inline-flex;
+  min-width: 8rem;
+  justify-content: center;
+  /* Ngăn chọn văn bản */
+  user-select: none;
+  vertical-align: bottom;
+  /* Văn bản trên 1 dòng */
+  white-space: nowrap;
+}
+.udlite-btn-white-outline:active,
+.udlite-btn-white-outline:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.language-selector {
+  margin-left: 0.4rem;
+}
+
+.footer-section {
+  background: #1c1d1f;
+  border-top: 1px solid #3e4143;
+  color: #fff;
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+.language-selector-container {
+  padding: 0;
+  order: 1;
+  /* Chỉ định các mục sẽ co so với phần còn lại bên trong 1 container */
+  flex-shrink: 0;
+  margin-left: auto;
+  margin-block-start: 1em;
+}
+
+.udlite-footer .white-link {
+  color: #fff;
+}
+
+.footer-section a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.udlite-text-sm {
+  font-family: sf pro text, -apple-system, BlinkMacSystemFont, Roboto, segoe ui,
+    Helvetica, Arial, sans-serif, apple color emoji, segoe ui emoji,
+    segoe ui symbol;
+  font-weight: 400;
+  line-height: 1.4;
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: #fff;
+  padding: 0.4rem 0;
+}
+
+.links-and-language-selector {
+  display: flex;
+}
+
+.link-column {
+  flex-basis: 23.5rem;
+  margin-right: 1.6rem;
+  margin-bottom: 0;
+}
+
+.unstyled-list .link {
+  display: block;
+  padding: 0.25rem 0;
+}
+
+.unstyled-list {
+  list-style: none;
+  margin-right: 1em;
+  padding: 0;
+  max-width: none;
+  font-weight: 400;
+}
+
+.logo-and-copyright {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3.4rem 0 2.5rem;
+}
+
+.udlite-text-xs {
+  font-family: sf pro text, -apple-system, BlinkMacSystemFont, Roboto, segoe ui,
+    Helvetica, Arial, sans-serif, apple color emoji, segoe ui emoji,
+    segoe ui symbol;
+  font-weight: 400;
+  line-height: 1.4;
+  font-size: 0.8rem;
+}

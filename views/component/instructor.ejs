@@ -1,0 +1,75 @@
+<head>
+  <link rel="stylesheet" href="/stylesheets/instructor.css" />
+  <% include _head %>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <header><%- include('header')%></header>
+  <!-- Get started -->
+  <section class="started">
+    <div class="started-container">
+      <div class="started-content">
+        <h2>Come teach with us</h2>
+        <p>Become an instructor and change lives — including your own</p>
+      </div>
+      <div class="started-btn">
+        <button
+          type="button"
+          class="btn btn-dark btn-lg rounded w-100 fw-bolder"
+        >
+          <a href="/teaching/register" class="text-light">Get Started</a>
+        </button>
+      </div>
+    </div>
+  </section>
+  <!-- End  -->
+
+  <!-- Start: Reasons -->
+  <section class="reasons">
+    <div class="reasons-title">
+      <h2>So many reasons to start</h2>
+    </div>
+    <div class="reasons-description mt-5">
+      <div class="reasons-item text-center">
+        <img
+          src="https://s.udemycdn.com/teaching/value-prop-teach-v3.jpg"
+          alt=""
+        />
+        <h4>Teach your way</h4>
+        <p>
+          Publish the course you want, in the way you want, and always have of
+          control your own content.
+        </p>
+      </div>
+      <div class="reasons-item text-center">
+        <img
+          src="https://s.udemycdn.com/teaching/value-prop-inspire-v3.jpg"
+          alt=""
+        />
+        <h4>Inspire learners</h4>
+        <p>
+          Teach what you know and help learners explore their interests, gain
+          new skills, and advance their careers.
+        </p>
+      </div>
+      <div class="reasons-item text-center">
+        <img
+          src="https://s.udemycdn.com/teaching/value-prop-get-rewarded-v3.jpg"
+          alt=""
+        />
+        <h4>Get rewarded</h4>
+        <p>
+          Expand your professional network, build your expertise, and earn money
+          on each paid enrollment.
+        </p>
+      </div>
+    </div>
+  </section>
+  <!-- End: Reasons -->
+  <footer><%- include('footer')%></footer>
+</body>
