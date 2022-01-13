@@ -41,10 +41,8 @@
          <% }); %>
       
    </div>
-
-  
-   <nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-end">
+   <nav>
+    <ul class="pagination">
       <% for(let i = 0; i < pages; i++){%> 
       <li class="page-item"><a class="page-link" href="/search/page=<%- i %>?title=<%- title %>"><%- i+1 %></a></li>
       <% } %> 
