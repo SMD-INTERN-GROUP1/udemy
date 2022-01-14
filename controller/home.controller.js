@@ -30,3 +30,14 @@ module.exports = {
   renderTeachingPage,
   renderTeachingRegister,
 };
+let isLogin = false;
+if (!req.cookies.user) {
+  isLogin = true;
+  console.log("cookies", req.cookies.user);
+}
+
+res.render("index", { title: "Udemy", isLogin, categories, banners, courses });
+
+module.exports = {
+  getHomePage,
+};

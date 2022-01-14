@@ -1,14 +1,15 @@
-const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const dotenv = require('dotenv');
-const cors = require('cors')
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const mongoose = require('mongoose');
-var route = require('./routes/index');
-
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const dotenv = require("dotenv");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const paypal = require('paypal-rest-sdk');
+const mongoose = require("mongoose");
 dotenv.config();
+
+const route = require("./routes/index");
 
 // db
 mongoose.connect(process.env.MONGO_DB ,function(err){
@@ -18,6 +19,14 @@ mongoose.connect(process.env.MONGO_DB ,function(err){
   else{
     console.log('error');
   }
+});
+
+//payment
+
+paypal.configure({
+  'mode': 'sandbox', //sandbox or live
+  'client_id': 'AUzspjS4ov0cME-ngsMUMXUjnRrREzgIq6v08q5SxXBLhgdqkWzCi7-TOEzt4h4otyEJeEnm5Mtbd99o',
+  'client_secret': 'ECSOuh2RfNBwD-vSzKsDDRw5ZU4Bf8W-PAftU3VqaUDVkkXB3VSKlj6y1_-iYTiNxOv-5N_24MEkVMS0'
 });
 
 const app = express();
