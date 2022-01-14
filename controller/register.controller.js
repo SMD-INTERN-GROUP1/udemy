@@ -48,7 +48,7 @@ async function renderUserRegister (req, res, next) {
     })
     .then(data => {
       //redirect login form
-      res.redirect("/auth");
+      res.redirect("/login");
     })
     .catch(err => {
       // res.json('Tạo tài khoản thất bại');
