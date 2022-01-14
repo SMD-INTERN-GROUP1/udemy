@@ -2,15 +2,11 @@ const mongoose = require("mongoose");
 
 const course = new mongoose.Schema(
   {
-    image: {
-      type: String,
-      default: "",
-    },
     title: {
       type: String,
       default: "",
     },
-    author: {
+    image: {
       type: String,
       default: "",
     },
@@ -18,17 +14,38 @@ const course = new mongoose.Schema(
       type: String,
       default: "",
     },
+    author: {
+      type: String,
+      default: "",
+    },
     price: {
       type: Number,
       default: 0,
     },
-    isDiscount: {
-      type: Boolean,
+    slug: {
+      type: String,
+      slug: "title",
+      unique: true,
+    },
+    price_discount: {
+      type: Number,
       default: false,
     },
+    chapter_id: {
+      type: mongoose.Types.ObjectId,
+      ref: "Chapter",
+    },
     topic_id: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Types.ObjectId,
       ref: "Topic",
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    updatedAt: {
+      type: Date,
+      default: Date.now,
     },
     // kids: [{type:mongoose.Schema.Types.ObjectId}]
   },

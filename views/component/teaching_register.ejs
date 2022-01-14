@@ -9,10 +9,36 @@
 </head>
 <body>
   <header><%- include('header')%></header>
+
+  <!-- Teaching register form -->
   <div class="container mt-5">
     <form>
       <div class="form-group mt-3">
-        <label class="mb-2 fw-bold" for="exampleInputEmail1">Specialty</label>
+        <label class="mb-2 fw-bold" for="exampleInputEmail1">User ID:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+          readonly
+          value="<%= userId %>"
+        />
+      </div>
+
+      <div class="form-group mt-3">
+        <label class="mb-2 fw-bold" for="exampleInputEmail1">Username:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+          readonly
+          value="<%= user %>"
+        />
+      </div>
+
+      <div class="form-group mt-3">
+        <label class="mb-2 fw-bold" for="exampleInputEmail1">Specialty:</label>
         <input
           type="text"
           class="form-control"
@@ -20,15 +46,17 @@
           aria-describedby="emailHelp"
         />
       </div>
+
       <div class="form-group mt-3">
         <label class="mb-2 fw-bold" for="exampleInputPassword1"
-          >Description</label
+          >Description:</label
         >
         <input type="text" class="form-control" id="exampleInputPassword1" />
       </div>
+
       <div class="form-group mt-3">
         <label class="mb-2 fw-bold" for="exampleInputPassword1"
-          >Experience</label
+          >Experience:</label
         >
         <select class="form-control" name="category_id">
           <option value="1">Basic</option>
@@ -36,10 +64,13 @@
           <option value="3">Master</option>
         </select>
       </div>
+
       <button type="submit" class="btn btn-dark mt-5 mb-5 fw-bolder rounded">
         Submit
       </button>
     </form>
   </div>
+  <!-- Teaching register form -->
+
   <footer><%- include('footer')%></footer>
 </body>
