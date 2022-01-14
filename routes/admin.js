@@ -1,5 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
+const path = require("path");
+
 const adminController = require("../controller/admin.controler");
 const categoriesController = require("../controller/category.controller");
 const topicController = require("../controller/topic.controller");
@@ -35,5 +38,50 @@ router.get("/courses", courseController.renderCoursePage);
 // Banner section
 // GET List banners /admin/banners
 router.get("/banners", bannerController.renderBannerPage);
+router.get("/addbanner", bannerController.renderCreateView);
+// router.post("/createbanner", bannerController.create);
+
+const storage = multer.diskStorage({
+  destination: "./public/upload/admins",
+  filename: (req, file, cb) => {
+    console.log(file);
+    cb(
+      null,
+      file.filename + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+
+const upload = multer({
+  storage: storage,
+  limits: { filesize: 1000000 },
+}).single("img");
+
+router.post("/createbanner", async function (req, res) {
+  upload(req, res, (err) => {
+    if (err) {
+      res.render("template/master", {
+        title: "Admin page",
+        content: "../banner/create",
+        msg: err,
+      });
+    } else {
+      if (req.file == undefined) {
+        res.render("template/master", {
+          title: "Admin page",
+          content: "../banner/create",
+          msg: "Error: No file selected!!!!",
+        });
+      } else {
+        res.render("template/master", {
+          title: "Admin page",
+          content: "../banner/create",
+          msg: "File uploaded ",
+          file: `upload/admins/${req.file.filename}`,
+        });
+      }
+    }
+  });
+});
 
 module.exports = router;

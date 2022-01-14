@@ -1,22 +1,22 @@
-const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const dotenv = require('dotenv');
-const cors = require('cors')
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const mongoose = require('mongoose');
-var route = require('./routes/index');
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const dotenv = require("dotenv");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const mongoose = require("mongoose");
+const methodOverride = require("method-override");
+var route = require("./routes/index");
 
 dotenv.config();
 
 // db
-mongoose.connect(process.env.MONGO_DB ,function(err){
-  if(!err){
-    console.log('connected sucessfully');
-  }
-  else{
-    console.log('error');
+mongoose.connect(process.env.MONGO_DB, function (err) {
+  if (!err) {
+    console.log("connected sucessfully");
+  } else {
+    console.log("error");
   }
 });
 
@@ -33,8 +33,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-// override using a query value
-// app.use(methodOverride("_method"));
+//override using a query value
+app.use(methodOverride("_method"));
 
 route(app);
 
