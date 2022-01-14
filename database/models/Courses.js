@@ -9,6 +9,10 @@ const course = new mongoose.Schema({
         type:String,
         default:''
     },
+    author: {
+        type: String,
+        default: ''
+    },
     description:{
         type:String,
         default:''
