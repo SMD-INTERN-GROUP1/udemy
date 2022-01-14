@@ -1,12 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
+const courseController = require("../controller/course.controller");
+
 /* GET instructor page. */
-router.get("/", (req, res, next) => {
-  res.render("template_instructor/master", {
-    title: "Instructor page",
-    content: "../instructor_view/instructor_index",
-  });
-});
+router.get("/", courseController.getListCourser);
+router.get("/addcourse", courseController.renderCreateCoursePage);
 
 module.exports = router;

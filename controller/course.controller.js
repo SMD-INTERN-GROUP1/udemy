@@ -18,7 +18,31 @@ const renderCoursePage = async (req, res, next) => {
     content: "../course/course_index",
   });
 };
+
+const getListCourser = async (req, res, next) => {
+  const getCourses = await Course.find()
+    .then((courses) => {
+      res.render("template_instructor/master", {
+        title: "Instructor page",
+        content: "../instructor_view/instructor_index",
+        courses,
+      });
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+};
+
+const renderCreateCoursePage = async (req, res, next) => {
+  res.render("template_instructor/master", {
+    title: "Instructor page",
+    content: "../course/create",
+  });
+};
+
 module.exports = {
   getDetailCourse,
   renderCoursePage,
+  getListCourser,
+  renderCreateCoursePage,
 };

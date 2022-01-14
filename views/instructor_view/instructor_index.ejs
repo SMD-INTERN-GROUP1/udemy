@@ -1,1 +1,26 @@
-<h2>Hello Instructor</h2>
+<div class="container">
+  <div class="d-flex flex-row-reverse bd-highlight ml-5">
+    <a
+      href="/instructor/addcourse"
+      class="btn btn-dark rounded-pill fw-bold"
+      style="margin-bottom: 20px"
+      >New Course</a
+    >
+  </div>
+
+  <div class="row row-cols-4">
+    <% courses.forEach(course=> { %>
+    <div class="col mt-5">
+      <div class="card">
+        <img src="<%= course.image%>" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title fs-4 fw-bold"><%= course.title%></h5>
+          <p class="card-text fs-5"><%= course.description%></p>
+          <p class="card-text fs-6">Price: <%= course.price%>$</p>
+          <a href="#" class="btn btn-primary w-100 fw-bold">View Details</a>
+        </div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+</div>
