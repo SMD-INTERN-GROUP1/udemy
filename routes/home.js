@@ -5,4 +5,6 @@ const router = express.Router();
 /* GET home page. */
 router.get("/", homeController.getHomePage);
 
+router.get("/teaching/register", homeController.renderTeachingRegister);
+
 module.exports = router;
