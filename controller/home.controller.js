@@ -71,9 +71,15 @@ const teachingRegister = (req, res, next) => {
       { isTeacher: false, _id: id },
       { $set: { isTeacher: true } }
     ),
-  ]).then((instructor, user) => {
-    // res.send([instructor, user]);
-    res.redirect("/instructor");
+  ]).then(() => {
+    res.cookies("userId", user_id).redirect("/instructor");
+    // res.render("template_instructor/master", {
+    //   title: "Instructor page",
+    //   content: "../instructor_view/instructor_index",
+    //   findInstructor,
+    //   instructor,
+    //   user,
+    // });
   });
 };
 

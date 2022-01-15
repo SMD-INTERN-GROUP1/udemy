@@ -30,7 +30,7 @@ const instructor = new mongoose.Schema(
     },
     user_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "Users",
     },
     experience: {
       type: String,

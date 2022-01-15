@@ -11,13 +11,13 @@
 
   <div class="row">
     <% courses.forEach(course=> { %>
-    <div class="col-sm-6 col-lg-4 mt-5">
+    <div class="col-sm-6 col-lg-4 mt-3">
       <div class="card">
         <img src="<%= course.image%>" class="card-img-top" alt="..." />
         <div class="card-body">
           <h5 class="card-title fs-4 fw-bold"><%= course.title%></h5>
           <p class="card-text fs-5"><%= course.author%></p>
-          <p class="card-text fs-6">Price: <%= course.price%>$</p>
+          <p class="card-text fs-6">Price: $<%= course.price%></p>
           <a href="#" class="btn btn-primary w-100 fw-bold">View Details</a>
         </div>
       </div>

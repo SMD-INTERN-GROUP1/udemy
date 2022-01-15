@@ -1,12 +1,10 @@
 const mongoose = require("mongoose");
+const slug = require("mongoose-slug-generator");
+mongoose.plugin(slug);
 
 const course = new mongoose.Schema(
   {
     title: {
-      type: String,
-      default: "",
-    },
-    image: {
       type: String,
       default: "",
     },
@@ -18,18 +16,25 @@ const course = new mongoose.Schema(
       type: String,
       default: "",
     },
-    price: {
-      type: Number,
-      default: 0,
+    image: {
+      type: String,
+      default: "",
+    },
+    video_id: {
+      type: String,
+      default: "",
     },
     slug: {
       type: String,
       slug: "title",
       unique: true,
     },
+    price: {
+      type: Number,
+    },
     price_discount: {
       type: Number,
-      default: false,
+      default: 0,
     },
     chapter_id: {
       type: mongoose.Types.ObjectId,
@@ -39,13 +44,9 @@ const course = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: "Topic",
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
-    updatedAt: {
-      type: Date,
-      default: Date.now,
+    user_id: {
+      type: mongoose.Types.ObjectId,
+      ref: "Users",
     },
     // kids: [{type:mongoose.Schema.Types.ObjectId}]
   },
