@@ -1,4 +1,4 @@
-const Course = require("../database/models/Courses");
+const Course = require("../database/models/course");
 
 function getDetailCourse(req, res, next) {
   const title = req.params.title;

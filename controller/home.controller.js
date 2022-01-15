@@ -1,5 +1,5 @@
 const categoryService = require("../services/category.services");
-const Course = require('../database/models/Courses');
+const Course = require('../database/models/course');
 const Banner = require('../database/models/banners');
 
 const getHomePage = async (req, res, next) => {

@@ -4,6 +4,7 @@ const authRouter = require('./auth.route');
 const adminRouter = require("./admin");
 const paypalRouter=require('./payment');
 const registerRouter = require('./register');
+const userRouter = require('./user');
 const authenticateToken= require('../middlerwares/auth.middleware');
 const cartRouter=require('./cart');
 
@@ -16,6 +17,7 @@ function route(app) {
   app.use('/cart',cartRouter);
   app.use('/login', authRouter);
   app.use('/register', registerRouter);
+  app.use('/user', userRouter)
   app.use("/", homeRouter);
 }
 
