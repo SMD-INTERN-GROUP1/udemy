@@ -12,7 +12,7 @@
 
   <!-- Teaching register form -->
   <div class="container mt-5">
-    <form>
+    <form action="/teaching/register" method="POST">
       <div class="form-group mt-3">
         <label class="mb-2 fw-bold" for="exampleInputEmail1">User ID:</label>
         <input
@@ -21,7 +21,8 @@
           id="exampleInputEmail1"
           aria-describedby="emailHelp"
           readonly
-          value="<%= userId %>"
+          value="<%= user._id %>"
+          name="user_id"
         />
       </div>
 
@@ -33,7 +34,20 @@
           id="exampleInputEmail1"
           aria-describedby="emailHelp"
           readonly
-          value="<%= user %>"
+          value="<%= user.username %>"
+        />
+      </div>
+
+      <div class="form-group mt-3">
+        <label class="mb-2 fw-bold" for="exampleInputEmail1">Is teacher</label>
+        <input
+          type="number"
+          class="form-control"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+          readonly
+          value="1"
+          name="isTeacher"
         />
       </div>
 
@@ -44,6 +58,7 @@
           class="form-control"
           id="exampleInputEmail1"
           aria-describedby="emailHelp"
+          name="specialty"
         />
       </div>
 
@@ -51,17 +66,22 @@
         <label class="mb-2 fw-bold" for="exampleInputPassword1"
           >Description:</label
         >
-        <input type="text" class="form-control" id="exampleInputPassword1" />
+        <input
+          type="text"
+          class="form-control"
+          id="exampleInputPassword1"
+          name="description"
+        />
       </div>
 
       <div class="form-group mt-3">
         <label class="mb-2 fw-bold" for="exampleInputPassword1"
           >Experience:</label
         >
-        <select class="form-control" name="category_id">
-          <option value="1">Basic</option>
-          <option value="2">Middle</option>
-          <option value="3">Master</option>
+        <select class="form-control" name="experience">
+          <option value="1 to 2 years">1 to 2 years</option>
+          <option value="3 to 5 years">3 to 5 years</option>
+          <option value="5 years">5 years</option>
         </select>
       </div>
 

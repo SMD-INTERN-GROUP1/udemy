@@ -9,4 +9,6 @@ router.get("/teaching", homeController.renderTeachingPage);
 
 router.get("/teaching/register", homeController.renderTeachingRegister);
 
+router.post("/teaching/register", homeController.teachingRegister);
+
 module.exports = router;

@@ -11,7 +11,7 @@ const social = new mongoose.Schema(
       default: "",
     },
   },
-  { timestamps }
+  { timestamps: true }
 );
 
 const instructor = new mongoose.Schema(

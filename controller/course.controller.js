@@ -20,12 +20,22 @@ const renderCoursePage = async (req, res, next) => {
 };
 
 const getListCourser = async (req, res, next) => {
+  let isLogin = true;
+  let user;
+  if (req.cookies.user) {
+    isLogin = false;
+    console.log("cookies", req.cookies.user);
+    user = req.cookies.user;
+  }
+
   const getCourses = await Course.find()
     .then((courses) => {
       res.render("template_instructor/master", {
         title: "Instructor page",
         content: "../instructor_view/instructor_index",
         courses,
+        isLogin,
+        user,
       });
     })
     .catch((error) => {
