@@ -1,0 +1,46 @@
+{
+  "categories": [
+    {
+      "id": "d25a0b0b-b037-4585-a4a0-e695bea14020",
+      "category": "Computer",
+      "description": "The Football Is Good For Training And Recreational Purposes",
+      "createdAt": 1641450793878,
+      "updatedAt": 1641450793878
+    },
+    {
+      "id": "8a52745a-7a9c-4511-9ad4-58c7bf166d3b",
+      "category": "Gloves",
+      "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+      "createdAt": 1641450793878,
+      "updatedAt": 1641450793878
+    },
+    {
+      "id": "286b2e84-dddc-48b8-aee2-bf911fbcae57",
+      "category": "Bacon",
+      "description": "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
+      "createdAt": 1641450793878,
+      "updatedAt": 1641450793878
+    },
+    {
+      "id": "6daa0785-a5fa-4e82-910f-aae1aa424c7b",
+      "category": "Computer",
+      "description": "The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality",
+      "createdAt": 1641450793879,
+      "updatedAt": 1641450793879
+    },
+    {
+      "id": "c640f3ea-342f-4e90-a4b6-74d816187eec",
+      "category": "Keyboard",
+      "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+      "createdAt": 1641450793879,
+      "updatedAt": 1641450793879
+    },
+    {
+      "id": "f8ccbe48-ddd8-4d4c-82eb-e7d28026e5a5",
+      "category": "Computer",
+      "description": "New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016",
+      "createdAt": 1641450793879,
+      "updatedAt": 1641450793879
+    }
+  ]
+}

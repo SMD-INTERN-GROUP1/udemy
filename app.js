@@ -5,28 +5,37 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const paypal = require('paypal-rest-sdk');
 const mongoose = require("mongoose");
 dotenv.config();
 
-var route = require("./routes/index");
+const route = require("./routes/index");
 
 // db
+<<<<<<< HEAD
 mongoose.connect(process.env.MONGO_DB, function (err) {
   if (!err) {
     console.log("connected sucessfully");
   } else {
     console.log("error");
+=======
+mongoose.connect(process.env.MONGO_DB ,function(err){
+  if(!err){
+    console.log('connected sucessfully');
+  }
+  else{
+    console.log('error');
+>>>>>>> de2f674743fac461491c8bf6c3878458464dc5f0
   }
 });
 
-//models
-const Users = require("./database/models/Users");
-const Categories = require("./database/models/Categories");
-const Courses = require("./database/models/Courses");
-const videos = require("./database/models/Videos");
+//payment
 
-const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
+paypal.configure({
+  'mode': 'sandbox', //sandbox or live
+  'client_id': 'AUzspjS4ov0cME-ngsMUMXUjnRrREzgIq6v08q5SxXBLhgdqkWzCi7-TOEzt4h4otyEJeEnm5Mtbd99o',
+  'client_secret': 'ECSOuh2RfNBwD-vSzKsDDRw5ZU4Bf8W-PAftU3VqaUDVkkXB3VSKlj6y1_-iYTiNxOv-5N_24MEkVMS0'
+});
 
 const app = express();
 
@@ -41,9 +50,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+// override using a query value
+// app.use(methodOverride("_method"));
+
 route(app);
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
