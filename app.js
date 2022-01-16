@@ -11,7 +11,7 @@ dotenv.config();
 var route = require("./routes/index");
 
 // db
-mongoose.connect(process.env.MONGODB, function (err) {
+mongoose.connect(process.env.MONGO_DB, function (err) {
   if (!err) {
     console.log("connected sucessfully");
   } else {
