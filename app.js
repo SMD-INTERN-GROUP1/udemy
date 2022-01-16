@@ -5,28 +5,30 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const paypal = require('paypal-rest-sdk');
+const paypal = require("paypal-rest-sdk");
 const mongoose = require("mongoose");
+const methodOverride = require("method-override");
 dotenv.config();
 
 const route = require("./routes/index");
 
 // db
-mongoose.connect(process.env.MONGO_DB ,function(err){
-  if(!err){
-    console.log('connected sucessfully');
-  }
-  else{
-    console.log('error');
+mongoose.connect(process.env.MONGO_DB, function (err) {
+  if (!err) {
+    console.log("connected sucessfully");
+  } else {
+    console.log("error");
   }
 });
 
 //payment
 
 paypal.configure({
-  'mode': 'sandbox', //sandbox or live
-  'client_id': 'AUzspjS4ov0cME-ngsMUMXUjnRrREzgIq6v08q5SxXBLhgdqkWzCi7-TOEzt4h4otyEJeEnm5Mtbd99o',
-  'client_secret': 'ECSOuh2RfNBwD-vSzKsDDRw5ZU4Bf8W-PAftU3VqaUDVkkXB3VSKlj6y1_-iYTiNxOv-5N_24MEkVMS0'
+  mode: "sandbox", //sandbox or live
+  client_id:
+    "AUzspjS4ov0cME-ngsMUMXUjnRrREzgIq6v08q5SxXBLhgdqkWzCi7-TOEzt4h4otyEJeEnm5Mtbd99o",
+  client_secret:
+    "ECSOuh2RfNBwD-vSzKsDDRw5ZU4Bf8W-PAftU3VqaUDVkkXB3VSKlj6y1_-iYTiNxOv-5N_24MEkVMS0",
 });
 
 const app = express();
@@ -43,7 +45,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 // override using a query value
-// app.use(methodOverride("_method"));
+app.use(methodOverride("_method"));
 
 route(app);
 

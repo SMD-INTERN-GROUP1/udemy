@@ -1,6 +1,10 @@
 <div class="container">
-  <form class="row g-3" action="/instructor/createcourse" method="POST">
-    <h2>Create Course page</h2>
+  <form
+    class="row g-3"
+    action="/instructor/courses/<%= courses.slug %>/updated?_method=PUT"
+    method="POST"
+  >
+    <h2>Update course page</h2>
     <div class="form-group col-12">
       <label for="exampleInputEmail1" class="fw-bold">User ID:</label>
       <input
@@ -9,7 +13,7 @@
         id="exampleInputEmail1"
         aria-describedby="emailHelp"
         name="user_id"
-        value="<%= user._id %>"
+        value="<%= courses.user_id %>"
         readonly
       />
     </div>
@@ -20,6 +24,7 @@
         class="form-control"
         id="exampleInputEmail1"
         aria-describedby="emailHelp"
+        value="<%= courses.title %>"
         name="title"
       />
     </div>
@@ -29,6 +34,7 @@
         type="text"
         class="form-control"
         id="exampleInputPassword1"
+        value="<%= courses.description %>"
         name="description"
       />
     </div>
@@ -38,6 +44,7 @@
         type="text"
         class="form-control"
         id="exampleInputPassword1"
+        value="<%= courses.video_id %>"
         name="video_id"
       />
     </div>
@@ -47,6 +54,7 @@
         type="text"
         class="form-control"
         id="exampleInputPassword1"
+        value="<%= courses.author %>"
         name="author"
       />
     </div>
@@ -54,6 +62,9 @@
     <div class="form-group col-md-6">
       <label for="exampleInputPassword1">Topic</label>
       <select class="form-control" name="topic_id">
+        <option selected class="font-weight-bold">
+          <%= courses.topic_id.name%>
+        </option>
         <% getTopics.forEach(topic => { %>
         <option value="<%= topic._id %>"><%= topic.name%></option>
         <% }); %>
@@ -66,6 +77,7 @@
         type="number"
         class="form-control"
         id="exampleInputPassword1"
+        value="<%= courses.price %>"
         name="price"
       />
     </div>
@@ -76,6 +88,7 @@
         type="number"
         class="form-control"
         id="exampleInputPassword1"
+        value="<%= courses.price_discount%>"
         name="price_discount"
       />
     </div>

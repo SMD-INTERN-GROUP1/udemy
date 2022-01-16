@@ -1,4 +1,3 @@
-const Instructor = require("../database/models/Instrutor");
 const Course = require("../database/models/Courses");
 const Topic = require("../database/models/Topics");
 
@@ -59,8 +58,65 @@ const create = async (req, res, next) => {
   }
 };
 
+const showCourse = async (req, res, next) => {
+  const findCourseBySlug = await Course.findOne({ slug: req.params.slug })
+    .then((course) => {
+      res.render("template_instructor/master", {
+        title: "Instructor page",
+        content: "../instructor_view/instructor_course",
+        course,
+      });
+    })
+    .catch(next);
+};
+
+const renderUpdateView = (req, res, next) => {
+  Promise.all([
+    Course.findOne({ slug: req.params.slug }).populate("topic_id"),
+    Topic.find(),
+  ])
+    .then(([courses, getTopics]) => {
+      res.render("template_instructor/master", {
+        title: "Instructor page",
+        content: "../course/update",
+        courses,
+        getTopics,
+      });
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+};
+
+const update = async (req, res, next) => {
+  try {
+    const formData = req.body;
+    formData.image = `https://img.youtube.com/vi/${req.body.video_id}/sddefault.jpg`;
+    const updateCourse = await Course.where({ slug: req.params.slug }).update(
+      formData
+    );
+    res.redirect("/instructor");
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+const destroy = async (req, res, next) => {
+  const deleteCourse = await Course.delete({ slug: req.params.slug })
+    .then(() => {
+      res.redirect("/instructor");
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+};
+
 module.exports = {
   getListCourser,
   renderCreateCoursePage,
   create,
+  showCourse,
+  destroy,
+  renderUpdateView,
+  update,
 };

@@ -19,20 +19,4 @@ const middlewareController = {
   },
 };
 
-const authInstructor = (req, res, next) => {
-  if (!req.cookies.userId) {
-    res.redirect("/teaching");
-    return;
-  }
-
-  var user = User.find({ _id: req.cookies.userId });
-
-  if (!user) {
-    res.redirect("/teaching");
-    return;
-  }
-
-  next();
-};
-
-module.exports = { middlewareController, authInstructor };
+module.exports = { middlewareController };
