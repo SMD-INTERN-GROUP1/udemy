@@ -23,8 +23,8 @@ const renderCreateView = (req, res, next) => {
 
 const create = async (req, res, next) => {
   let data;
-  const { description, category } = req.body;
-  data = { description, category };
+  const { description, name } = req.body;
+  data = { description, name };
   const createCategory = new CategoriesModel(data);
   await createCategory
     .save()
