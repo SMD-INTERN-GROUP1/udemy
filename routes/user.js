@@ -12,38 +12,49 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/edit-profile', async (req, res, next) => {
-  let isLogin = true;
-  let user;
-  if (req.cookies.user) {
-    isLogin = false;
-    console.log("cookies", req.cookies.user.fullName);
-    // console.log("cookies", req.cookies);
-    user = req.cookies.user;
-  }
-  res.render("profile/profile.ejs", { title: "Edit profile", user } );
+  try {
+    let isLogin = false;
+  
+    if (req.cookies.user) {
+      isLogin = true;
+
+      Users.findOne({_id: req.cookies.user._id})
+      .then(user => {
+        res.render("profile/profile.ejs", { title: "Edit profile", user } );
+      })
+      .catch(next);
+    } else {
+      res.redirect('/login');
+    }
+  } catch(err) {
+    return   res.status(500).json(err);
+  };
 });
 
 router.patch('/edit-profile', async (req, res, next) => {
-  let isLogin = true;
-  let idUser;
-  if (req.cookies.user) {
-    isLogin = false;
-    // console.log("cookies", req.cookies.user._id);
-    // console.log("cookies", req.cookies);
-    idUser = req.cookies.user._id;
+  try {
+    let isLogin = false;
+    let idUser;
+    
+    if (req.cookies.user) {
+      isLogin = true;
+      idUser = req.cookies.user._id;
 
-    Users.updateOne({ _id: idUser }, req.body)
-    .then((data) => console.log(data))
-    .catch(err => console.log(err));
+      Users.updateOne({ _id: idUser }, req.body)
+      .then(() => res.redirect('edit-profile'))
+      .catch(err => console.log(err));
+    }
+  } catch(err) {
+    return res.status(500).json(err);
   }
-
-  console.log(req.body);
-  res.json(req.body);
 });
 
 router.get('/edit-account', async (req, res, next) => {
-  res.render("profile/account.ejs", { title: "User account" });
+  res.render("profile/account.ejs", { title: "Public profile" });
 });
 
+// router.get('/public-profile', async (req, res, next) => {
+//   res.render("profile/public-profile.ejs", { title: "User account" });
+// });
 
 module.exports = router;
