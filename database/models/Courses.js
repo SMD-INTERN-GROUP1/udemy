@@ -3,6 +3,7 @@ const slug = require('mongoose-slug-generator');
 mongoose.plugin(slug);
 
 const course = new mongoose.Schema({
+
         title: {
             type:String,
             default:''
@@ -42,6 +43,7 @@ const course = new mongoose.Schema({
         }
     },
     {timestamps:true}
+
 );
 
 module.exports=mongoose.model("Course",course);
