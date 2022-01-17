@@ -5,9 +5,9 @@ const Banner = require('../database/models/banners');
 const Category = require('../database/models/Categories');
 const getHomePage = async (req, res, next) => {
     try { 
-        let isLogin=true;
+        let isLogin=false;
         if(!req.cookies.user){
-            isLogin=false;
+            isLogin=true;
             console.log('cookies',req.cookies.user);
         }   
         let listCategory = [];
@@ -46,8 +46,6 @@ const getHomePage = async (req, res, next) => {
                         }
                     } 
                 }
-                console.log('courses: ', courses);
-                console.log('listCategory: ', listCategory);
                 res.render('index', {title: "Udemy", isLogin, categories, banners, courses, listCategory});
             } else {
                 console.log(err);
