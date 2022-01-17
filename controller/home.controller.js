@@ -1,19 +1,20 @@
 const categoryService = require("../services/category.services");
 const Course = require('../database/models/Courses');
 const Topic = require('../database/models/Topics');
+const Banner = require('../database/models/banners');
 const Category = require('../database/models/Categories');
 const getHomePage = async (req, res, next) => {
     try { 
-        const categories = await categoryService.getListCategory();
-        const banners = await Banner.find();  
-        let isLogin=false;
+        let isLogin=true;
         if(!req.cookies.user){
-            isLogin=true;
+            isLogin=false;
             console.log('cookies',req.cookies.user);
         }   
         let listCategory = [];
         Course.find().populate('topic_id').
         exec( async (err, courses) => {
+            const categories = await categoryService.getListCategory();
+            const banners = await Banner.find();  
             if(!err) {
                 courses.sort(function(first_course, second_course) {
                     let first_category_id = first_course.topic_id.category_id;
