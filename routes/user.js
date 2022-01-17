@@ -11,11 +11,11 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/edit-profile', async (req, res, next) => {
-  res.render("profile/profile.ejs");
+  res.render("profile/profile.ejs", { title: "Edit profile" } );
 });
 
 router.get('/edit-account', async (req, res, next) => {
-  res.render("profile/account.ejs");
+  res.render("profile/account.ejs", { title: "User account" });
 });
 
 module.exports = router;
