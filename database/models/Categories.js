@@ -2,11 +2,14 @@ const mongoose = require("mongoose");
 
 const category = new mongoose.Schema(
   {
-    title: {
+    category: {
       type: String,
       default: "",
     },
-    kids: [{ type: mongoose.Schema.Types.ObjectId }],
+    description: {
+      type: String,
+      default: ""
+    }
   },
   { timestamps: true }
 );

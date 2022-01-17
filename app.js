@@ -19,11 +19,7 @@ mongoose.connect(process.env.MONGODB, function (err) {
   }
 });
 
-//models
-const Users = require("./database/models/Users");
-const Categories = require("./database/models/Categories");
-const Courses = require("./database/models/Courses");
-const videos = require("./database/models/Videos");
+
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
