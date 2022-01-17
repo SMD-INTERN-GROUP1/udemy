@@ -1,13 +1,22 @@
-/*style of top courses in homepage by Dung, Nguyen Anh*/
+.category_title {
+    padding-left: 16px;
+    margin-top: 6px;
+    margin-bottom: 10px;
+}
 .image-slider {
     margin-top: 30px;
     padding-bottom: 50px;
   }
 .course-link {
+    height: 480px;
+    padding: 10px;
     text-decoration: none;
     color: black;
 }
 .course-link:hover {
+    color: black !important;
+}
+.image-item:hover {
     color: black;
 }
 .image {
@@ -21,7 +30,7 @@
     border-radius: 12px;
 }
 .image-title {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 600;
 
 }
@@ -81,5 +90,46 @@
 
 .author {
     font-weight: 600;
-    opacity: 0.8;
+    opacity: 1;
+}
+.description {
+    height: 100px;
+    overflow-y: hidden;
+}
+.price {
+    font-weight: 700;
+}
+del {
+    padding-left: 6px;
+}
+.sell-price {
+    width: 40%;
+    padding: 4px;
+    font-weight: 600;
+    text-align: center;
+    background-color: #f39c12;
+}
+.btn-group {
+    width: 40%;
+    display: none;
+    animation-name: bottom-to-top;
+    animation-duration: 0.5s;
+}
+@keyframes bottom-to-top {
+    from {margin-left: 20px;}
+    to {margin-left: 0px;}
+  }
+.course-link:hover > .btn-group {
+    display: block;
+    margin-top: 0;
+}
+.btn-add {
+    width: 100%;
+    font-weight: 600;
+    margin-top: 4px;
+    padding: 2px;
+    background-color: #74b9ff;
+}
+.btn-add:hover {
+    font-weight: 800;
 }
