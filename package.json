@@ -3,9 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon --inspect ./bin/www"
+    "start": "nodemon --inspect ./bin/www",
+    "seed": " node  ./database/seed/category.seed.js"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "debug": "^2.6.9",
@@ -14,13 +16,18 @@
     "express": "^4.16.4",
     "http-errors": "^1.8.1",
     "jsonwebtoken": "^8.5.1",
+    "method-override": "^3.0.0",
     "mongoose": "^6.1.4",
+    "mongoose-data-faker": "^0.1.2",
+    "mongoose-slug-generator": "^1.0.4",
     "morgan": "^1.9.1",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "paypal-rest-sdk": "^1.8.1"
   },
   "devDependencies": {
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.3.2",
-    "eslint-plugin-import": "^2.12.0"
+    "eslint-plugin-import": "^2.12.0",
+    "faker": "^6.6.6"
   }
 }

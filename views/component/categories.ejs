@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/stylesheets/categories.css" />
-    <title><%= title %></title>
+    <title>Udemy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -24,26 +24,11 @@
     <nav class="category">
       <div class="category-content">
         <ul class="category-menu">
+          <% categories.forEach(category=> { %>
           <li class="category-item">
-            <a class="category-link" href="/courses/development"
-              >Development
-            </a>
+            <a class="category-link" href=""><%= category.category%> </a>
           </li>
-          <li class="category-item">
-            <a class="category-link" href="#">Business</a>
-          </li>
-          <li class="category-item">
-            <a class="category-link" href="#">Design</a>
-          </li>
-          <li class="category-item">
-            <a class="category-link" href="#">Marketing</a>
-          </li>
-          <li class="category-item">
-            <a class="category-link" href="#">Pesonal Development</a>
-          </li>
-          <li class="category-item">
-            <a class="category-link" href="#">Music</a>
-          </li>
+          <% }) %>
         </ul>
       </div>
     </nav>

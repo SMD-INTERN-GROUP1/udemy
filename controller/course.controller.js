@@ -1,4 +1,4 @@
-const Course = require('../database/models/Courses');
+const Course = require("../database/models/Courses");
 
 function getDetailCourse(req, res, next) {
     const title = req.params.title;
@@ -10,6 +10,14 @@ function getDetailCourse(req, res, next) {
         }
     })       
 }
+
+const renderCoursePage = async (req, res, next) => {
+  res.render("template/master", {
+    title: "Topic page",
+    content: "../course/course_index",
+  });
+};
 module.exports = {
-    getDetailCourse
-}
+  getDetailCourse,
+  renderCoursePage,
+};
