@@ -1,9 +1,9 @@
 const Course = require("../database/models/course");
 
 function getDetailCourse(req, res, next) {
-  const title = req.params.title;
+  const slug = req.params.slug;
   //query, raw query
-  Course.findOne({ title: title }, function (err, course) {
+  Course.findOne({ slug: slug }, function (err, course) {
     if (!err) {
       res.render("component/course_detail", { course });
     } else {

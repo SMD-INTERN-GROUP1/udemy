@@ -1,6 +1,6 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const courseController = require('../controller/course.controller');
-router.get('/:title', courseController.getDetailCourse);
+const courseController = require("../controller/course.controller");
+router.get("/:slug", courseController.getDetailCourse);
 
 module.exports = router;

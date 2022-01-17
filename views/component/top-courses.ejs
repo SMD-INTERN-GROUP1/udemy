@@ -1,6 +1,6 @@
 <div class="image-slider">
     <% for(var i = 0; i<courses.length; i++) { %>
-      <a class="image-item course-link" href="/course/<%-courses[i].title%>">
+      <a class="image-item course-link" href="/course/<%= courses[i].slug%>">
         <div class="image">
           <img
             src=<%=courses[i].image%>
