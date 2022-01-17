@@ -36,7 +36,7 @@ const authController ={
                 },process.env.JWT_REFRESHTOKEN_KEY,
                 {expiresIn:"365d"}
                 );
-                res.cookie('user',user.username)
+                res.cookie('user',user)
                 // res.status(200).json({user,accessToken,refreshToken});
                 // delete user.password;
                 // req.session.isAuthenticated=true;
