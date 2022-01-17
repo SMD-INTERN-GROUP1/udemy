@@ -6,6 +6,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const paypal = require('paypal-rest-sdk');
+var methodOverride = require('method-override')
 const mongoose = require("mongoose");
 dotenv.config();
 
@@ -43,7 +44,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 // override using a query value
-// app.use(methodOverride("_method"));
+app.use(methodOverride("_method"));
 
 route(app);
 

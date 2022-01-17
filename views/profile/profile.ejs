@@ -20,22 +20,14 @@
                         <div class="user-info">
                             <img class="img-profile img-circle img-responsive center-block" src="https://www.donkey.bike/wp-content/uploads/2020/12/user-member-avatar-face-profile-icon-vector-22965342-300x300.jpg" alt="">
                             <ul class="meta list list-unstyled">
-                                <!-- <li class="name">Rebecca Sanders
-                                    <label class="label label-info">UX Designer</label>
-                                </li>
-                                <li class="email"><a href="#">Rebecca.S@website.com</a></li> -->
                                 <% if (user.fullName) { %>
                                     <li class="name"> <%=user.fullName%>
                                         <% if (user.headLine) { %>
                                             <label class="label label-info"><%=user.headLine%></label>
                                         <% } %>
                                     </li>
-                                    <li class="email"><a href="#">Rebecca.S@website.com</a></li>
-                                <%} else { %>
-                                    <!-- <li class="name">Your full name
-                                        <label class="label label-info">UX Designer</label>
-                                    </li>
-                                    <li class="email"><a href="#">Rebecca.S@website.com</a></li> -->
+                                    <!-- show persional link -->
+                                    <!-- <li class="email"><a href="#">Rebecca.S@website.com</a></li> -->
                                 <% } %>
                             </ul>
                         </div>
@@ -53,12 +45,12 @@
                             <h2 class="title">Profile</h2>
                             <h4 class="sub-title">Add information about yourself</h4>
                         </div>
-                        <form class="form-horizontal">
+                        <form class="form-horizontal" method="POST" action="edit-profile?_method=patch">
                             <fieldset class="fieldset">
                                 <h3 class="fieldset-title">Personal Info:</h3>
                                 <div class="form-group avatar">
                                     <figure class="figure col-md-2 col-sm-3 col-xs-12">
-                                        <img class="img-rounded img-responsive" src="https://www.donkey.bike/wp-content/uploads/2020/12/user-member-avatar-face-profile-icon-vector-22965342-300x300.jpg" alt="">
+                                        <img class="img-rounded img-responsive" src=<%= user.avatar %>>
                                     </figure>
                                     <div class="form-inline col-md-10 col-sm-9 col-xs-12">
                                         <input type="file" class="file-uploader pull-left">
@@ -81,21 +73,22 @@
                                 <div class="form-group">
                                     <label class="col-md-2 col-sm-3 col-xs-12 control-label">Full Name</label>
                                     <div class="col-md-10 col-sm-9 col-xs-12">
-                                        <input type="text" class="form-control" placeholder="Your full name" value=<%= user.fullName  %> >
+                                        <input type="text" class="form-control" placeholder="Your full name" name="fullName" value="<%= user.fullName %>" >
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 col-sm-3 col-xs-12 control-label">HeadLine</label>
                                     <div class="col-md-10 col-sm-9 col-xs-12">
-                                        <input type="text" class="form-control" placeholder="HeadLine" value=<%= user.headLine %>>
+                                        <input type="text" class="form-control" placeholder="HeadLine" name="headLine" value="<%= user.headLine %>">
                                         <p class="help-block">Add a professional headline like, "Engineer at Udemy" or "Architect."</p>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 col-sm-3 col-xs-12 control-label">Biography</label>
                                     <div class="col-md-10 col-sm-9 col-xs-12">
-                                        <p contenteditable="true" id="content-biography"></p>
-                                        <input type="hidden" name="biography" class="form-control" id="input-biography">
+                                        <!-- <p contenteditable="true" id="content-biography"></p> -->
+                                        <!-- <input type="hidden" name="biography" class="form-control" id="input-biography"> -->
+                                        <textarea name="biography" class="form-control"><%= user.biography %></textarea>
                                         <p class="help-block">Links and coupon codes are not permitted in this section.</p>
                                     </div>
                                 </div>
@@ -154,14 +147,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script>
-        console.log($('#content-biography').text());
+        // console.log($('#content-biography').text());
 
-        var input = document.getElementById("content-biography");
-        input.onkeyup = (function () {
-        var content = $('#content-biography').text();
-        $("#input-biography").val(content);
+        // var input = document.getElementById("content-biography");
+        // input.onkeyup = (function () {
+        // var content = $('#content-biography').text();
+        // $("#input-biography").val(content);
         // console.log($("#input-biography").val());
-        });
+        // });
     </script>
 </body>
 </html>

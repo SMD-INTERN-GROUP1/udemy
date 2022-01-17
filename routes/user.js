@@ -1,5 +1,5 @@
 const express = require('express');
-const User = require('../database/models/Users')
+const Users = require('../database/models/Users')
 
 const router = express.Router();
 
@@ -16,11 +16,29 @@ router.get('/edit-profile', async (req, res, next) => {
   let user;
   if (req.cookies.user) {
     isLogin = false;
-    // console.log("cookies", req.cookies.user);
+    console.log("cookies", req.cookies.user.fullName);
     // console.log("cookies", req.cookies);
     user = req.cookies.user;
   }
   res.render("profile/profile.ejs", { title: "Edit profile", user } );
+});
+
+router.patch('/edit-profile', async (req, res, next) => {
+  let isLogin = true;
+  let idUser;
+  if (req.cookies.user) {
+    isLogin = false;
+    // console.log("cookies", req.cookies.user._id);
+    // console.log("cookies", req.cookies);
+    idUser = req.cookies.user._id;
+
+    Users.updateOne({ _id: idUser }, req.body)
+    .then((data) => console.log(data))
+    .catch(err => console.log(err));
+  }
+
+  console.log(req.body);
+  res.json(req.body);
 });
 
 router.get('/edit-account', async (req, res, next) => {

@@ -40,7 +40,7 @@ const user = new mongoose.Schema({
     },
     avatar:{
         type:String,
-        default:''
+        default:'/images/profile/user-member-avatar-default.jpg'
     }
 },{timestamps:true}
 );
