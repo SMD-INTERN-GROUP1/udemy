@@ -28,19 +28,24 @@ const getListCourserOfInstructor = async (req, res, next) => {
     console.log("cookies", req.cookies.user);
     user = req.cookies.user;
   }
-  const getCourses = await Course.find()
-    .then((courses) => {
-      res.render("template_instructor/master", {
-        title: "Instructor page",
-        content: "../instructor_view/instructor_index",
-        courses,
-        isLogin,
-        user,
-      });
-    })
-    .catch((error) => {
-      res.status(500).send(error);
-    });
+  const getCourses = await Course.find();
+  const productnumber = 4;
+  const total_pages = Math.ceil(getCourses.length / productnumber);
+  const num = Number(req.params.page);
+  const pagination = getCourses.slice(
+    productnumber * num,
+    productnumber * (1 + num)
+  );
+  console.log(pagination);
+
+  res.render("template_instructor/master", {
+    title: "Instructor page",
+    content: "../instructor_view/instructor_index",
+    getCourses,
+    total_pages,
+    isLogin,
+    user,
+  });
 };
 
 const renderCreateCoursePage = async (req, res, next) => {
