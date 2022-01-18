@@ -23,7 +23,6 @@ const getSearch = async (req, res, next) => {
 
     // req.query.sort["fieldname"] =  asc | desc
 
-    // paginate
     const productnumber = 4;
     const total_pages = Math.ceil(data.length / productnumber);
     const num = Number(req.params.page);
