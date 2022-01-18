@@ -1,5 +1,6 @@
 const CartModel = require("../database/models/Cart");
 const UserModel = require('../database/models/Users');
+const CourseModel = require('../database/models/Courses');
 
 const listCart = async (req, res, next) => {
   const cart = await CartModel.find();
