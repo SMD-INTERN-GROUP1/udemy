@@ -12,6 +12,10 @@ const course = new mongoose.Schema(
       type: String,
       default: "",
     },
+    video_id: {
+      type: String,
+      default: "",
+    },
     description: {
       type: String,
       default: "",

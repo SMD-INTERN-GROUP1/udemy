@@ -1,0 +1,42 @@
+.tab-list {
+  display: none !important;
+}
+
+.tab-list.active {
+  display: block !important;
+}
+
+.avatar-img {
+  cursor: pointer;
+}
+
+.interaction-like {
+  width: 45px;
+  height: 45px;
+  border: 2px solid rgb(27, 27, 27) !important;
+}
+.interaction-like i {
+  margin-top: 21% !important;
+  font-size: 20;
+}
+
+.interaction-dislike {
+  margin-left: 4px;
+  width: 45px;
+  height: 45px;
+  border: 2px solid rgb(27, 27, 27) !important;
+  transform: rotate(180deg);
+}
+
+.interaction-dislike i {
+  margin-top: 21% !important;
+  font-size: 20;
+}
+
+.interaction-like i:hover {
+  color: rgb(175, 22, 168, 0.877) !important;
+}
+
+.interaction-dislike i:hover {
+  color: rgba(175, 22, 168, 0.877) !important;
+}
