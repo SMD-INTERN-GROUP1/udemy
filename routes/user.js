@@ -52,52 +52,43 @@ router.get('/edit-profile', (req, res, next) => {
 // });
 
 router.patch('/edit-profile', (req, res, next) => {
-    let isLogin = false;
-    let idUser;
-    
-    if (req.cookies.user) {
-      isLogin = true;
-      idUser = req.cookies.user._id;
-      // let socialList = [req.body.personalWebsite, req.body.twitter, req.body.linkedin, req.body.facebook];
-      // console.log(socialList);
-
-      let personalWebsite = req.body.personalWebsite;
-      let twitter = req.body.twitter;
-      let facebook = req.body.facebook;
-      let linkedin = req.body.linkedin;
-
-      // console.log('hi:', req.body.personalWebsite, req.body.twitter, req.body.facebook, req.body.linkedin)
-      console.log(req.body);
-
-      // if(personalWebsite === "")
-      //   personalWebsite === null;
-      // if(twitter === "")
-      //   twitter === null;
-      // if(facebook === "")
-      //   facebook === null;
-      // if(linkedin == '')
-      //   linkedin === "ass";
-
-      // console.log(req.body);
+    try {
+      let isLogin = false;
+      let idUser;
       
-      // Users.updateOne({ _id: idUser }, {$push: {list_social: [req.body.personalWebsite]}})
-      // .then(() => res.redirect('edit-profile'))
-      // .catch(err => console.log(err));
+      if (req.cookies.user) {
+        isLogin = true;
+        idUser = req.cookies.user._id;
 
-      Users.updateOne(
-        { _id: idUser }, 
-        { $set: 
-          {list_social: [
-            {"name": "Website", "url": personalWebsite},
-            {"name": "Twitter", "url": twitter},
-            {"name": "LinkedIn", "url": linkedin},
-            {"name": "Facebook", "url": facebook}
-          ]}
-        })
-      .then(() => res.redirect('edit-profile'))
-      .catch(err => console.log(err));
+        let personalWebsite = req.body.Website;
+        let twitter = req.body.Twitter;
+        let facebook = req.body.Facebook;
+        let linkedin = req.body.LinkedIn;
+        let fullName = req.body.fullName;
+        let headLine = req.body.headLine;
+        let biography = req.body.biography;
 
-      // res.json(req.body);
+        Users.updateOne(
+          { _id: idUser }, 
+          { 
+            $set: 
+            {
+              list_social: [
+                {"name": "Website", "url": personalWebsite},
+                {"name": "Twitter", "url": twitter},
+                {"name": "LinkedIn", "url": linkedin},
+                {"name": "Facebook", "url": facebook}
+              ],
+              fullName: fullName,
+              headLine: headLine,
+              biography: biography
+            }
+          })
+        .then(() => res.redirect('edit-profile'))
+        .catch(err => console.log(err));
+      }
+    } catch {
+      return res.status(500).json(err);
     }
 });
 

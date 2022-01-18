@@ -93,50 +93,20 @@
                             </fieldset>
                             <fieldset class="fieldset" id="fieldset-link">
                                 <h3 class="fieldset-title">Links:</h3>
-                                <!-- <%for(let i = 0; i<user.list_social.length; i++) {%>
+                                <%for(let i = 0; i<user.list_social.length; i++) {%>
                                     <div class="form-group">
                                         <label class="col-md-2  col-sm-3 col-xs-12 control-label"><%= user.list_social[i].name %></label>
                                         <div class="col-md-10 col-sm-9 col-xs-12">
-                                            <input type="text" name="personalWebsite" class="form-control" value="<%= user.list_social[i].url %>" placeholder="Rebecca@website.com">
+                                            <input type="text" name="<%= user.list_social[i].name %>" class="form-control" value="<%= user.list_social[i].url %>" placeholder="Rebecca@website.com">
                                             <p class="help-block" style="margin-top: 5px;">Add your <%= user.list_social[i].name %></p>
                                         </div>
                                     </div>
-                                <% } %> -->
-                                <div class="form-group">
-                                    <label class="col-md-2  col-sm-3 col-xs-12 control-label">Your Website</label>
-                                    <div class="col-md-10 col-sm-9 col-xs-12">
-                                        <input type="text" name="personalWebsite" class="form-control" placeholder="Rebecca@website.com">
-                                        <p class="help-block" style="margin-top: 5px;">Add your website</p>
+                                <% } %>
+                                <div class="form-group" style="text-align: center;">
+                                    <div class="col-md-10 col-sm-9 col-xs-12 col-md-push-2 col-sm-push-3 col-xs-push-0">
+                                        <input class="btn btn-primary" type="submit" value="Update">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-md-2  col-sm-3 col-xs-12 control-label">Twitter</label>
-                                    <div class="col-md-10 col-sm-9 col-xs-12">
-                                        <input type="text" name="twitter" class="form-control" placeholder="eg. SpeedyBecky">
-                                        <p class="help-block">Your twitter username</p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-2  col-sm-3 col-xs-12 control-label">Linkedin</label>
-                                    <div class="col-md-10 col-sm-9 col-xs-12">
-                                        <input type="url" name="linkedin" class="form-control" placeholder="eg. https://www.linkedin.com/in/lorem">
-                                        <p class="help-block">https://www.linkedin.com/in/yourname</p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-2  col-sm-3 col-xs-12 control-label">Facebook</label>
-                                    <div class="col-md-10 col-sm-9 col-xs-12">
-                                        <input type="url" name="facebook" class="form-control" placeholder="eg. https://www.facebook.com/hanh19">
-                                        <p class="help-block">https://www.facebook.com/username</p>
-                                    </div>
-                                </div>
-                            </fieldset>
-
-                            <div class="form-group" style="text-align: center;">
-                                <div class="col-md-10 col-sm-9 col-xs-12 col-md-push-2 col-sm-push-3 col-xs-push-0">
-                                    <input class="btn btn-primary" type="submit" value="Update Profile">
-                                </div>
-                            </div>
                         </form>
                     </div>
                 </div>

@@ -1,18 +1,5 @@
 const mongoose = require('mongoose');
 
-const social = new mongoose.Schema(
-    {
-      name: {
-        type: String,
-        default: "",
-      },
-      url: {
-        type: String,
-        default: "",
-      },
-    }
-);
-
 const user = new mongoose.Schema({
     username:{
         type:String,
@@ -55,7 +42,15 @@ const user = new mongoose.Schema({
         type:String,
         default:'/images/profile/user-member-avatar-default.jpg'
     },
-    list_social: [social]
+    list_social: {
+        type: Array,
+        default: [
+            {"name": "Website", "url": ""}, 
+            {"name": "Twitter", "url": ""}, 
+            {"name": "LinkedIn", "url": ""}, 
+            {"name": "Facebook", "url": ""}
+        ]
+    }
 },{timestamps:true}
 );
 
