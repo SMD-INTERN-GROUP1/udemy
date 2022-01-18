@@ -535,3 +535,38 @@ a:hover{
 }
 /* end banner */
 
+/* icon tim */
+.btnlike {
+  border: none;
+  text-decoration: none;
+  background: unset;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  color: #626262;
+  
+}
+.btnlike .fa-heart{
+  font-size: 30px;
+}
+.btnlike.active{
+  color: #A435F0;
+}
+.btnlike:hover,
+.btnlike:focus {
+  background: none;
+  color: #A435F0;
+}
+.btnlike:focus {
+  outline: 1px solid transparent;
+}
+.pagetitle{
+  position: relative;
+}
+.pagetitle::after{
+  bottom: -3px;
+  content: "";
+  width: 80px;
+  height: 4px;
+  background-color: #A435F0;
+  position: absolute;
+}

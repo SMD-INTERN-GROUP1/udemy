@@ -1,53 +1,52 @@
-
 <div class="image-slider">
-  <% for(var i = 0; i<courses.length; i++) { %>
-    <a class="image-item course-link" href="/course/<%-courses[i].title%>">
+    <% for(var i = 0; i<courses.length; i++) { %>
+      <a class="image-item course-link" href="/course/<%-courses[i].title%>">
+        <div class="image">
+          <img
+            src=<%=courses[i].image%>
+            alt=""
+          />
+        </div>
+        <div class="image-title"><%=courses[i].title%></div>
+        <div class="author"><%=courses[i].author%></div>
+        <div class="description"><%=courses[i].description%></div>
+        <div class="price">$<%=courses[i].price%></div>
+      </a>
+    <% } %>
+    <!-- <div class="image-item">
       <div class="image">
         <img
-          src=<%=courses[i].image%>
+          src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=710&q=80"
           alt=""
         />
       </div>
-      <div class="image-title"><%=courses[i].title%></div>
-      <div class="author"><%=courses[i].author%></div>
-      <div class="description"><%=courses[i].description%></div>
-      <div class="price">$<%=courses[i].price%></div>
-    </a>
-  <% } %>
-  <!-- <div class="image-item">
-    <div class="image">
-      <img
-        src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=710&q=80"
-        alt=""
-      />
+      <h3 class="image-title">This is demo title</h3>
     </div>
-    <h3 class="image-title">This is demo title</h3>
-  </div>
-  <div class="image-item">
-    <div class="image">
-      <img
-        src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=749&q=80"
-        alt=""
-      />
+    <div class="image-item">
+      <div class="image">
+        <img
+          src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=749&q=80"
+          alt=""
+        />
+      </div>
+      <h3 class="image-title">This is demo title</h3>
     </div>
-    <h3 class="image-title">This is demo title</h3>
-  </div>
-  <div class="image-item">
-    <div class="image">
-      <img
-        src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80"
-        alt=""
-      />
+    <div class="image-item">
+      <div class="image">
+        <img
+          src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80"
+          alt=""
+        />
+      </div>
+      <h3 class="image-title">This is demo title</h3>
     </div>
-    <h3 class="image-title">This is demo title</h3>
-  </div>
-  <div class="image-item">
-    <div class="image">
-      <img
-        src="https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=928&q=80"
-        alt=""
-      />
-    </div>
-    <h3 class="image-title">This is demo title</h3>
-  </div> -->
-</div> 
+    <div class="image-item">
+      <div class="image">
+        <img
+          src="https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=928&q=80"
+          alt=""
+        />
+      </div>
+      <h3 class="image-title">This is demo title</h3>
+    </div> -->
+  </div> 

@@ -16,29 +16,26 @@
       <div class="nav-item">
         <ul>
            <!-- chua dang nhap -->
-         <div class="menu-notlogin ">
+         <!-- <div class="menu-notlogin ">
           <a class="nav-login">
             <span>Log in</span>
          </a>
          <a class="nav-sign">
             <span>Sign up</span>
          </a>
-         </div>
+         </div> -->
           <!-- da dang nhap -->
-         <div class="menu-logged active">
+         <!-- <div class="menu-logged active">
           <a class="menu-username">
             <span>Hi Tin</i></span>
           </a>
-            <a class="menu-learn">
-              <span>My Learning</span>
-        </a>
-         </div>
-          <li><a href="">Development</a><i class="fas fa-chevron-right"></i></li>
-          <li><a href="">Business</a><i class="fas fa-chevron-right"></i></li>
-          <li><a href="">Design</a><i class="fas fa-chevron-right"></i></li>
-          <li><a href="">Marketing</a><i class="fas fa-chevron-right"></i></li>
-          <li><a href="">Pesonal Development</a><i class="fas fa-chevron-right"></i></li>
-          <li><a href="">Music</a><i class="fas fa-chevron-right"></i></li>
+          <a class="menu-learn">
+            <span>My Learning</span>
+          </a>
+         </div> -->
+         <% categories.forEach(category=> { %>
+          <li><a href=""><%= category.category%></a><i class="fas fa-chevron-right"></i></li>
+          <% }) %>
           <a class="menu-logout active">
             <span>Đăng xuất</i></span>
           </a>
@@ -46,61 +43,64 @@
       </div>
        </div>
         <div class="nav-search">
-            <form action="/search/page=0", method="GET">
+            <form action="/course/search/page=0", method="GET">
               <input name="title" type="text" placeholder="Search for anything">
             </form>
             <i class="fas fa-search"></i>
         </div>
-        <!-- chua dang nhap -->
-    <div class="nav-noglogin">
-        <a class="nav-sbusiness">
-          <span>Udemy Business</span>
-      </a>
-      <a class="nav-teach">
-          <span>Teach on Udemy</span>
-      </a>
-      <div class="mob-search">
-        <i class="fas fa-search"></i>
-      </div>
-      <a class="nav-cart">
-          <span><i class="far fa-shopping-cart"></i></span>
-      </a>
-      <div class="nav-user">
-          <a class="nav-login">
-              <span>Log in</span>
-          </a>
-          <a class="nav-sign">
-              <span>Sign up</span>
-          </a>
-      </div>
-       </div>
+       <!-- chua dang nhap -->
+        <% if(isLogin) {%>
+          <div class="nav-noglogin active">
+            <a class="nav-sbusiness">
+              <span>Udemy Business</span>
+            </a>
+            <a class="nav-teach">
+              <span>Teach on Udemy</span>
+            </a>
+            <div class="mob-search">
+              <i class="fas fa-search"></i>
+            </div>
+            <a class="nav-cart">
+              <span><i class="far fa-shopping-cart"></i></span>
+            </a>
+            <div class="nav-user">
+              <a href="/login" class="nav-login">
+                <span>Log in</span>
+              </a>
+              <a href="/register" class="nav-sign">
+                <span>Sign up</span>
+              </a>
+            </div>
+           </div>
+        <% } else {%>
        <!-- da dang nhap -->
-       <div class="nav-logged active">
-        <a class="nav-sbusiness">
-          <span>Udemy Business</span>
-      </a>
-      <a class="nav-instructor">
-        <span>Instructor</span>
-    </a>
-      <a class="nav-learn">
-        <span>My Learning</span>
-    </a>
-    <a class="nav-like">
-      <span><i class="far fa-heart"></i></span>
-    </a>
-    <a class="nav-cart">
-      <span><i class="far fa-shopping-cart"></i></span>
-    </a>
-   <div class="nav-username">
-    <a>
-      <span>Tin</span>
-  </a>
-    <div class="logout">
-       <ul>
-        <li><a href="">Đăng xuất</a></li>
-       </ul>
-    </div>
-  </div>
+        <div class="nav-logged active">
+          <a class="nav-sbusiness">
+            <span>Udemy Business</span>
+          </a>
+          <a class="nav-instructor">
+            <span>Instructor</span>
+          </a>
+          <a class="nav-learn">
+            <span>My Learning</span>
+          </a>
+          <a href="/course/wishlist" class="nav-like">
+            <span><i class="far fa-heart"></i></span>
+          </a>
+          <a class="nav-cart">
+            <span><i class="far fa-shopping-cart"></i></span>
+          </a>
+          <div class="nav-username">
+            <a>
+              <span>Tin</span>
+            </a>
+            <div class="logout">
+            <ul>
+              <li><a href="/login">Đăng xuất</a></li>
+            </ul>
+          </div>
+        </div>   
+        <%}%>
        </div>
       </div>
     </header>

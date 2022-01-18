@@ -41,7 +41,9 @@ const user = new mongoose.Schema({
     avatar:{
         type:String,
         default:''
-    }
+    },
+    wishList : [{type : mongoose.Types.ObjectId, ref : "Courses"}]
+    
 },{timestamps:true}
 );
 

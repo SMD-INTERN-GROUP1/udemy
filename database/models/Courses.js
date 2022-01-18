@@ -33,6 +33,7 @@ const course = new mongoose.Schema({
         type:String,
         default:''
     },
+    comments : [{ type : mongoose.Types.ObjectId, ref : "Comments" }]
     // kids: [{type:mongoose.Schema.Types.ObjectId}]
 },{timestamps:true}
 );
