@@ -6,13 +6,12 @@ const getHomePage = async (req, res, next) => {
   const categories = await categoryService.getListCategory();
   const banners = await Banner.find();
   const courses = await Course.find();
-  let isLogin=false;
-  if(!req.cookies.user){
-      isLogin=true;
-      console.log('cookies',req.cookies.user);
+  let user=req.cookies.user;
+  if(typeof user === 'undefined')
+  {
+      user='';
   }
-
-  res.render("index", { title: "Udemy", isLogin, categories, banners, courses});
+  res.render("index", { title: "Udemy" , user, categories, banners, courses});
 };
 
 module.exports = {

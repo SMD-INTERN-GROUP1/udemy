@@ -6,7 +6,7 @@ router.get('/',(req, res) => {
   return res.render('component/payment')
 });
 
-router.post('/paypal', (req, res) => {
+router.post('/', (req, res) => {
   const create_payment_json = {
     "intent": "sale",
     "payer": {
@@ -38,11 +38,12 @@ paypal.payment.create(create_payment_json, function (error, payment) {
   if (error) {
       throw error;
   } else {
-      for(let i = 0;i < payment.links.length;i++){
-        if(payment.links[i].rel === 'approval_url'){
-          res.redirect(payment.links[i].href);
-        }
-      }
+      // for(let i = 0;i < payment.links.length;i++){
+      //   if(payment.links[i].rel === 'approval_url'){
+      //     res.redirect(payment.links[i].href);
+      //   }
+      // }
+      console.log('payment',payment);
   }
 });
 
