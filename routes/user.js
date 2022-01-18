@@ -50,7 +50,20 @@ router.patch('/edit-profile', async (req, res, next) => {
 });
 
 router.get('/edit-account', async (req, res, next) => {
-  res.render("profile/account.ejs", { title: "Public profile" });
+  try {
+    if (req.cookies.user) {
+
+      Users.findOne({_id: req.cookies.user._id})
+      .then(user => {
+        res.render("profile/account.ejs", { title: "User account", user } );
+      })
+      .catch(next);
+    } else {
+      res.redirect('/login');
+    }
+  } catch(err) {
+    return res.status(500).json(err);
+  };
 });
 
 // router.get('/public-profile', async (req, res, next) => {
