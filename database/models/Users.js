@@ -1,5 +1,18 @@
 const mongoose = require('mongoose');
 
+const social = new mongoose.Schema(
+    {
+      name: {
+        type: String,
+        default: "",
+      },
+      url: {
+        type: String,
+        default: "",
+      },
+    }
+);
+
 const user = new mongoose.Schema({
     username:{
         type:String,
@@ -41,7 +54,8 @@ const user = new mongoose.Schema({
     avatar:{
         type:String,
         default:'/images/profile/user-member-avatar-default.jpg'
-    }
+    },
+    list_social: [social]
 },{timestamps:true}
 );
 

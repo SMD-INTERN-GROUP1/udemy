@@ -1,6 +1,7 @@
 const express = require('express');
 const bcrypt = require("bcrypt");
 const Users = require('../database/models/Users');
+const Instructor = require('../database/models/instructor');
 
 const router = express.Router();
 
@@ -32,22 +33,72 @@ router.get('/edit-profile', (req, res, next) => {
   };
 });
 
+// router.patch('/edit-profile', (req, res, next) => {
+//   try {
+//     let isLogin = false;
+//     let idUser;
+    
+//     if (req.cookies.user) {
+//       isLogin = true;
+//       idUser = req.cookies.user._id;
+
+//       Users.updateOne({ _id: idUser }, req.body)
+//       .then(() => res.redirect('edit-profile'))
+//       .catch(err => console.log(err));
+//     }
+//   } catch(err) {
+//     return res.status(500).json(err);
+//   }
+// });
+
 router.patch('/edit-profile', (req, res, next) => {
-  try {
     let isLogin = false;
     let idUser;
     
     if (req.cookies.user) {
       isLogin = true;
       idUser = req.cookies.user._id;
+      // let socialList = [req.body.personalWebsite, req.body.twitter, req.body.linkedin, req.body.facebook];
+      // console.log(socialList);
 
-      Users.updateOne({ _id: idUser }, req.body)
+      let personalWebsite = req.body.personalWebsite;
+      let twitter = req.body.twitter;
+      let facebook = req.body.facebook;
+      let linkedin = req.body.linkedin;
+
+      // console.log('hi:', req.body.personalWebsite, req.body.twitter, req.body.facebook, req.body.linkedin)
+      console.log(req.body);
+
+      // if(personalWebsite === "")
+      //   personalWebsite === null;
+      // if(twitter === "")
+      //   twitter === null;
+      // if(facebook === "")
+      //   facebook === null;
+      // if(linkedin == '')
+      //   linkedin === "ass";
+
+      // console.log(req.body);
+      
+      // Users.updateOne({ _id: idUser }, {$push: {list_social: [req.body.personalWebsite]}})
+      // .then(() => res.redirect('edit-profile'))
+      // .catch(err => console.log(err));
+
+      Users.updateOne(
+        { _id: idUser }, 
+        { $set: 
+          {list_social: [
+            {"name": "Website", "url": personalWebsite},
+            {"name": "Twitter", "url": twitter},
+            {"name": "LinkedIn", "url": linkedin},
+            {"name": "Facebook", "url": facebook}
+          ]}
+        })
       .then(() => res.redirect('edit-profile'))
       .catch(err => console.log(err));
+
+      // res.json(req.body);
     }
-  } catch(err) {
-    return res.status(500).json(err);
-  }
 });
 
 router.get('/edit-account', (req, res, next) => {
@@ -74,43 +125,23 @@ router.patch('/edit-account', async (req, res, next) => {
     let newPass = hashedNewPass;
 
     if (req.cookies.user) {
-      let idUser = req.cookies.user._id;
-      let notification;
       let user = req.cookies.user;
-
-      // let query = { _id: idUser, password: currentPass}
-      // Users.findOneAndUpdate(query, {password: newPass})
-      // .then((data) => {
-      //   console.log('data user', data);
-      //   if(data) {
-      //     notification = "Password update successful";
-      //     res.render("profile/account.ejs", { title: "User account", data, notification } );
-      //     // res.json('đúng');
-      //   } else {
-      //     notification = "Incorrect password";
-      //     res.render("profile/account.ejs", { title: "User account", user, notification } );
-      //     // res.json('sai');
-      //   }
-      // })
-      // .catch(err => console.log(err));
-
-
-      const checkUser = await Users.findOne({email : req.cookies.user.email}); //find by ID
-      console.log(checkUser);
+      let idUser = req.cookies.user._id;
+      let password = req.body.password;
+      let notification;
+      
+      const checkUser = await Users.findOne({_id : idUser});
       if(!checkUser){
-        // json('Sai tài khoản!');
+        //Sai tài khoản
         return res.status(404).render('component/login');
       }
+
       const validPassword = await bcrypt.compare(
-        req.body.password,
+        password,
         checkUser.password
       );
+
       if(!validPassword){
-          // json('Sai mật khẩu!');
-          // return res.status(404).render('component/login');
-          // notification = "Incorrect password";
-          // res.json(notification);
-          // res.render("profile/account.ejs", { title: "User account", user, notification } );
           notification = "Incorrect";
           res.render("profile/account.ejs", { title: "User account", user, notification } );
       } else {
@@ -120,15 +151,7 @@ router.patch('/edit-account', async (req, res, next) => {
           res.render("profile/account.ejs", { title: "User account", user, notification } );
         });
       }
-
-      
-      // notification = "Correct password";
-      // res.json(notification);
-
-      // console.log(req.body);
-      // res.json(req.body);
     }
-  
 });
 
 // router.get('/public-profile', async (req, res, next) => {
