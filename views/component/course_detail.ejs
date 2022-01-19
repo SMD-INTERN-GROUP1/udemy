@@ -264,11 +264,11 @@
       button.onclick = function () {
         // console.log(list);
 
-        $(".tab-button.active").classList.remove("active");
-        $(".tab-list.active").classList.remove("active");
+        // $(".tab-button.active").classList.remove("active");
+        // $(".tab-list.active").classList.remove("active");
 
-        this.classList.add("active");
-        list.classList.add("active");
+        this.classList.toggle("active");
+        list.classList.toggle("active");
       };
     });
   </script>
