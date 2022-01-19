@@ -1,3 +1,10 @@
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+  integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+
 <div class="container">
   <h3>Welcome: <%= user.username %></h3>
   <div class="d-flex flex-row-reverse bd-highlight ml-5">
@@ -10,8 +17,8 @@
   </div>
 
   <div class="row">
-    <% getCourses.forEach(course=> { %>
-    <div class="col-sm-6 col-lg-4 mt-3 mh-100">
+    <% getCoursesOfInstructor.forEach(course=> { %>
+    <div class="col-sm-6 col-lg-4 mb-4 mh-100">
       <div class="card">
         <img src="<%= course.image%>" class="card-img-top" alt="..." />
         <div class="card-body">
@@ -21,7 +28,7 @@
           <a
             href="/instructor/courses/<%= course.slug%>"
             class="btn btn-dark w-100 fw-bold"
-            >View Details</a
+            >View chapters</a
           >
           <div class="row">
             <div class="col-6">
@@ -31,7 +38,7 @@
                 data-bs-toggle="modal"
                 data-bs-target="#delete-course-modal"
                 data-bs-id="<%= course.slug%>"
-                class="btn btn-danger fw-bold w-100 mt-4"
+                class="btn btn-danger fw-bold w-100 mt-2"
               >
                 Delete
               </a>
@@ -40,7 +47,7 @@
               <a
                 href="/instructor/courses/<%= course.slug %>/update"
                 type="submit"
-                class="btn btn-dark fw-bold w-100 mt-4"
+                class="btn btn-dark fw-bold w-100 mt-2"
               >
                 Update
               </a>
@@ -50,6 +57,63 @@
       </div>
     </div>
     <% }) %>
+    <!-- pagination -->
+    <div class="">
+      <% if(pages > 0) { %>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <!-- FIRST ITEM -->
+          <% if(current == 1) { %>
+          <li class="page-item disabled">
+            <a class="page-link" href="/instructor">First</a>
+          </li>
+          <% } else { %>
+          <li class="page-item">
+            <a class="page-link" href="/instructor">First</a>
+          </li>
+          <% } %>
+          <!-- ITEMS  -->
+          <% var i = (Number(current) > 3 ? Number(current) - 2 : 1) %>
+          <!-- if page = 1 -->
+          <% if(i !== 1) { %>
+          <li class="page-item disabled">
+            <a class="page-link" href="#">...</a>
+          </li>
+          <% } %>
+          <!-- for loop -->
+          <% for(; i <= (Number(current) + 2) && i <= pages; i++) { %>
+          <!-- ---- -->
+          <% if(i == current) { %>
+          <li class="page-item active">
+            <a class="page-link" href="/instructor?page=<%= i %>"><%= i %></a>
+          </li>
+          <% } else { %>
+          <li class="page-item">
+            <a class="page-link" href="/instructor?page=<%= i %>"><%= i %></a>
+          </li>
+          <% } %>
+          <!-- ---- -->
+          <% if (i == Number(current) + 2 && i < pages) { %>
+          <li class="page-item disabled">
+            <a class="page-link" href="#">...</a>
+          </li>
+          <% } %>
+          <!-------->
+          <% } %>
+          <!-- LAST ITEM -->
+          <% if(current == pages) { %>
+          <li class="page-item disabled">
+            <a class="page-link" href="#">Last</a>
+          </li>
+          <% } else { %>
+          <li class="page-item">
+            <a class="page-link" href="/instructor?page=<%= pages %>">Last</a>
+          </li>
+          <% } %>
+        </ul>
+      </nav>
+      <% } %>
+    </div>
   </div>
 </div>
 

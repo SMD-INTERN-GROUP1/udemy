@@ -32,10 +32,12 @@ const instructor = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Users",
     },
-    experience: {
-      type: String,
-      default: "",
-    },
+    course_id: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Courses",
+      },
+    ],
     list_social: [social],
   },
   { timestamps: true }

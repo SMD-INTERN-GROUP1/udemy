@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const slug = require("mongoose-slug-generator");
 const mongooseDelete = require("mongoose-delete");
+mongoose.plugin(slug);
 
 const course = new mongoose.Schema(
   {
@@ -44,9 +45,9 @@ const course = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: "Topic",
     },
-    user_id: {
+    instructor_id: {
       type: mongoose.Types.ObjectId,
-      ref: "Users",
+      ref: "Instructor",
     },
     // kids: [{type:mongoose.Schema.Types.ObjectId}]
   },
@@ -54,7 +55,7 @@ const course = new mongoose.Schema(
 );
 
 // Add plugin
-mongoose.plugin(slug);
+// mongoose.plugin(slug);
 course.plugin(mongooseDelete, { deletedAt: true, overrideMethods: "all" });
 
 module.exports = mongoose.model("Courses", course);
