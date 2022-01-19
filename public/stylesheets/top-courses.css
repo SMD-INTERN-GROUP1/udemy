@@ -122,7 +122,7 @@ del {
     margin-left: 0px;
   }
 }
-.course-link:hover > .btn-group {
+.image-item:hover > .btn-group {
   display: block;
   margin-top: 0;
 }

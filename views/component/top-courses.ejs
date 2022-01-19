@@ -4,35 +4,36 @@
 <div class="image-slider">
   <% for(let j=0; j<courses.length; j++) { %>
     <% if(courses[j].topic_id.category_id.toString() === listCategory[i].category_id.toString()) {%>
-      <a class="image-item course-link" href="/course/<%-courses[j].slug%>">
-        <div class="image">
-          <img
+      <div class="image-item">
+        <a class="course-link" href="/course/<%-courses[j].slug%>">
+          <div class="image">
+            <img
             src="<%=courses[j].image%>"
             alt=""
-          />
-        </div>
-        <div class="image-title"><%=courses[j].title%></div>
-        <div class="author"><%=courses[j].author%></div>
-        <div class="description"><%=courses[j].description%></div>
-        <% if(courses[j].price_discount === 0 || courses[j].price_discount === null) { %> 
-          <div class="price">$<%=courses[j].price%></div>
-          <% } else { %>
-            <div class="price">$<%= courses[j].price_discount %><del><%= courses[j].price %></del></div>
-            <div class="sell-price">Bestseller</div>          
-          <% } %>
-          <div class="btn-group">
-          <button class="btn btn-add" onclick="add()">Add to card</button>
+            />
           </div>
-        </a>
-        <% } %>
-  <% } %>
+          <div class="image-title"><%=courses[j].title%></div>
+          <div class="author"><%=courses[j].author%></div>
+          <div class="description"><%=courses[j].description%></div>
+          <% if(courses[j].price_discount === 0 || courses[j].price_discount === null) { %> 
+            <div class="price">$<%=courses[j].price%></div>
+            <% } else { %>
+              <div class="price">$<%= courses[j].price_discount %><del><%= courses[j].price %></del></div>
+              <div class="sell-price">Bestseller</div>          
+              <% } %>
+            </a>
+            <div class="btn-group">
+              <form action="/cart/add/<%=courses[j]._id%>?_method=PATCH" method="post">
+                <button class="btn btn-add" type="submit">Add to card</button>
+              </form>
+            </div>
+          </div>
+          <% } %>
+          <% } %>
 </div> 
 <% } %>
 <script>
-  function add(){
-    console.log('add');
-    window.location.href="/";
-  }
+
   // let saveCart= localStorage.setItem('cart');
 
 </script>
