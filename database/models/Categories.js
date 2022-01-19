@@ -3,7 +3,7 @@ const mongooseDelete = require("mongoose-delete");
 
 const category = new mongoose.Schema(
   {
-    name: {
+    category: {
       type: String,
       default: "",
     },

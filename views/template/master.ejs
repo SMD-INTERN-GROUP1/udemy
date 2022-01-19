@@ -362,6 +362,18 @@
             [10, 25, 50, "All"],
           ],
         });
+        $("#table_courses").DataTable({
+          language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Search records",
+          },
+          reponsive: true,
+          pagingType: "full_numbers",
+          lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"],
+          ],
+        });
         $("#table_trash_topics").DataTable({
           language: {
             search: "_INPUT_",

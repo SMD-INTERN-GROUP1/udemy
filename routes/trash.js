@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const topicController = require("../controller/topic.controller");
 const categoryController = require("../controller/category.controller");
+const courseController = require("../controller/course.controller");
 
 /* Trash topics section */
 // GET: /admin/trash/topics -> render trash topics page
@@ -22,5 +23,11 @@ router.patch("/category/:id/restore", categoryController.restore);
 
 // DELETE: /admin/trash/category/:id/force -> Delete category forever
 router.delete("/category/:id/force", categoryController.forceDestroy);
+
+/* Trash courses section */
+router.get("/courses", courseController.renderTrashCourses);
+
+// DELETE: /admin/trash/courses/:id/force -> Delete category forever
+router.delete("/course/:id/force", courseController.forceDestroy);
 
 module.exports = router;

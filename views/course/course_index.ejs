@@ -1,27 +1,45 @@
 <!-- Courses section -->
-<table class="table" id="table_2">
-  <h3 class="">Tables of courses</h3>
-  <thead class="table-dark text-center">
-    <tr>
-      <th scope="col">Title</th>
-      <th scope="col">Topic</th>
-      <th scope="col">Category</th>
-      <th scope="col" class="text-center">Action</th>
-    </tr>
-  </thead>
-  <tbody class="text-center">
-    <tr>
-      <td>Nodejs</td>
-      <td>Web development</td>
-      <td>Development</td>
-      <td style="text-align: center">
-        <a href="" class="btn btn-primary" title="view details"
-          ><i class="fas fa-info-circle"></i
+<div class="container">
+  <table class="table" id="table_courses">
+    <div class="row mt-3">
+      <div class="col-6">
+        <h3 class="">Tables of courses</h3>
+      </div>
+      <div class="col-8">
+        <a
+          href="/admin/trash/courses"
+          class="btn btn-secondary rounded-pill"
+          style="margin-bottom: 20px"
+          ><i class="fas fa-trash-restore"></i
         ></a>
-        <a href="" class="btn btn-danger" title="Delete"
-          ><i class="fas fa-window-close"></i
-        ></a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+      </div>
+    </div>
+    <thead class="table-dark text-center mt-5">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Topic</th>
+        <th scope="col">Author</th>
+        <th scope="col" class="text-center">Action</th>
+      </tr>
+    </thead>
+    <tbody class="text-center">
+      <% getListCourses.forEach((course, index)=> { %>
+      <tr>
+        <th scope="row"><%= index+1 %></th>
+        <td><%= course.title%></td>
+        <td><%= course.topic_id.name%></td>
+        <td><%= course.author%></td>
+        <td style="text-align: center">
+          <a href="" class="btn btn-primary" title="view details"
+            ><i class="fas fa-info-circle"></i
+          ></a>
+          <!-- <a href="" class="btn btn-danger" title="Delete"
+            ><i class="fas fa-window-close"></i
+          ></a> -->
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
