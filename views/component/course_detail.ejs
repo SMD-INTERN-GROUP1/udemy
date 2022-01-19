@@ -189,10 +189,38 @@
   </div>
 
   <div class="container mt-5">
+    <div class="course-rate pb-5">
+      <h2>Student feedback</h2>
+    <% for(var i = 1; i<=5; i++) { %> 
+      <% if(course.rating >= i ){ %> 
+         <span><i class="fas fa-star text-warning" style="font-size: 30px;"></i></span> 
+        <% }else if(course.rating >= (i - 0.5)){  %> 
+          <span><i class="fas fa-star-half-alt text-warning" style="font-size: 30px;"></i></span> 
+      <%}else{%>
+        <span><i class="far fa-star text-warning" style="font-size: 30px;"></i></span> 
+        <%}%> 
+    <% } %>
+    <h4 class="text-warning">Course Rating</h4>
+    </div>
     <div class="feedback">
       <h3>Reviews</h3>
-      <!-- <div><%- include('rate-star')%></div> -->
+      <% if(isLogin) {%>
+        <h5>You need to <a style="color: blueviolet !important;" href="/login">login</a> and purchase this course to rate it</h5>
+        <% } else {%>
+          <div><%- include('rate-star')%></div>
+        <% } %>
+     
+      <%course.reviews.forEach(function(data) { %>
       <div class="mt-4">
+        <div class="d-flex" style="justify-content: end;">
+          <div class="delete">
+            <% if(isLogin==false) {%>
+              <form action="/course/review/delete/<%= data._id %>/<%= course._id %>" method="post" style="float: right;">
+                <button type="submit" style="border: none; font-size: 20px;"><i class="fas fa-times"></i></i></button>
+              </form>
+              <% } %>
+          </div>
+        </div>
         <div class="d-flex">
           <div class="avatar">
             <img
@@ -204,19 +232,24 @@
             />
           </div>
           <div class="rating ms-3">
-            <p class="fw-bold">Tiger</p>
+           
+            <p class="fw-bold"><%= data.name %></p>
             <div class="rating-star d-flex">
-              <span><i class="fas fa-star text-warning"></i></span>
-              <span><i class="fas fa-star text-warning"></i></span>
-              <span><i class="fas fa-star text-warning"></i></span>
-              <span><i class="fas fa-star text-warning"></i></span>
-              <span><i class="fas fa-star text-warning"></i></span>
+              <% for(var i = 0; i<5; i++) {%> 
+
+                <% if(i<data.rate) { %> 
+
+                <span><i class="fas fa-star text-warning"></i></span> 
+
+                <% }else{ %> 
+
+                  <span><i class="far fa-star text-warning" ></i></span> 
+                <% } %>
+
+              <% } %>
             </div>
             <div class="comment mt-3">
-              <p>
-                Great course from Stephen as usual. Overall course covered
-                microfrontends pretty well and concise.
-              </p>
+              <p><%= data.comment %></p>
             </div>
             <div class="interaction">
               <a href="" class="btn btn-light rounded-circle interaction-like"
@@ -230,7 +263,9 @@
             </div>
           </div>
         </div>
+      
       </div>
+      <% }); %>
     </div>
   </div>
 
@@ -263,12 +298,8 @@
 
       button.onclick = function () {
         // console.log(list);
-
-        $(".tab-button.active").classList.remove("active");
-        $(".tab-list.active").classList.remove("active");
-
-        this.classList.add("active");
-        list.classList.add("active");
+        this.classList.toggle("active");
+        list.classList.toggle("active");
       };
     });
   </script>
