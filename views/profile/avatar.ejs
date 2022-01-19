@@ -10,6 +10,77 @@
     <link rel="stylesheet" href="/stylesheets/style.css" />
     <link rel="stylesheet" href="/stylesheets/profile.css" />
     <title><%= title%></title>
+    <!-- <style>
+      .image-upload-preview-with-crop--imageWrapper--cPa0q {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        background: #f7f9fa;
+        padding: 2px;
+        height: auto;
+      }
+      .ReactCrop {
+          position: relative;
+          display: inline-block;
+          cursor: crosshair;
+          overflow: hidden;
+          max-width: 100%;
+          background-color: #000;
+      }
+      .image-upload-preview-with-crop--imageWrapper--cPa0q .ReactCrop>img {
+          max-height: 100%;
+      }
+    </style> -->
+    <style>
+      /* * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      } */
+      .container-img{
+          /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 100vh;
+          /* background-color: rgb(255, 240, 222); */
+          background-color: rgba(170, 170, 170, 0.2);
+      }
+
+      #file-input {
+          display: none;
+      }
+
+      .preview {
+          padding: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          width: 100%;
+          max-width: 350px;
+          margin: auto;
+          background-color: rgb(255, 255, 255);
+          box-shadow: 0 0 20px rgba(170, 170, 170, 0.2);
+      }
+
+      #img-preview {
+          width: 100%;
+          object-fit: cover;
+          margin-bottom: 20px;
+      }
+
+      .upload-image {
+          font-weight: 600;
+          cursor: pointer;
+          color: #fff;
+          border-radius: 2px;
+          padding: 10px 20px;
+          /* background-color: rgb(101, 101, 255); */
+          background-color: black
+      }
+    </style>
   </head>
   <body>
     <div class="container">
@@ -18,7 +89,7 @@
           <div class="module-inner">
             <div class="side-bar">
               <div class="user-info">
-                <img class="img-profile img-circle img-responsive center-block" src="<%= user.avatar %>" alt="">
+                <img class="img-profile img-circle img-responsive center-block" style="object-fit: cover;" src="<%= user.avatar %>" alt="">
                 <ul class="meta list list-unstyled">
                   <% if (user.fullName) { %>
                   <li class="name"> <%=user.fullName%>
@@ -50,39 +121,32 @@
                 <h4 class="sub-title">Add a nice photo of yourself for your profile.</h4>
               </div>
               <hr>
-              <!-- <div class="form-group avatar">
-                <figure class="figure col-md-2 col-sm-3 col-xs-12">
-                    <img class="img-rounded img-responsive" src=<%= user.avatar %>>
-                </figure>
-                <div class="form-inline col-md-10 col-sm-9 col-xs-12">
-                    <input type="file" class="file-uploader pull-left">
-                    <button type="submit" class="btn btn-sm btn-default-alt pull-left">Update Image</button>
-                </div>
-                </div> -->
-              <h4><small>Demo</small></h4>
-              <hr>
               <div class="container">
-                <div class="col-md-8 col-md-offset-2">
-                    <h3>File Input Example</h3>
+                <!-- <div class="col-md-8 col-md-offset-2"> -->
+                <div>
                     <form method="post" action="edit-photo?_method=PATCH" enctype="multipart/form-data">
                       <div class="form-group">
-                          <input type="file" name="avatar" class="input-group input-file" required/>
-                          <button type="submit" class="btn btn-primary pull-right">Upload</button>
+                          <!-- <label class="udheavy-form-label control-label " for="id_image_file">Image preview</label>
+                          <img id="blah" class="ReactCrop__image" src="https://img-c.udemycdn.com/user/200_H/anonymous_3.png" alt="your image" />
+                          <label class="udheavy-form-label control-label">Add / Change Image:</label>
+                          accept="image/*" => chỉ chấp nhận các file dạng hình ảnh
+                          <input type="file" name="avatar" id="imgInp" accept="image/*" class="input-group input-file" required/> -->
+                          <div class="container-img">
+                            <div class="preview">
+                              <img id="img-preview" src="https://img-c.udemycdn.com/user/200_H/anonymous_3.png" />
+                              <label for="file-input" class="upload-image">Upload Image</label>
+                              <input type="file" accept="image/*" name="avatar" class="input-group input-file" id="file-input" required/>
+                            </div>
+                          </div>
+                          <hr>
+                          <div style="text-align: center;">
+                            <button type="submit" class="btn btn-primary pull-center">Save</button>
+                          </div>
+                          <hr>
                       </div>
                     </form>
                 </div>
               </div>
-              <!-- <form method="post" action="edit-photo?_method=PATCH" enctype="multipart/form-data">
-                <div class="input-group">
-                  <div class="custom-file">
-                    <input type="file" class="custom-file-input"  name="avatar" id="inputGroupFile04">
-                    <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
-                  </div>
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="submit">Button</button>
-                  </div>
-                </div>
-              </form> -->
             </div>
           </div>
         </section>
@@ -95,5 +159,24 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+      // imgInp.onchange = evt => {
+      //   const [file] = imgInp.files
+      //   if (file) {
+      //     blah.src = URL.createObjectURL(file)
+      //   }
+      // }
+
+      const input = document.getElementById("file-input");
+      const image = document.getElementById("img-preview");
+
+      input.addEventListener("change", (e) => {
+        if (e.target.files.length) {
+          const src = URL.createObjectURL(e.target.files[0]);
+          image.src = src;
+        }
+      });
+
+    </script>
   </body>
 </html>
