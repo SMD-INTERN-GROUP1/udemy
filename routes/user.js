@@ -149,4 +149,31 @@ router.patch('/edit-account', async (req, res, next) => {
 //   res.render("profile/public-profile.ejs", { title: "User account" });
 // });
 
+//avatar page
+router.get('/edit-photo', async (req, res, next) => {
+  
+  try {
+    let isLogin = false;
+  
+    if (req.cookies.user) {
+      isLogin = true;
+
+      Users.findOne({_id: req.cookies.user._id})
+      .then(user => {
+        res.render("profile/avatar.ejs", { title: "Photo", user });
+      })
+      .catch(next);
+    } else {
+      res.redirect('/login');
+    }
+  } catch(err) {
+    return   res.status(500).json(err);
+  };
+});
+
+router.patch('/edit-photo', async (req, res, next) => {
+  
+});
+
+
 module.exports = router;

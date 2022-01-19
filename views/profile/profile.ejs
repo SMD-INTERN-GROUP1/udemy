@@ -35,6 +35,7 @@
                             <ul class="nav">
                                 <li class="active"><a href="edit-profile"><span class="fa fa-user"></span> Profile</a></li>
                                 <li><a href="edit-account"><span class="fa fa-key"></span> Account</a></li>
+                                <li><a href="edit-photo"><span class="fa fa-picture-o"></span> Photo </a></li>
                                 <li><a href="#"><span class="fa fa-credit-card"></span> Payment methods</a></li>
                                 <li><a href="#"><span class="fa fa-envelope"></span> Messages</a></li>
                             </ul>
@@ -48,7 +49,7 @@
                         <form class="form-horizontal" method="POST" action="edit-profile?_method=PATCH">
                             <fieldset class="fieldset">
                                 <h3 class="fieldset-title">Personal Info:</h3>
-                                <div class="form-group avatar">
+                                <!-- <div class="form-group avatar">
                                     <figure class="figure col-md-2 col-sm-3 col-xs-12">
                                         <img class="img-rounded img-responsive" src=<%= user.avatar %>>
                                     </figure>
@@ -56,7 +57,7 @@
                                         <input type="file" class="file-uploader pull-left">
                                         <button type="submit" class="btn btn-sm btn-default-alt pull-left">Update Image</button>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="form-group">
                                     <label class="col-md-2 col-sm-3 col-xs-12 control-label">User Name</label>
                                     <div class="col-md-10 col-sm-9 col-xs-12">
@@ -104,7 +105,7 @@
                                 <% } %>
                                 <div class="form-group" style="text-align: center;">
                                     <div class="col-md-10 col-sm-9 col-xs-12 col-md-push-2 col-sm-push-3 col-xs-push-0">
-                                        <input class="btn btn-primary" type="submit" value="Update">
+                                        <input class="btn btn-primary" type="submit" value="Update Profile">
                                     </div>
                                 </div>
                         </form>
