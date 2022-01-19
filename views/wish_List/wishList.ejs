@@ -22,7 +22,7 @@
                             <% } else {%>
                            <!-- da dang nhap -->
                            <form action="/user/wish/<%= data._id %>?_method=PATCH" method="post">  
-                            <button class="btnlike  <% var wishLists=user.wishList.includes(data._id); if(wishLists==true) {%> active <%}%> "><i class="fas fa-heart"></i></button>
+                            <button class="btnlike"><i class="fas fa-heart <% var wishLists=user.wishList.includes(data._id); if(wishLists==true) {%> active <%}%>"></i></button>
                          </form>
                             <%}%> 
                     </ul>

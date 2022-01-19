@@ -6,8 +6,9 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const paypal = require('paypal-rest-sdk');
+const session = require('express-session');
+const methodOverride = require('method-override')
 const mongoose = require("mongoose");
-var methodOverride = require('method-override')
 
 dotenv.config();
 
@@ -21,12 +22,23 @@ mongoose.connect(process.env.MONGO_DB ,function(err){
     console.log('error');
   }
 });
+
+//sesstion
+
+// app.set('trust proxy', 1) 
+// app.use(session({
+//   secret: 'keyboard cat',
+//   resave: false,
+//   saveUninitialized: true,
+//   cookie: { secure: true }
+// }))
+
 //payment
 
 paypal.configure({
   'mode': 'sandbox', //sandbox or live
-  'client_id': 'AUzspjS4ov0cME-ngsMUMXUjnRrREzgIq6v08q5SxXBLhgdqkWzCi7-TOEzt4h4otyEJeEnm5Mtbd99o',
-  'client_secret': 'ECSOuh2RfNBwD-vSzKsDDRw5ZU4Bf8W-PAftU3VqaUDVkkXB3VSKlj6y1_-iYTiNxOv-5N_24MEkVMS0'
+  'client_id': 'AStfnCB1MGhO7ngndwNoy6nywUsoZkbyrRJzuJ-zH7HonwXM5MMwcembTy7xPmci7YCiL54fKMmbHFMx',
+  'client_secret': 'EHjOl8-nGvtxGmVeeBiVCiFpVzJNv9NJhVxComQz3ppJ7Nm4_xc-0jqQY8XgVyo6kCFVkZpIHAf-Td2C'
 });
 
 const app = express();
@@ -42,9 +54,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(methodOverride("_method"));
 
-// override using a query value
-// app.use(methodOverride("_method"));
 
 route(app);
 

@@ -10,7 +10,7 @@ const renderUserPage = async (req, res, next) => {
 };
 const toggleWish = async (req, res,next) => {
   const idCourse = req.params.id;
-  const user = await UsersModel.findOne({username : req.username});
+  const user = await UsersModel.findOne({username : req.user.username});
   const { wishList } = user;
   if (wishList.includes(idCourse)) {
     const newUser = await UsersModel.findByIdAndUpdate(

@@ -12,27 +12,8 @@
           <span>Categories</span>
       </div>
       <div class="black-bg"></div>
-        <i class="far fa-times-circle nav-close"></i>
       <div class="nav-item">
         <ul>
-           <!-- chua dang nhap -->
-         <!-- <div class="menu-notlogin ">
-          <a class="nav-login">
-            <span>Log in</span>
-         </a>
-         <a class="nav-sign">
-            <span>Sign up</span>
-         </a>
-         </div> -->
-          <!-- da dang nhap -->
-         <!-- <div class="menu-logged active">
-          <a class="menu-username">
-            <span>Hi Tin</i></span>
-          </a>
-          <a class="menu-learn">
-            <span>My Learning</span>
-          </a>
-         </div> -->
          <% categories.forEach(category=> { %>
           <li><a href=""><%= category.category%></a><i class="fas fa-chevron-right"></i></li>
           <% }) %>
@@ -49,7 +30,7 @@
             <i class="fas fa-search"></i>
         </div>
        <!-- chua dang nhap -->
-        <% if(isLogin) {%>
+        <% if(!user) {%>
           <div class="nav-noglogin active">
             <a class="nav-sbusiness">
               <span>Udemy Business</span>
@@ -60,7 +41,7 @@
             <div class="mob-search">
               <i class="fas fa-search"></i>
             </div>
-            <a class="nav-cart">
+            <a href="/cart" class="nav-cart">
               <span><i class="far fa-shopping-cart"></i></span>
             </a>
             <div class="nav-user">
@@ -87,16 +68,16 @@
           <a href="/course/wishlist" class="nav-like">
             <span><i class="far fa-heart"></i></span>
           </a>
-          <a class="nav-cart">
+          <a href="/cart" class="nav-cart">
             <span><i class="far fa-shopping-cart"></i></span>
           </a>
           <div class="nav-username">
             <a>
-              <span>Tin</span>
+              <span><%= user.username %></span>
             </a>
             <div class="logout">
             <ul>
-              <li><a href="/login">Đăng xuất</a></li>
+              <li><a href="/logout">Đăng xuất</a></li>
             </ul>
           </div>
         </div>   

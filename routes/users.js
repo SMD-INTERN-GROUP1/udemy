@@ -10,6 +10,6 @@ router.get("/", (req, res, next) => {
 });
 
 /* PATCH users wishList. */
-router.patch("/wish/:id", authMiddleware.verify, toggleWish);
+router.patch("/wish/:id", authMiddleware, toggleWish);
 
 module.exports = router;

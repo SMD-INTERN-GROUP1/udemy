@@ -3,7 +3,6 @@ const categoryService = require("../services/category.services");
 const UserModal = require("../database/models/Users");
 function getDetailCourse(req, res, next) {
   const title = req.params.title;
-  //query, raw query
   Course.findOne({ title: title }, function (err, course) {
     if (!err) {
       res.render("component/course_detail", { course });
@@ -30,13 +29,10 @@ const getSearch = async (req, res, next) => {
       productnumber * num,
       productnumber * (1 + num)
     );
-    let user;
     let isLogin = false;
-    if (!req.cookies.user) {
+    if (!req.cookies.user && !req.cookies.user.username) {
       isLogin = true;
-    } else {
-       user = await UserModal.findOne({ username: req.cookies.user });
-    }
+    } 
 
     const sort = req.query.sort;
     if (sort) {
@@ -49,6 +45,7 @@ const getSearch = async (req, res, next) => {
       });
     }
 
+
     res.render("search", {
       categories,
       pagination,
@@ -56,7 +53,7 @@ const getSearch = async (req, res, next) => {
       total_pages,
       result: data.length,
       isLogin,
-      user
+      user : await UserModal.findOne({username : req.cookies.user.username}) || { wishList : [] },
     });
   } catch (error) {
     console.log(error.message);
@@ -73,24 +70,29 @@ const renderCoursePage = async (req, res, next) => {
 const wishListFunc = async (req, res) => {
   const categories = await categoryService.getListCategory();
   let isLogin = false;
-  if (!req.cookies.user) {
+  if (!req.user.username) {
     isLogin = true;
-    console.log("cookies", req.cookies.user);
-  }
+  } 
+
+
+
   const user = await UserModal.findOne({
-    username: req.cookies.user,
+    username: req.user.username,
   }).populate("wishList");
 
   const newUser = await UserModal.findOne({
-    username: req.cookies.user,
+    username: req.user.username,
   });
-   
-  res.render("wish", {
+
+
+ 
+
+  return res.render("wish", {
     wishList: user.wishList,
     isLogin,
-    user : newUser,
-    lengthlist:user.wishList.length,
-    categories
+    user: newUser,
+    lengthlist: user.wishList.length,
+    categories,
   });
 };
 module.exports = {
