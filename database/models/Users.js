@@ -41,7 +41,8 @@ const user = new mongoose.Schema({
     avatar:{
         type:String,
         default:''
-    }
+    },
+    courses: [{type:mongoose.Schema.Types.ObjectId,ref: 'Courses'}]
 },{timestamps:true}
 );
 

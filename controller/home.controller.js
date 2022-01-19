@@ -5,11 +5,11 @@ const Banner = require('../database/models/banners');
 const Category = require('../database/models/Categories');
 const getHomePage = async (req, res, next) => {
     try { 
-        let isLogin=false;
-        if(!req.cookies.user){
-            isLogin=true;
-            console.log('cookies',req.cookies.user);
-        }   
+        let user=req.cookies.user;
+        if(typeof user === 'undefined')
+        {
+            user='';
+        }
         let listCategory = [];
         Course.find().populate('topic_id').
         exec( async (err, courses) => {
@@ -46,7 +46,7 @@ const getHomePage = async (req, res, next) => {
                         }
                     } 
                 }
-                res.render('index', {title: "Udemy", isLogin, categories, banners, courses, listCategory});
+                res.render('index', {title: "Udemy", user, categories, banners, courses, listCategory});
             } else {
                 console.log(err);
             }

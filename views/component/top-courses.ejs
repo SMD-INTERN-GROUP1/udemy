@@ -8,8 +8,8 @@
         <a class="course-link" href="/course/<%-courses[j].slug%>">
           <div class="image">
             <img
-              src="<%=courses[j].image%>"
-              alt=""
+            src="<%=courses[j].image%>"
+            alt=""
             />
           </div>
           <div class="image-title"><%=courses[j].title%></div>
@@ -20,13 +20,20 @@
             <% } else { %>
               <div class="price">$<%= courses[j].price_discount %><del><%= courses[j].price %></del></div>
               <div class="sell-price">Bestseller</div>          
-            <% } %>
-          </a>
-          <div class="btn-group">
-            <button class="btn btn-add">Add to card</button>
+              <% } %>
+            </a>
+            <div class="btn-group">
+              <form action="/cart/add/<%=courses[j]._id%>?_method=PATCH" method="post">
+                <button class="btn btn-add" type="submit">Add to card</button>
+              </form>
+            </div>
           </div>
-      </div>
-    <% } %>
-  <% } %>
+          <% } %>
+          <% } %>
 </div> 
 <% } %>
+<script>
+
+  // let saveCart= localStorage.setItem('cart');
+
+</script>

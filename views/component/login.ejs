@@ -88,7 +88,7 @@
       </a>
         <input type="email" name="email" placeholder="Email">
         <input type="password" name="password" placeholder="password"> 
-        <button type="submit" class="btn">Log In</button>
+        <button type="submit" class="btn" onclick="save()">Log In</button>
     </form>
     <div class="text">
       <p>or <a href="" class="text-link">Forgot Password</a></p>
@@ -111,5 +111,11 @@
     crossorigin="anonymous"
   ></script>
   <script src="/javascript/header.js"></script>
+  <script>
+    function save(){
+      let email=document.querySelectorAll("input")[0].value;
+      localStorage.user=JSON.stringify({email:email});
+    }
+  </script>
   </body>
 </html>
