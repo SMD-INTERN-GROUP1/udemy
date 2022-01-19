@@ -1,6 +1,8 @@
 const Course = require("../database/models/course");
 const categoryService = require("../services/category.services");
 const User = require("../database/models/Users");
+const { format } = require("timeago.js");
+const Users = require("../database/models/Users");
 
 const getDetailCourse = async (req, res, next) => {
   const slug = req.params.slug;
@@ -12,10 +14,16 @@ const getDetailCourse = async (req, res, next) => {
     console.log("cookies", req.cookies.user);
   }
 
+  course.reviews.sort(function (a, b) {
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
+
   res.render("component/course_detail", {
     course,
     categories,
     isLogin,
+    format,
+    user: req.cookies.user || null,
   });
 };
 
@@ -29,9 +37,11 @@ const renderCoursePage = async (req, res, next) => {
 // create review
 const createReview = async (req, res) => {
   const { comment, rate } = req.body;
-
+  if (!comment || !rate) {
+    return res.redirect("back");
+  }
   const course = await Course.findById(req.params.id);
-  const user = await User.findOne({ username: req.cookies.user });
+  const user = await User.findOne({ username: req.cookies.user.username });
 
   if (!course) {
     return res.status(400).json({ err: "course is not exist !" });
@@ -64,7 +74,7 @@ const createReview = async (req, res) => {
 
 const deleteReview = async (req, res) => {
   const course = await Course.findById(req.params.idCourse);
-  const user = await User.findOne({ username: req.cookies.user });
+  const user = await User.findOne({ username: req.cookies.user.username });
 
   if (!course) {
     return res.status(400).json({ err: "course is not exist !" });
@@ -90,7 +100,7 @@ const deleteReview = async (req, res) => {
     course.reviews.splice(index, 1);
   }
 
-  if (course.reviews.length  > 0) {
+  if (course.reviews.length > 0) {
     course.numberReview = course.reviews.length;
 
     course.rating =

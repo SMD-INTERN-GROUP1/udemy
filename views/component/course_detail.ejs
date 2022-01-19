@@ -214,7 +214,7 @@
       <div class="mt-4">
         <div class="d-flex" style="justify-content: end;">
           <div class="delete">
-            <% if(isLogin==false) {%>
+            <% if(isLogin==false && user === data.name ) {%>
               <form action="/course/review/delete/<%= data._id %>/<%= course._id %>" method="post" style="float: right;">
                 <button type="submit" style="border: none; font-size: 20px;"><i class="fas fa-times"></i></i></button>
               </form>
@@ -248,6 +248,7 @@
 
               <% } %>
             </div>
+            <p class="pt-2" style="font-size: 12px !important;"><%= format(data.createdAt) %></p>
             <div class="comment mt-3">
               <p><%= data.comment %></p>
             </div>
