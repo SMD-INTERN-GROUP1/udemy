@@ -9,20 +9,22 @@ const middlewareController = {
            try{
             jwt.verify(accessToken, process.env.JWT_ACCESS_KEY,(err,user)=>{
                 if(err){
-                    res.redirect("/login");
+                   return res.redirect("/login");
                 }
                 req.user=user;
                 next();
             });
            }catch(err){
                 console.log(error);
-                res.sendStatus(403);
+              return  res.sendStatus(403);
            }
         }
         else{
-            res.status(401).json("You're not authenticated");
+          return  res.status(401).json("You're not authenticated");
         }
-    }
-}
+  
+  },
+};
 
 module.exports=middlewareController.verifyToken;
+
