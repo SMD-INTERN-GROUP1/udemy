@@ -1,21 +1,38 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const multer = require('multer');
-const upload = multer({ dest: 'public/images/profile/uploads/' });
 
 const Users = require('../database/models/Users');
 
 const router = express.Router();
 
-// const storage = multer.diskStorage({
-//   destination: (req, res, cb) => {
-//     cb(null, 'public/images/profile/uploads/');
-//   },
-//   filename: (req, res, cb) => {
-//     cb(null, new Date().toISOString() + file.originalname);
-//   }
-// });
 
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/images/profile/uploads')
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    cb(null, uniqueSuffix + '-' + file.originalname)
+  }
+})
+
+const fileFilter = (req, file, cb) => {
+  //reject a file
+  if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png'){
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+}
+
+const upload = multer({ 
+  storage: storage, 
+  limits: {
+    fileSize: 1024 * 1024 * 5
+  } ,
+  fileFilter: fileFilter
+});
 
 router.patch('/edit-photo', upload.single('avatar'), async (req, res, next) => {
   console.log(req.file);
