@@ -1,17 +1,20 @@
 const bcrypt = require('bcrypt');
 
 const Users = require('../database/models/Users');
+const Banner = require('../database/models/banners');
+const categoryService = require("../services/category.services");
 
-function renderEditProfilePage (req, res, next) {
+async function renderEditProfilePage (req, res, next) {
   try {
-    let isLogin = false;
+    const categories = await categoryService.getListCategory();
+    const banners = await Banner.find(); 
   
     if (req.cookies.user) {
       isLogin = true;
 
       Users.findOne({_id: req.cookies.user._id})
       .then(user => {
-        res.render("profile/profile.ejs", { title: "Edit profile", user } );
+        res.render("profile/profile.ejs", { title: "Edit profile", user, categories, banners } );
       })
       .catch(next);
     } else {
@@ -63,14 +66,16 @@ function editProfile (req, res, next) {
   }
 };
 
-function renderEditAccountPage (req, res, next) {
+async function renderEditAccountPage (req, res, next) {
   try {
+    const categories = await categoryService.getListCategory();
+    const banners = await Banner.find(); 
     let notification = "";
 
     if (req.cookies.user) {
       Users.findOne({_id: req.cookies.user._id})
       .then(user => {
-        res.render("profile/account.ejs", { title: "User account", user, notification } );
+        res.render("profile/account.ejs", { title: "User account", user, notification, categories, banners } );
       })
       .catch(next);
     } else {
@@ -82,50 +87,53 @@ function renderEditAccountPage (req, res, next) {
 };
 
 async function editAccount (req, res, next) {
-  const salt = await bcrypt.genSalt(10);
-  const hashedNewPass = await bcrypt.hash(req.body.newPassword, salt);
-  let newPass = hashedNewPass;
+  try {
+    const salt = await bcrypt.genSalt(10);
+    const hashedNewPass = await bcrypt.hash(req.body.newPassword, salt);
+    let newPass = hashedNewPass;
 
-  if (req.cookies.user) {
-    let user = req.cookies.user;
-    let idUser = req.cookies.user._id;
-    let password = req.body.password;
-    let notification = "";
-    
-    const checkUser = await Users.findOne({_id : idUser});
-    if(!checkUser){
-      //Sai tài khoản
-      return res.status(404).render('component/login');
+    if (req.cookies.user) {
+      let user = req.cookies.user;
+      let idUser = req.cookies.user._id;
+      let password = req.body.password;
+      let notification = "";
+      
+      const checkUser = await Users.findOne({_id : idUser});
+      if(!checkUser){
+        //Sai tài khoản
+        return res.status(404).render('component/login');
+      }
+
+      const validPassword = await bcrypt.compare(
+        password,
+        checkUser.password
+      );
+
+      if(!validPassword){
+          notification = "Incorrect";
+          res.render("profile/account.ejs", { title: "User account", user, notification } );
+      } else {
+        Users.updateOne( { _id: idUser } , { password: newPass} )
+        .then(() => {
+          notification = "Successful";
+          res.render("profile/account.ejs", { title: "User account", user, notification } );
+        });
+      }
     }
-
-    const validPassword = await bcrypt.compare(
-      password,
-      checkUser.password
-    );
-
-    if(!validPassword){
-        notification = "Incorrect";
-        res.render("profile/account.ejs", { title: "User account", user, notification } );
-    } else {
-      Users.updateOne( { _id: idUser } , { password: newPass} )
-      .then(() => {
-        notification = "Successful";
-        res.render("profile/account.ejs", { title: "User account", user, notification } );
-      });
-    }
-  }
+  } catch(err) {
+    return   res.status(500).json(err);
+  };
 }
 
-function renderEditPhotoPage (req, res, next) {
+async function renderEditPhotoPage (req, res, next) {
   try {
-    let isLogin = false;
+    const categories = await categoryService.getListCategory();
+    const banners = await Banner.find(); 
   
     if (req.cookies.user) {
-      isLogin = true;
-
       Users.findOne({_id: req.cookies.user._id})
       .then(user => {
-        res.render("profile/avatar.ejs", { title: "Photo", user });
+        res.render("profile/avatar.ejs", { title: "Photo", user, categories, banners });
       })
       .catch(next);
     } else {
