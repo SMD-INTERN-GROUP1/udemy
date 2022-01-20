@@ -33,16 +33,18 @@ mongoose.connect(process.env.MONGO_DB ,function(err){
 //   cookie: { secure: true }
 // }))
 
-//payment
 
-paypal.configure({
-  'mode': 'sandbox', //sandbox or live
-  'client_id': 'AStfnCB1MGhO7ngndwNoy6nywUsoZkbyrRJzuJ-zH7HonwXM5MMwcembTy7xPmci7YCiL54fKMmbHFMx',
-  'client_secret': 'EHjOl8-nGvtxGmVeeBiVCiFpVzJNv9NJhVxComQz3ppJ7Nm4_xc-0jqQY8XgVyo6kCFVkZpIHAf-Td2C'
-});
 
 const app = express();
 app.use(methodOverride('_method'))
+
+//payment
+paypal.configure({
+  'mode': 'sandbox', //sandbox or live
+  'client_id': 'AZlQWdxUbFxt5Vz566Z9lxmlA-EkzApcaWaaVYSQfPI52gkUFh3HErNudlDxc88F_LIJtVIdbq0cBShI',
+  'client_secret': 'EB_HyN6R9XSQgznNum1nnO_xvCeiTdyUuPUdUx5OrMknrfv4N7B0UX58dN7keVSFoxY0IxUsVYBDSwAc'
+});
+
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -60,19 +62,19 @@ app.use(methodOverride("_method"));
 route(app);
 
 // catch 404 and forward to error handler
-// app.use((req, res, next) => {
-//   next(createError(404));
-// });
+app.use((req, res, next) => {
+  next(createError(404));
+});
 
 // error handler
-// app.use((err, req, res, next) => {
-//   // set locals, only providing error in development
-//   res.locals.message = err.message;
-//   res.locals.error = req.app.get("env") === "development" ? err : {};
+app.use((err, req, res, next) => {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get("env") === "development" ? err : {};
 
-//   // render the error page
-//   res.status(err.status || 500);
-//   res.render("error");
-// });
+  // render the error page
+  res.status(err.status || 500);
+  res.render("error");
+});
 
 module.exports = app;
