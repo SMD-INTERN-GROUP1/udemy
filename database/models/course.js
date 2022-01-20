@@ -22,6 +22,10 @@ const course = new mongoose.Schema(
       type: String,
       default: "",
     },
+    video_id: {
+      type: String,
+      default: "",
+    },
     description: {
       type: String,
       default: "",
@@ -54,8 +58,16 @@ const course = new mongoose.Schema(
     reviews: [reviewSchema],
     rating: { type: Number, default: 0 },
     numberReview: { type: Number, default: 0 },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    updatedAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Courses", course);
+module.exports = mongoose.model("Course", course);

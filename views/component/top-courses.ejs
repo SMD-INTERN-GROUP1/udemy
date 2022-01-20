@@ -15,6 +15,15 @@
           <div class="image-title"><%=courses[j].title%></div>
           <div class="author"><%=courses[j].author%></div>
           <div class="description"><%=courses[j].description%></div>
+          <% for(var k = 1; k<=5; k++) { %> 
+            <% if(courses[j].rating >= k ){ %> 
+               <span><i class="fas fa-star text-warning" ></i></span> 
+              <% }else if(courses[j].rating >= (k - 0.5)){  %> 
+                <span><i class="fas fa-star-half-alt text-warning" ></i></span> 
+            <%}else{%>
+              <span><i class="far fa-star text-warning"></i></span> 
+              <%}%> 
+          <% } %>
           <% if(courses[j].price_discount === 0 || courses[j].price_discount === null) { %> 
             <div class="price">$<%=courses[j].price%></div>
             <% } else { %>
