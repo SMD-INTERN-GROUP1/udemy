@@ -16,9 +16,8 @@ router.get("/users", userController.renderUserPage);
 
 // Categories section
 router.get("/categories", categoriesController.renderCategoriesPage);
-router.get("/addcategories", categoriesController.renderCreateView);
-router.post("/createcategories", categoriesController.create);
-router.get("/updatecategories/:id", categoriesController.renderUpdateView);
+router.post("/categories", categoriesController.create);
+router.get("/categories/:id", categoriesController.renderUpdatePage);
 router.put("/editcategories/:id", categoriesController.update);
 router.delete("/deletecategories/:id", categoriesController.destroy);
 

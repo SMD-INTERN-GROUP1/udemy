@@ -1,30 +1,24 @@
 const CategoriesModel = require("../database/models/Categories");
 
+// GET: /admin/categories
 const renderCategoriesPage = async (req, res, next) => {
-  const getAllCategories = await CategoriesModel.find()
-    .then((categories) => {
-      res.render("template/master", {
-        title: "Admin page",
-        content: "../categories/category_index",
-        categories,
-      });
-    })
-    .catch((error) => {
-      res.status(500).send(error);
+  try {
+    const getAllCategories = await CategoriesModel.find();
+    res.render("dashboard_admin/master", {
+      title: "Admin page",
+      content: "../categories/category_index",
+      getAllCategories,
     });
+  } catch (e) {
+    res.status(500).send(e);
+  }
 };
 
-const renderCreateView = (req, res, next) => {
-  res.render("template/master", {
-    title: "Categories page",
-    content: "../categories/create",
-  });
-};
-
+// POST: /admin/categries
 const create = async (req, res, next) => {
   let data;
-  const { description, name } = req.body;
-  data = { description, name };
+  const { description, category } = req.body;
+  data = { description, category };
   const createCategory = new CategoriesModel(data);
   await createCategory
     .save()
@@ -32,16 +26,16 @@ const create = async (req, res, next) => {
       res.redirect("/admin/categories");
     })
     .catch((error) => {
-      console.log(error);
-      res.status(500).redirect("/admin/createcategories");
+      res.status(500).send(error.message);
     });
 };
 
-const renderUpdateView = async (req, res, next) => {
+// GET: /admin/updatecategories/:id
+const renderUpdatePage = async (req, res, next) => {
   const { id } = req.params;
   const getCategory = await CategoriesModel.findById(id)
     .then((category) => {
-      res.render("template/master", {
+      res.render("dashboard_admin/master", {
         title: "Category page",
         content: "../categories/update",
         category,
@@ -52,6 +46,7 @@ const renderUpdateView = async (req, res, next) => {
     });
 };
 
+// PUT: /admin/editcategories/:id
 const update = (req, res, next) => {
   CategoriesModel.updateOne({ _id: req.params.id }, req.body)
     .then(() => res.redirect("/admin/categories"))
@@ -108,9 +103,8 @@ const restore = async (req, res, next) => {
 
 module.exports = {
   renderCategoriesPage,
-  renderCreateView,
   create,
-  renderUpdateView,
+  renderUpdatePage,
   update,
   destroy,
   forceDestroy,
