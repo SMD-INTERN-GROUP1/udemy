@@ -1,20 +1,18 @@
 const bcrypt = require('bcrypt');
 
 const Users = require('../database/models/Users');
-const Banner = require('../database/models/banners');
 const categoryService = require("../services/category.services");
 
 async function renderEditProfilePage (req, res, next) {
   try {
     const categories = await categoryService.getListCategory();
-    const banners = await Banner.find(); 
   
     if (req.cookies.user) {
       isLogin = true;
 
       Users.findOne({_id: req.cookies.user._id})
       .then(user => {
-        res.render("profile/profile.ejs", { title: "Edit profile", user, categories, banners } );
+        res.render("profile/profile.ejs", { title: "Edit profile", user, categories } );
       })
       .catch(next);
     } else {
@@ -69,13 +67,12 @@ function editProfile (req, res, next) {
 async function renderEditAccountPage (req, res, next) {
   try {
     const categories = await categoryService.getListCategory();
-    const banners = await Banner.find(); 
     let notification = "";
 
     if (req.cookies.user) {
       Users.findOne({_id: req.cookies.user._id})
       .then(user => {
-        res.render("profile/account.ejs", { title: "User account", user, notification, categories, banners } );
+        res.render("profile/account.ejs", { title: "User account", user, notification, categories } );
       })
       .catch(next);
     } else {
@@ -91,6 +88,7 @@ async function editAccount (req, res, next) {
     const salt = await bcrypt.genSalt(10);
     const hashedNewPass = await bcrypt.hash(req.body.newPassword, salt);
     let newPass = hashedNewPass;
+    const categories = await categoryService.getListCategory();
 
     if (req.cookies.user) {
       let user = req.cookies.user;
@@ -111,12 +109,12 @@ async function editAccount (req, res, next) {
 
       if(!validPassword){
           notification = "Incorrect";
-          res.render("profile/account.ejs", { title: "User account", user, notification } );
+          res.render("profile/account.ejs", { title: "User account", user, notification, categories } );
       } else {
         Users.updateOne( { _id: idUser } , { password: newPass} )
         .then(() => {
           notification = "Successful";
-          res.render("profile/account.ejs", { title: "User account", user, notification } );
+          res.render("profile/account.ejs", { title: "User account", user, notification, categories } );
         });
       }
     }
@@ -128,12 +126,11 @@ async function editAccount (req, res, next) {
 async function renderEditPhotoPage (req, res, next) {
   try {
     const categories = await categoryService.getListCategory();
-    const banners = await Banner.find(); 
   
     if (req.cookies.user) {
       Users.findOne({_id: req.cookies.user._id})
       .then(user => {
-        res.render("profile/avatar.ejs", { title: "Photo", user, categories, banners });
+        res.render("profile/avatar.ejs", { title: "Photo", user, categories });
       })
       .catch(next);
     } else {

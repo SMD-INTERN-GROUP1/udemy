@@ -1,25 +1,33 @@
-const homeRouter = require('./home');
-const courseDetailRoute = require('./courses_detail');
-const authRouter = require('./auth.route');
+const homeRouter = require("./home");
+const courseDetailRoute = require("./courses_detail");
+const authRouter = require("./auth.route");
 const adminRouter = require("./admin");
-const paypalRouter=require('./payment');
-const registerRouter = require('./register');
-const userRouter = require('./user');
-const cartRouter=require('./cart');
+
+const registerRouter = require("./register");
+const instructorRouter = require("./instructor");
+const paypalRouter = require("./payment");
+const authenticateToken = require("../middlerwares/auth.middleware");
+const cartRouter = require("./cart");
+const myLearningRouter = require("./my_learning");
 const logoutRouter=require('./logout');
+const middleware = require('../middlerwares/auth.middleware');
+const userRouter = require("./users")
 
 function route(app) {
   //write URL here
-  app.use('/course', courseDetailRoute);
-  app.use('/pay', paypalRouter);
+  // app.use(authenticateToken.verifyToken)
+  app.use("/instructor", instructorRouter);
+  app.use("/course", courseDetailRoute);
+  app.use("/pay", paypalRouter);
   app.use("/admin", adminRouter);
-  app.use('/', homeRouter);
-  app.use('/cart',cartRouter);
-  app.use('/login', authRouter);
+  app.use("/cart", cartRouter);
+  app.use("/login", authRouter);
+  app.use("/register", registerRouter);
+  app.use("/myLearning", myLearningRouter);
   app.use('/logout',logoutRouter);
-  app.use('/register', registerRouter);
   app.use("/user",userRouter)
-  app.use("/", homeRouter);
+  app.use('/', homeRouter);
+
 }
 
 module.exports = route;

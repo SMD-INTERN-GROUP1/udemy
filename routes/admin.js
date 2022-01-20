@@ -15,18 +15,10 @@ router.get("/users", userController.renderUserPage);
 
 // Categories section
 router.get("/categories", categoriesController.renderCategoriesPage);
-
-// Render Create category page -> Route: /admin/categories
 router.get("/addcategories", categoriesController.renderCreateView);
-
-// Add category
 router.post("/createcategories", categoriesController.create);
-
-// Render update category page
 router.get("/updatecategories/:id", categoriesController.renderUpdateView);
-
 router.put("/editcategories/:id", categoriesController.update);
-
 router.get("/deletecategories/:id", categoriesController.destroy);
 
 // Topics section
