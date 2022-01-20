@@ -9,78 +9,8 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/stylesheets/style.css" />
     <link rel="stylesheet" href="/stylesheets/profile.css" />
+    <link rel="shortcut icon" href="https://image.winudf.com/v2/image1/Y29tLnVkZW15LmFuZHJvaWRfaWNvbl8xNjI2MjkxNzQzXzAxMA/icon.png?w=&fakeurl=1" />
     <title><%= title%></title>
-    <!-- <style>
-      .image-upload-preview-with-crop--imageWrapper--cPa0q {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        background: #f7f9fa;
-        padding: 2px;
-        height: auto;
-      }
-      .ReactCrop {
-          position: relative;
-          display: inline-block;
-          cursor: crosshair;
-          overflow: hidden;
-          max-width: 100%;
-          background-color: #000;
-      }
-      .image-upload-preview-with-crop--imageWrapper--cPa0q .ReactCrop>img {
-          max-height: 100%;
-      }
-    </style> -->
-    <style>
-      /* * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-      } */
-      .container-img{
-          /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          min-height: 100vh;
-          /* background-color: rgb(255, 240, 222); */
-          background-color: rgba(170, 170, 170, 0.2);
-      }
-
-      #file-input {
-          display: none;
-      }
-
-      .preview {
-          padding: 30px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-direction: column;
-          width: 100%;
-          max-width: 350px;
-          margin: auto;
-          background-color: rgb(255, 255, 255);
-          box-shadow: 0 0 20px rgba(170, 170, 170, 0.2);
-      }
-
-      #img-preview {
-          width: 100%;
-          object-fit: cover;
-          margin-bottom: 20px;
-      }
-
-      .upload-image {
-          font-weight: 600;
-          cursor: pointer;
-          color: #fff;
-          border-radius: 2px;
-          padding: 10px 20px;
-          /* background-color: rgb(101, 101, 255); */
-          background-color: black
-      }
-    </style>
   </head>
   <body>
     <div class="container">
@@ -97,11 +27,6 @@
                     <label class="label label-info"><%=user.headLine%></label>
                     <% } %>
                   </li>
-                  <!-- show persional link -->
-                  <!-- <li class="email"><a href="#">Rebecca.S@website.com</a></li> -->
-                  <!-- <%if(user.list_social[0].url) {%>
-                    <li class="email"><a href="<%= user.list_social[0].url%>" target="_blank"><%= user.list_social[0].url %></a></li>
-                    <% } %> -->
                   <% } %>
                 </ul>
               </div>
@@ -122,19 +47,14 @@
               </div>
               <hr>
               <div class="container">
-                <!-- <div class="col-md-8 col-md-offset-2"> -->
                 <div>
                     <form method="post" action="edit-photo?_method=PATCH" enctype="multipart/form-data">
                       <div class="form-group">
-                          <!-- <label class="udheavy-form-label control-label " for="id_image_file">Image preview</label>
-                          <img id="blah" class="ReactCrop__image" src="https://img-c.udemycdn.com/user/200_H/anonymous_3.png" alt="your image" />
-                          <label class="udheavy-form-label control-label">Add / Change Image:</label>
-                          accept="image/*" => chỉ chấp nhận các file dạng hình ảnh
-                          <input type="file" name="avatar" id="imgInp" accept="image/*" class="input-group input-file" required/> -->
-                          <div class="container-img">
+                          <div class="container-preview-img">
                             <div class="preview">
                               <img id="img-preview" src="https://img-c.udemycdn.com/user/200_H/anonymous_3.png" />
                               <label for="file-input" class="upload-image">Upload Image</label>
+                              <!-- accept="image/*" => chỉ chấp nhận các file dạng hình ảnh -->
                               <input type="file" accept="image/*" name="avatar" class="input-group input-file" id="file-input" required/>
                             </div>
                           </div>
@@ -160,13 +80,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script>
-      // imgInp.onchange = evt => {
-      //   const [file] = imgInp.files
-      //   if (file) {
-      //     blah.src = URL.createObjectURL(file)
-      //   }
-      // }
-
       const input = document.getElementById("file-input");
       const image = document.getElementById("img-preview");
 
@@ -176,7 +89,6 @@
           image.src = src;
         }
       });
-
     </script>
   </body>
 </html>
