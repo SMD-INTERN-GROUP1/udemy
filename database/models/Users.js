@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const user = new mongoose.Schema({
     username:{
@@ -40,9 +40,20 @@ const user = new mongoose.Schema({
     },
     avatar:{
         type:String,
-        default:''
-    }
+        default:'/images/profile/user-member-avatar-default.jpg'
+    },
+    list_social: {
+        type: Array,
+        default: [
+            {"name": "Website", "url": ""}, 
+            {"name": "Twitter", "url": ""}, 
+            {"name": "LinkedIn", "url": ""}, 
+            {"name": "Facebook", "url": ""}
+        ]
+    },
+    wishList: [{ type: mongoose.Types.ObjectId, ref: "Courses" }],
+    courses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Courses" }],
 },{timestamps:true}
 );
 
-module.exports=mongoose.model("Users",user);
+module.exports = mongoose.model("Users", user);

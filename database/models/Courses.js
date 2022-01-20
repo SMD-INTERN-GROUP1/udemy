@@ -1,6 +1,18 @@
 const mongoose = require("mongoose");
 const slug = require("mongoose-slug-generator");
+
 const mongooseDelete = require("mongoose-delete");
+mongoose.plugin(slug);
+
+const reviewSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    comment: { type: String, required: true },
+    rate: { type: Number, required: true },
+    user: { type: mongoose.Types.ObjectId, ref: "Users", required: true },
+  },
+  { timestamps: true }
+);
 
 const course = new mongoose.Schema(
   {
@@ -48,13 +60,15 @@ const course = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: "Instructor",
     },
+    reviews: [reviewSchema],
+    rating: { type: Number, default: 0 },
+    numberReview: { type: Number, default: 0 },
     // kids: [{type:mongoose.Schema.Types.ObjectId}]
   },
   { timestamps: true }
 );
 
 // Add plugin
-mongoose.plugin(slug);
+// mongoose.plugin(slug);
 course.plugin(mongooseDelete, { deletedAt: true, overrideMethods: "all" });
-
 module.exports = mongoose.model("Courses", course);

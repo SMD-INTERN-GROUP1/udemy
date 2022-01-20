@@ -1,0 +1,96 @@
+.started {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-image: url("https://s.udemycdn.com/teaching/billboard-desktop-v4.jpg");
+  background-repeat: no-repeat;
+  font-family: "Poppins", sans-serif !important;
+}
+
+.started-container {
+  position: absolute;
+  margin-top: 10%;
+  margin-left: 15%;
+  max-width: 340px;
+  /* background-color: rgb(86, 141, 204); */
+}
+
+.started-content h2 {
+  font-size: 52;
+  font-weight: bold;
+}
+
+.started-content p {
+  font-size: 18px;
+}
+
+.reasons {
+  width: 100%;
+  height: 60%;
+  font-family: "Poppins", sans-serif !important;
+  /* background-color: antiquewhite; */
+}
+
+.reasons .reasons-title h2 {
+  font-size: 48;
+  font-weight: bold;
+  text-align: center;
+}
+
+.reasons-description {
+  width: 100%;
+}
+
+.reasons-description {
+  display: flex;
+  flex-direction: row;
+}
+
+.reasons-item {
+  margin-left: 20px;
+}
+
+.reasons-item h4 {
+  margin-top: 22px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.reasons-item p {
+  font-size: 14px;
+  max-width: 480px;
+  line-height: 24px;
+  margin-left: 4rem;
+  margin-right: 4rem;
+}
+
+/* Instructor view course detail */
+
+.dropdown-chapter {
+  margin-top: 3%;
+}
+
+.tabs {
+  margin-left: -10%;
+  margin-right: 9%;
+}
+
+.tab-content {
+  border: none;
+  border-top: 0;
+  padding: 0.25rem;
+  text-align: justify;
+}
+
+.tab-list {
+  display: none !important;
+  margin-left: -3px;
+}
+
+.tab-list li a {
+  text-decoration: none;
+}
+
+.tab-list.active {
+  display: block !important;
+}

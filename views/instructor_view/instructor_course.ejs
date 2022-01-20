@@ -1,0 +1,89 @@
+<link
+  rel="stylesheet"
+  href="<%= process.env.BASE_URL %>/stylesheets/course-detail.css"
+/>
+<div class="container">
+  <div class="row g-3">
+    <div class="col-lg">
+      <h3><%= course.title %></h3>
+    </div>
+    <div class="col-md-12 d-flex">
+      <div class="col-md-6">
+        <div class="new-chapter">
+          <form method="POST" action="/instructor/courses/<%= course.slug %>/chapters/store" class="chapter-form">
+            <div class="form-group">
+              <label for="position">Chapter</label>
+              <input type="text" name="position" id="chapter-number">
+            </div>
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text" name="title">
+            </div>
+            <button type="submit" class="btn-add-chapter">Add chapter</button>
+          </form>
+        </div>
+          <ul class="chapter-list">
+            <% for(let i = 0; i < listChapter.length; i++) {%>
+              <li>
+                Chapter <span><%= listChapter[i].position%>: </span><%= listChapter[i].title %>
+                <ul class="list-video">
+                  <% listChapter[i].list_video.forEach(video => {%>
+                    <li>
+                      <iframe src="<%= video.video_url%>" frameborder="0"></iframe>
+                    </li>
+                  <% }) %>
+                </ul>
+              </li>
+            <% } %>
+          </ul>
+      </div>
+      <div class="col-md-6">
+          <!-- form upload video -->
+          <form method="POST" action="/instructor/courses/<%= course.slug %>/videos/store" enctype="multipart/form-data" class="video-form">
+            <div class="form-group">
+              <label for="">Chapter</label>
+              <select name="chapters" id="chapter" class="id">
+                <% for(let i = 0; i<  listChapter.length; i++) {%>
+                  <option value="<%= listChapter[i]._id %>"><%= listChapter[i].title %></option>
+                <% } %>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="position">Position</label>
+              <input type="text" name="position" id="chapter-number">
+            </div>
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text" name="title">
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <input type="text" name="description">
+            </div>
+            <div class="form-group">
+              <label for="video_url">Choose video</label>
+              <input type="file" name="video_url"/>
+            </div>
+            <button type="submit" class="btn-add-video">Add video</button>
+          </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const $ = document.querySelector.bind(document);
+    const $$ = document.querySelectorAll.bind(document);
+    const buttons = $$(".tab-button");
+    const lists = $$(".tab-list");
+
+    buttons.forEach((button, index) => {
+      const list = lists[index];
+      button.onclick = function () {
+        // $(".tab-button.active").classList.remove("active");
+        // $(".tab-list.active").classList.remove("active");
+        this.classList.toggle("active");
+        list.classList.toggle("active");
+      };
+    });
+  </script>
+</body>
