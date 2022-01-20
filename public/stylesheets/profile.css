@@ -442,7 +442,7 @@ body {
 		background: #1c1d1f;
 		border-right: 4px solid #1c1d1f;
 		border-bottom: none;
-		color: honeydew;
+		color: honeydew !important;
 	}
 	.theme-2 .view-account .side-bar .side-menu .nav>li.active a {
 		border-right-color: #6dbd63
@@ -602,7 +602,7 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	min-height: 100vh;
+	min-height: 50vh;
     border: 1px solid #1c1d1f;
     background-color: #ecf0f1
 }
@@ -631,11 +631,19 @@ body {
 }
 
 .container-preview-img .upload-image {
-	font-weight: 600;
+	font-weight: 500;
 	cursor: pointer;
 	color: #fff;
 	border-radius: 2px;
 	padding: 10px 20px;
 	/* background-color: rgb(101, 101, 255); */
 	background-color: #1c1d1f
+}
+
+.container-preview-img .upload-image:hover {
+	font-weight: 500;
+	color: #fff;
+	border-radius: 2px;
+	padding: 10px 20px;
+	background-color: #a435f0
 }
