@@ -14,12 +14,11 @@ dotenv.config();
 
 const route = require("./routes/index");
 // db
-mongoose.connect(process.env.MONGO_DB ,function(err){
-  if(!err){
-    console.log('connected sucessfully');
-  }
-  else{
-    console.log('error');
+mongoose.connect(process.env.MONGO_DB, function (err) {
+  if (!err) {
+    console.log("connected sucessfully");
+  } else {
+    console.log("error");
   }
 });
 
@@ -56,6 +55,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "node_modules")));
 app.use(methodOverride("_method"));
 
 

@@ -44,7 +44,6 @@ const user = new mongoose.Schema(
       default: "",
     },
     wishList: [{ type: mongoose.Types.ObjectId, ref: "Courses" }],
-
     courses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Courses" }],
   },
   { timestamps: true }
