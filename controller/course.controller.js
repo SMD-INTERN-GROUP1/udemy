@@ -1,23 +1,11 @@
-const { format } = require("timeago.js");
 const Course = require("../database/models/Courses");
-
 const Topic = require("../database/models/Topics");
-
 const Chapter = require("../database/models/Chapters");
-
-
 const Instrutor = require("../database/models/Instrutor");
-const User = require("../database/models/Users");
-
-
-function getDetailCourse(req, res, next) {
-  const title = req.params.title;
-  Course.findOne({ title: title }, function (err, course) {
-    if (!err) {
-      res.render("component/course_detail", { course });
-
+const { format } = require("timeago.js");
 const categoryService = require("../services/category.services");
 const UserModal = require("../database/models/Users");
+
 const getDetailCourse = async (req, res, next) => {
   const slug = req.params.slug;
   const categories = await categoryService.getListCategory();
@@ -41,69 +29,12 @@ const getDetailCourse = async (req, res, next) => {
   });
 };
 
-const getSearch = async (req, res, next) => {
-  try {
-    const categories = await categoryService.getListCategory();
-    const courses = await Course.find();
-  
-    const title = req.query.title;
-    const data = courses.filter(function (item) {
-      return item.title.toLowerCase().indexOf(title.toLowerCase()) !== -1;
-    });
-
-    // req.query.sort["fieldname"] =  asc | desc
-
-    const productnumber = 4;
-    const total_pages = Math.ceil(data.length / productnumber);
-    const num = Number(req.params.page);
-    const pagination = data.slice(
-      productnumber * num,
-      productnumber * (1 + num)
-    );
-    let isLogin = false;
-    let userSearch;
-
-    if (!req.cookies.user) {
-      req.cookies.user = {};
-
-      if (!req.cookies.user.username) isLogin = true;
-
-    } else {
-      if (req.cookies.user._id)
-        userSearch = await UserModal.findById(req.cookies.user._id);
-    }
-
-    const sort = req.query.sort;
-    if (sort) {
-      const keys = Object.keys(req.query.sort)[0];
-
-      pagination.sort((objecta, objectb) => {
-        return sort[keys] === "asc"
-          ? objecta.price - objectb.price
-          : objectb.price - objecta.price;
-      });
-    }
-    res.render("search", {
-      categories,
-      pagination,
-      title,
-      total_pages,
-      result: data.length,
-      isLogin,
-      user: userSearch || { wishList: [] },
-    });
-  } catch (error) {
-    console.log(error.message);
-  }
-};
-
 const renderCoursePage = async (req, res, next) => {
   res.render("template/master", {
     title: "Topic page",
     content: "../course/course_index",
   });
 };
-
 
 const getListCourserOfInstructor = async (req, res, next) => {
   const getCoursesOfInstructor = await Course.find({
@@ -172,17 +103,12 @@ const create = async (req, res, next) => {
   }
 };
 
-
 const showCourse = async (req, res, next) => {
   const slug = req.params.slug;
   const course = await Course.findOne({slug: slug});
   const course_id = course._id;
   const listChapter = await Chapter.find({course_id: course_id});
   const findCourseBySlug = await Course.findOne({ slug: req.params.slug })
-
-const showCourse = (req, res, next) => {
-  const findCourseBySlug = Course.findOne({ slug: req.params.slug })
-
     .then((course) => {
       res.render("template_instructor/master", {
         title: "Instructor page",
@@ -253,7 +179,6 @@ const createChapter = async(req, res, next) => {
     const course = await Course.findOne({slug: slug});
     let formData = req.body;
     formData.course_id = course._id;
-    console.log('formData: ', formData);
     let chapter = new Chapter(formData);
     chapter.save(function(err, data) {
       if(!err) console.log("create successful");
@@ -297,8 +222,28 @@ const createVideo = async(req, res, next) => {
     res.json({ msg: error })
   }
 }
+const wishListFunc = async (req, res) => {
+  const categories = await categoryService.getListCategory();
+  let isLogin = false;
+  if (!req.user.username) {
+    isLogin = true;
+  }
+  const user = await UserModal.findOne({
+    username: req.user.username,
+  }).populate("wishList");
 
-// create review
+  const newUser = await UserModal.findOne({
+    username: req.user.username,
+  });
+  return res.render("wish", {
+    wishList: user.wishList,
+    isLogin,
+    user: newUser,
+    lengthlist: user.wishList.length,
+    categories,
+  });
+};
+
 const createReview = async (req, res) => {
   const { comment, rate } = req.body;
   if (!comment || !rate) {
@@ -351,7 +296,7 @@ const deleteReview = async (req, res) => {
   // });
   // number, boolean, string
   // object, funtion, array => const a = {a : ""}
-  
+
  // void afunc(* ){ num = 3 } 
  // int a = 4;
  // afunc(a)
@@ -388,33 +333,64 @@ const deleteReview = async (req, res) => {
   return res.redirect("back");
 };
 
-const wishListFunc = async (req, res) => {
-  const categories = await categoryService.getListCategory();
-  let isLogin = false;
-  if (!req.user.username) {
-    isLogin = true;
+const getSearch = async (req, res, next) => {
+  try {
+    const categories = await categoryService.getListCategory();
+    const courses = await Course.find();
+
+    const title = req.query.title;
+    const data = courses.filter(function (item) {
+      return item.title.toLowerCase().indexOf(title.toLowerCase()) !== -1;
+    });
+
+    // req.query.sort["fieldname"] =  asc | desc
+
+    const productnumber = 4;
+    const total_pages = Math.ceil(data.length / productnumber);
+    const num = Number(req.params.page);
+    const pagination = data.slice(
+      productnumber * num,
+      productnumber * (1 + num)
+    );
+    let isLogin = false;
+    let userSearch;
+
+    if (!req.cookies.user) {
+      req.cookies.user = {};
+
+      if (!req.cookies.user.username) isLogin = true;
+    } else {
+      if (req.cookies.user._id)
+        userSearch = await UserModal.findById(req.cookies.user._id);
+    }
+
+    const sort = req.query.sort;
+    if (sort) {
+      const keys = Object.keys(req.query.sort)[0];
+
+      pagination.sort((objecta, objectb) => {
+        return sort[keys] === "asc"
+          ? objecta.price - objectb.price
+          : objectb.price - objecta.price;
+      });
+    }
+    res.render("search", {
+      categories,
+      pagination,
+      title,
+      total_pages,
+      result: data.length,
+      isLogin,
+      user: userSearch || { wishList: [] },
+    });
+  } catch (error) {
+    console.log(error.message);
   }
-  const user = await UserModal.findOne({
-    username: req.user.username,
-  }).populate("wishList");
-
-  const newUser = await UserModal.findOne({
-    username: req.user.username,
-  });
-  return res.render("wish", {
-    wishList: user.wishList,
-    isLogin,
-    user: newUser,
-    lengthlist: user.wishList.length,
-    categories,
-  });
 };
-
 
 module.exports = {
   getDetailCourse,
   renderCoursePage,
-
   getListCourserOfInstructor,
   renderCreateCoursePage,
   create,
@@ -424,11 +400,9 @@ module.exports = {
   update,
   getChapters,
   createChapter,
-  createVideo
-
-  getSearch,
+  createVideo,
   wishListFunc,
-  createReview,
+  getSearch,
   deleteReview,
-
+  createReview
 };

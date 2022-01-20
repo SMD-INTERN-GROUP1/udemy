@@ -4,9 +4,7 @@ const Instructor = require("../database/models/Instrutor");
 const User = require("../database/models/Users");
 const categoryService = require("../services/category.services");
 
-const Course = require('../database/models/Courses');
 const Topic = require('../database/models/Topics');
-const Banner = require('../database/models/banners');
 const Category = require('../database/models/Categories');
 const getHomePage = async (req, res, next) => {
     try { 
@@ -59,12 +57,26 @@ const getHomePage = async (req, res, next) => {
     } catch (error) {
         res.status(500).json({ msg: error });
     }
-}
+};
+const teachingRegister = (req, res, next) => {
+    let data;
+    const id = req.body.user_id;
+    const { specialty, description, experience, user_id } = req.body;
+    data = { specialty, description, experience, user_id };
+    Promise.all([
+      Instructor.create(data),
+      User.updateOne(
+        { isTeacher: false, _id: id },
+        { $set: { isTeacher: true } }
+      ),
+    ]).then((instructor, user) => {
+      // res.send([instructor, user]);
+      res.redirect("/instructor");
+    });
+  };
 
 module.exports = {
     getHomePage,
-  renderTeachingPage,
-  renderTeachingRegister,
-  teachingRegister,
+    
 } 
 
