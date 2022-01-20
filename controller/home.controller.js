@@ -8,7 +8,7 @@ const getHomePage = async (req, res, next) => {
   try {
     const categories = await categoryService.getListCategory();
     const banners = await Banner.find();
-    const courses = await Course.find();
+    const courses = await Course.find({ delete: false });
     let isLogin = false;
     if (!req.cookies.user) {
       isLogin = true;

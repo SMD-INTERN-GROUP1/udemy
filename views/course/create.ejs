@@ -2,14 +2,14 @@
   <form class="row g-3" action="/instructor/createcourse" method="POST">
     <h2>Create Course page</h2>
     <div class="form-group col-12">
-      <label for="exampleInputEmail1" class="fw-bold">User ID:</label>
+      <label for="exampleInputEmail1" class="fw-bold">Instructor ID:</label>
       <input
         type="text"
         class="form-control"
         id="exampleInputEmail1"
         aria-describedby="emailHelp"
-        name="user_id"
-        value="<%= user._id %>"
+        name="instructor_id"
+        value="<%= getInstructor._id %>"
         readonly
       />
     </div>
@@ -48,6 +48,7 @@
         class="form-control"
         id="exampleInputPassword1"
         name="author"
+        value="<%= getInstructor.user_id.username %>"
       />
     </div>
 

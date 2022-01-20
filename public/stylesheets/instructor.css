@@ -63,3 +63,34 @@
   margin-left: 4rem;
   margin-right: 4rem;
 }
+
+/* Instructor view course detail */
+
+.dropdown-chapter {
+  margin-top: 3%;
+}
+
+.tabs {
+  margin-left: -10%;
+  margin-right: 9%;
+}
+
+.tab-content {
+  border: none;
+  border-top: 0;
+  padding: 0.25rem;
+  text-align: justify;
+}
+
+.tab-list {
+  display: none !important;
+  margin-left: -3px;
+}
+
+.tab-list li a {
+  text-decoration: none;
+}
+
+.tab-list.active {
+  display: block !important;
+}
