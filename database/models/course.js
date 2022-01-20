@@ -1,9 +1,5 @@
 const mongoose = require("mongoose");
 const slug = require("mongoose-slug-generator");
-
-const mongooseDelete = require("mongoose-delete");
-mongoose.plugin(slug);
-
 mongoose.plugin(slug);
 
 const reviewSchema = new mongoose.Schema(
@@ -16,19 +12,9 @@ const reviewSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-
 const course = new mongoose.Schema(
   {
     title: {
-      type: String,
-      default: "",
-
-    },
-    description: {
-      type: String,
-      default: "",
-    },
-    author: {
       type: String,
       default: "",
     },
@@ -40,17 +26,26 @@ const course = new mongoose.Schema(
       type: String,
       default: "",
     },
+    description: {
+      type: String,
+      default: "",
+    },
+    author: {
+      type: String,
+      default: "",
+    },
+    price: {
+      type: Number,
+      default: 0,
+    },
     slug: {
       type: String,
       slug: "title",
       unique: true,
     },
-    price: {
-      type: Number,
-    },
     price_discount: {
       type: Number,
-      default: 0,
+      default: false,
     },
     chapter_id: {
       type: mongoose.Types.ObjectId,
@@ -60,22 +55,19 @@ const course = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: "Topic",
     },
-    instructor_id: {
-      type: mongoose.Types.ObjectId,
-      ref: "Instructor",
-    },
     reviews: [reviewSchema],
     rating: { type: Number, default: 0 },
     numberReview: { type: Number, default: 0 },
-    // kids: [{type:mongoose.Schema.Types.ObjectId}]  
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    updatedAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
   { timestamps: true }
 );
 
-
-// Add plugin
-// mongoose.plugin(slug);
-course.plugin(mongooseDelete, { deletedAt: true, overrideMethods: "all" });
-module.exports = mongoose.model("Courses", course);
-
-
+module.exports = mongoose.model("Course", course);

@@ -1,3 +1,314 @@
-<img src=<%=course.image %> alt="">
-<h3><%=course.title %></h3>
-<p><%=course.author %></p>
+<head>
+  <link rel="stylesheet" href="/stylesheets/course-detail.css" />
+  <%- include('_head')%>
+</head>
+<body>
+  <header>
+    <%- include('header')%>
+    <nav><%- include('categories')%></nav>
+  </header>
+
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-sm-8">
+        <h3><%=course.title %></h3>
+        <p><%=course.author %></p>
+      </div>
+      <div class="col-sm-12 col-lg-4 float-end">
+        <div class="card">
+          <img src="<%=course.image %>" class="card-img-top" alt="" />
+          <!-- <iframe
+            width="414"
+            height="315"
+            src="https://www.youtube.com/embed/<%= course.video_id %>"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe> -->
+          <div class="card-body">
+            <h5 class="card-title">Price: $<%=course.price %></h5>
+            <div class="row">
+              <div class="col-sm-9">
+                <a href="#" class="btn btn-dark fw-bold text-light h-100 w-100"
+                  >Add to cart</a
+                >
+              </div>
+              <div class="col-sm-3">
+                <ul class="list-inline list-inline-dotted mb-0 py-1">
+                  <% if(isLogin) {%>
+                      <a href="/login" class="btn btn-danger" style="color: white !important;">Add to wishlist</a>
+                      <% } else {%>
+                     <!-- da dang nhap -->
+                     <form action="/user/wish/<%= course._id %>?_method=PATCH" method="post">  
+                      <button class="btnlike"><i class="fas fa-heart <% const check=user.wishList.includes(course._id); if(check===true) {%> active <%}%>"></i></button>
+                   </form>
+                      <%}%> 
+              </ul>
+              </div>
+            </div>
+            <div class="mt-2">
+              <a href="" class="btn btn-dark w-100 h-100 fw-bold text-light"
+                >Buy now</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-8" style="margin-top: -24%">
+        <div class="tabs">
+          <a
+            class="text-start btn btn-light w-100 mb-2 border-dark border-2 fw-bold tab-button active"
+          >
+            Chapter 1
+          </a>
+          <div class="tab-content">
+            <ul class="w-100 tab-list active">
+              <li
+                class="text-start btn btn-light w-100 border-dark border-1 mb-1 fw-bold"
+                style="margin-left: -3%"
+              >
+                <i class="fas fa-play-circle"></i><a href=""> &ensp; Bài 1</a>
+              </li>
+              <li
+                class="text-start btn btn-light w-100 border-dark border-1 mb-1 fw-bold"
+                style="margin-left: -3%"
+              >
+                <i class="fas fa-play-circle"></i><a href=""> &ensp; Bài 1</a>
+              </li>
+              <li
+                class="text-start btn btn-light w-100 border-dark border-1 mb-1 fw-bold"
+                style="margin-left: -3%"
+              >
+                <i class="fas fa-play-circle"></i><a href=""> &ensp; Bài 1</a>
+              </li>
+              <li
+                class="text-start btn btn-light w-100 border-dark border-1 mb-1 fw-bold"
+                style="margin-left: -3%"
+              >
+                <i class="fas fa-play-circle"></i><a href=""> &ensp; Bài 1</a>
+              </li>
+            </ul>
+          </div>
+          <a
+            class="text-start btn btn-light w-100 mb-2 border-dark border-2 fw-bold tab-button"
+          >
+            Chapter 2
+          </a>
+          <div class="tab-content">
+            <ul class="w-100 tab-list">
+              <li
+                class="text-start btn btn-light w-100 border-dark border-1 mb-1 fw-bold"
+                style="margin-left: -3%"
+              >
+                <i class="fas fa-play-circle"></i><a href=""> &ensp; Bài 2</a>
+              </li>
+              <li
+                class="text-start btn btn-light w-100 border-dark border-1 mb-1 fw-bold"
+                style="margin-left: -3%"
+              >
+                <i class="fas fa-play-circle"></i><a href=""> &ensp; Bài 2</a>
+              </li>
+              <li
+                class="text-start btn btn-light w-100 border-dark border-1 mb-1 fw-bold"
+                style="margin-left: -3%"
+              >
+                <i class="fas fa-play-circle"></i><a href=""> &ensp; Bài 2</a>
+              </li>
+              <li
+                class="text-start btn btn-light w-100 border-dark border-1 mb-1 fw-bold"
+                style="margin-left: -3%"
+              >
+                <i class="fas fa-play-circle"></i><a href=""> &ensp; Bài 2</a>
+              </li>
+            </ul>
+          </div>
+          <a
+            class="text-start btn btn-light w-100 mb-2 border-dark border-2 fw-bold tab-button"
+          >
+            Chapter 3
+          </a>
+          <div class="tab-content">
+            <ul class="w-100 tab-list">
+              <li
+                class="text-start btn btn-light w-100 border-dark border-1 mb-1 fw-bold"
+                style="margin-left: -3%"
+              >
+                <i class="fas fa-play-circle"></i><a href=""> &ensp; Bài 3</a>
+              </li>
+              <li
+                class="text-start btn btn-light w-100 border-dark border-1 mb-1 fw-bold"
+                style="margin-left: -3%"
+              >
+                <i class="fas fa-play-circle"></i><a href=""> &ensp; Bài 3</a>
+              </li>
+              <li
+                class="text-start btn btn-light w-100 border-dark border-1 mb-1 fw-bold"
+                style="margin-left: -3%"
+              >
+                <i class="fas fa-play-circle"></i><a href=""> &ensp; Bài 3</a>
+              </li>
+              <li
+                class="text-start btn btn-light w-100 border-dark border-1 mb-1 fw-bold"
+                style="margin-left: -3%"
+              >
+                <i class="fas fa-play-circle"></i><a href=""> &ensp; Bài 3</a>
+              </li>
+            </ul>
+          </div>
+          <a
+            class="text-start btn btn-light w-100 mb-2 border-dark border-2 fw-bold tab-button"
+          >
+            Chapter 4
+          </a>
+          <div class="tab-content">
+            <ul class="w-100 tab-list">
+              <li
+                class="text-start btn btn-light w-100 border-dark border-1 mb-1 fw-bold"
+                style="margin-left: -3%"
+              >
+                <i class="fas fa-play-circle"></i><a href=""> &ensp; Bài 4</a>
+              </li>
+              <li
+                class="text-start btn btn-light w-100 border-dark border-1 mb-1 fw-bold"
+                style="margin-left: -3%"
+              >
+                <i class="fas fa-play-circle"></i><a href=""> &ensp; Bài 4</a>
+              </li>
+              <li
+                class="text-start btn btn-light w-100 border-dark border-1 mb-1 fw-bold"
+                style="margin-left: -3%"
+              >
+                <i class="fas fa-play-circle"></i><a href=""> &ensp; Bài 4</a>
+              </li>
+              <li
+                class="text-start btn btn-light w-100 border-dark border-1 mb-1 fw-bold"
+                style="margin-left: -3%"
+              >
+                <i class="fas fa-play-circle"></i><a href=""> &ensp; Bài 4</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <div class="course-rate pb-5">
+      <h2>Student feedback</h2>
+    <% for(var i = 1; i<=5; i++) { %> 
+      <% if(course.rating >= i ){ %> 
+         <span><i class="fas fa-star text-warning" style="font-size: 30px;"></i></span> 
+        <% }else if(course.rating >= (i - 0.5)){  %> 
+          <span><i class="fas fa-star-half-alt text-warning" style="font-size: 30px;"></i></span> 
+      <%}else{%>
+        <span><i class="far fa-star text-warning" style="font-size: 30px;"></i></span> 
+        <%}%> 
+    <% } %>
+    <h4 class="text-warning">Course Rating</h4>
+    </div>
+    <div class="feedback">
+      <h3>Reviews</h3>
+      <% if(isLogin) {%>
+        <h5>You need to <a style="color: blueviolet !important;" href="/login">login</a> and purchase this course to rate it</h5>
+        <% } else {%>
+          <div><%- include('rate-star')%></div>
+        <% } %>
+     
+      <%course.reviews.forEach(function(data) { %>
+      <div class="mt-4">
+        <div class="d-flex" style="justify-content: end;">
+          <div class="delete">
+            <% if(isLogin==false && user.username === data.name ) {%>
+              <form action="/course/review/delete/<%= data._id %>/<%= course._id %>" method="post" style="float: right;">
+                <button type="submit" style="border: none; font-size: 20px;"><i class="fas fa-times"></i></i></button>
+              </form>
+              <% } %>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="avatar">
+            <img
+              srcset="
+                https://o.vdoc.vn/data/image/2022/01/10/hinh-nen-ho-9.jpg 10x
+              "
+              alt=""
+              class="rounded-circle avatar-img"
+            />
+          </div>
+          <div class="rating ms-3">
+           
+            <p class="fw-bold"><%= data.name %></p>
+            <div class="rating-star d-flex">
+              <% for(var i = 0; i<5; i++) {%> 
+
+                <% if(i<data.rate) { %> 
+
+                <span><i class="fas fa-star text-warning"></i></span> 
+
+                <% }else{ %> 
+
+                  <span><i class="far fa-star text-warning" ></i></span> 
+                <% } %>
+
+              <% } %>
+            </div>
+            <p class="pt-2" style="font-size: 12px !important;"><%= format(data.createdAt) %></p>
+            <div class="comment mt-2">
+              <p style="font-size: 20px; font-weight: 600;"><%= data.comment %></p>
+            </div>
+            <div class="interaction">
+              <a href="" class="btn btn-light rounded-circle interaction-like"
+                ><i class="far fa-thumbs-up"></i
+              ></a>
+              <a
+                href=""
+                class="btn btn-light rounded-circle interaction-dislike"
+                ><i class="far fa-thumbs-up"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      
+      </div>
+      <% }); %>
+    </div>
+  </div>
+
+  <footer class="mt-5"><%- include('footer')%></footer>
+  <!-- <script>
+    var button = document.getElementById("btn");
+    var list = document.getElementById("list");
+    list.style.display = "none";
+
+    button.addEventListener("click", (event) => {
+      if (list.style.display == "none") {
+        list.style.display = "block";
+      } else {
+        list.style.display = "none";
+      }
+    });
+  </script> -->
+
+  <script>
+    const $ = document.querySelector.bind(document);
+    const $$ = document.querySelectorAll.bind(document);
+
+    const buttons = $$(".tab-button");
+    const lists = $$(".tab-list");
+
+    // console.log(lists, buttons);
+
+    buttons.forEach((button, index) => {
+      const list = lists[index];
+
+      button.onclick = function () {
+        // console.log(list);
+        this.classList.toggle("active");
+        list.classList.toggle("active");
+      };
+    });
+  </script>
+</body>

@@ -1,0 +1,27 @@
+<form
+  action="/course/review/<%=course._id %>"
+  method="post"
+  class="needs-validation"
+>
+  <div class="rate-wrapper align-items-center">
+    <div class="rate-select">
+      <select class="form-select" name="rate" required>
+        <option selected disabled value="">All rating</option>
+        <option value="1">Bad</option>
+        <option value="2">Quite bad</option>
+        <option value="3">Normally</option>
+        <option value="4">Good</option>
+        <option value="5">Very Good</option>
+      </select>
+    </div>
+    <div class="input-wrapper">
+      <textarea
+        type="text"
+        class="form-control w-100"
+        name="comment"
+        required
+      ></textarea>
+      <button class="btn btn-success">Submit</button>
+    </div>
+  </div>
+</form>
