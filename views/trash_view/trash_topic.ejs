@@ -30,7 +30,7 @@
           <a
             href=""
             class="btn btn-primary btn-restore"
-            data-id="<%= topicdeleted.id %>"
+            data-id="<%= topicdeleted._id %>"
             title="restore"
             >Restore</a
           >
@@ -40,7 +40,7 @@
             title="Delete forever"
             data-bs-toggle="modal"
             data-bs-target="#delete-topic-modal"
-            data-bs-id="<%= topicdeleted.id %>"
+            data-bs-id="<%= topicdeleted._id %>"
             ><i class="fas fa-window-close"></i
           ></a>
         </td>
@@ -106,7 +106,6 @@
   });
 
   btnDeleteTopic.onclick = function () {
-    // alert(topicId);
     deleteForm.action =
       "/admin/trash/topic/" + topicId + "/force?_method=DELETE";
     deleteForm.submit();
@@ -118,10 +117,10 @@
     restoreBtn.click(function (e) {
       e.preventDefault();
 
-      var topicId = $(this).data("id");
+      var deletedtopicId = $(this).data("id");
       // console.log($(this).data("id"));
       restoreForm.action =
-        "/admin/trash/topic/" + topicId + "/restore?_method=PATCH";
+        "/admin/trash/topic/" + deletedtopicId + "/restore?_method=PATCH";
       restoreForm.submit();
     });
   });

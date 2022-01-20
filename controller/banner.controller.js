@@ -2,7 +2,7 @@ const BannersModel = require("../database/models/banners");
 
 const renderBannerPage = async (req, res, next) => {
   const banners = await BannersModel.find();
-  res.render("template/master", {
+  res.render("dashboard_admin/master", {
     title: "Admin page",
     content: "../banner/banner_index",
     banners,
@@ -10,7 +10,7 @@ const renderBannerPage = async (req, res, next) => {
 };
 
 const renderCreateView = async (req, res, next) => {
-  res.render("template/master", {
+  res.render("dashboard_admin/master", {
     title: "Admin page",
     content: "../banner/create",
   });

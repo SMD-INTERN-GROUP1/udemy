@@ -5,7 +5,7 @@ const getListTopics = async (req, res, next) => {
   const getTopics = await TopicsModel.find()
     .populate("category_id")
     .then((topics) => {
-      res.render("template/master", {
+      res.render("dashboard_admin/master", {
         title: "Admin page",
         content: "../topic/topic_index",
         topics,
@@ -16,19 +16,17 @@ const getListTopics = async (req, res, next) => {
     });
 };
 
-const renderCreateView = async (req, res, next) => {
-  const getCategories = await categoryService
-    .getListCategory()
-    .then((categories) => {
-      res.render("template/master", {
-        title: "Categories page",
-        content: "../topic/create",
-        categories,
-      });
-    })
-    .catch((error) => {
-      res.status(500).send(error);
+const renderCreatePage = async (req, res, next) => {
+  try {
+    const getCategories = await categoryService.getListCategory();
+    res.render("dashboard_admin/master", {
+      title: "Topic page",
+      content: "../topic/create",
+      getCategories,
     });
+  } catch (e) {
+    res.status(500).send(e.message);
+  }
 };
 
 const create = async (req, res, next) => {
@@ -46,12 +44,12 @@ const create = async (req, res, next) => {
     });
 };
 
-const renderUpdateView = (req, res, next) => {
+const renderUpdatePage = (req, res, next) => {
   Promise.all([
     TopicsModel.findById({ _id: req.params.id }).populate("category_id"),
     categoryService.getListCategory(),
   ]).then(([topic, categories]) => {
-    res.render("template/master", {
+    res.render("dashboard_admin/master", {
       title: "Category page",
       content: "../topic/update",
       topic,
@@ -92,7 +90,7 @@ const renderTrashTopics = async (req, res, next) => {
   const getTopicsDeleted = await TopicsModel.findDeleted({})
     .populate("category_id")
     .then((topicsdeleted) => {
-      res.render("template/master", {
+      res.render("dashboard_admin/master", {
         title: "Trash topic",
         content: "../trash_view/trash_topic",
         topicsdeleted,
@@ -103,7 +101,7 @@ const renderTrashTopics = async (req, res, next) => {
     });
 };
 
-const restore = async (req, res, next) => {
+const restoreTopic = async (req, res, next) => {
   const restoreTopicById = await TopicsModel.restore({ _id: req.params.id })
     .then(() => {
       res.redirect("/admin/trash/topics");
@@ -114,13 +112,13 @@ const restore = async (req, res, next) => {
 };
 
 module.exports = {
-  renderCreateView,
+  renderCreatePage,
   create,
-  renderUpdateView,
+  renderUpdatePage,
   update,
   getListTopics,
   destroy,
   renderTrashTopics,
-  restore,
+  restoreTopic,
   forceDestroy,
 };

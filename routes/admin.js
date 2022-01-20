@@ -18,16 +18,16 @@ router.get("/users", userController.renderUserPage);
 router.get("/categories", categoriesController.renderCategoriesPage);
 router.post("/categories", categoriesController.create);
 router.get("/categories/:id", categoriesController.renderUpdatePage);
-router.put("/editcategories/:id", categoriesController.update);
-router.delete("/deletecategories/:id", categoriesController.destroy);
+router.put("/categories/:id", categoriesController.update);
+router.delete("/categories/:id", categoriesController.destroy);
 
 // Topics section
 router.get("/topics", topicController.getListTopics);
-router.get("/addtopic", topicController.renderCreateView);
-router.post("/createtopic", topicController.create);
-router.get("/updatetopic/:id", topicController.renderUpdateView);
-router.put("/edittopic/:id", topicController.update);
-router.delete("/deletetopic/:id", topicController.destroy);
+router.get("/new/topics", topicController.renderCreatePage);
+router.post("/topics", topicController.create);
+router.get("/topics/:id", topicController.renderUpdatePage);
+router.put("/topics/:id", topicController.update);
+router.delete("/topics/:id", topicController.destroy);
 
 // Courses section
 router.get("/courses", courseController.renderCoursePage);

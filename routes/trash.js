@@ -5,29 +5,18 @@ const categoryController = require("../controller/category.controller");
 const courseController = require("../controller/course.controller");
 
 /* Trash topics section */
-// GET: /admin/trash/topics -> render trash topics page
 router.get("/topics", topicController.renderTrashTopics);
-
-// PATCH: /admin/trash/topic/:id/restore -> Restore topic
-router.patch("/topic/:id/restore", topicController.restore);
-
-// DELETE: /admin/trash/topic/:id/force -> Delete topic forever
+router.patch("/topic/:id/restore", topicController.restoreTopic);
 router.delete("/topic/:id/force", topicController.forceDestroy);
 
 /* Trash categories section */
-// GET: /admin/trash/categories -> render trash category page
 router.get("/categories", categoryController.renderTrashCategories);
-
-// PATCH: /admin/trash/category/:id/restore -> Restore category
 router.patch("/category/:id/restore", categoryController.restore);
-
-// DELETE: /admin/trash/category/:id/force -> Delete category forever
 router.delete("/category/:id/force", categoryController.forceDestroy);
 
 /* Trash courses section */
 router.get("/courses", courseController.renderTrashCourses);
 
-// DELETE: /admin/trash/courses/:id/force -> Delete category forever
 router.delete("/course/:id/force", courseController.forceDestroy);
 
 module.exports = router;

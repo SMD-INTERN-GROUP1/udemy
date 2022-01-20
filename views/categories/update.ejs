@@ -1,7 +1,7 @@
 <div class="container">
   <form
     class="mt-4"
-    action="/admin/editcategories/<%= category.id %>?_method=PUT"
+    action="/admin/categories/<%= category.id %>?_method=PUT"
     method="POST"
   >
     <h2>Update categories page</h2>
@@ -20,13 +20,14 @@
       <label for="exampleInputPassword1" class="fw-bold mb-2"
         >Description:</label
       >
-      <input
+      <textarea
         type="text"
         class="form-control"
         id="exampleInputPassword1"
         name="description"
-        value="<%= category.description %>"
-      />
+      >
+<%= category.description %></textarea
+      >
     </div>
     <button type="submit" class="btn btn-primary mt-4">Submit</button>
   </form>

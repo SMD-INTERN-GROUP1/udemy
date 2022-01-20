@@ -1,15 +1,15 @@
 <div class="container">
   <form
     class="mt-4"
-    action="/admin/edittopic/<%= topic.id %>?_method=PUT"
+    action="/admin/topics/<%= topic.id %>?_method=PUT"
     method="POST"
   >
-    <h2>Update Topic page</h2>
+    <h3>Update Topic page</h3>
     <div class="form-group">
-      <label for="exampleInputEmail1">Name</label>
+      <label for="exampleInputEmail1" class="fw-bold mb-2">Name:</label>
       <input
         type="text"
-        class="form-control"
+        class="form-control mb-2"
         id="exampleInputEmail1"
         aria-describedby="emailHelp"
         name="name"
@@ -17,18 +17,16 @@
       />
     </div>
     <div class="form-group">
-      <label for="exampleInputPassword1">Description</label>
-      <input
-        type="text"
-        class="form-control"
-        id="exampleInputPassword1"
-        name="description"
-        value="<%= topic.description%>"
-      />
+      <label for="exampleInputPassword1" class="fw-bold mb-2"
+        >Description:</label
+      >
+      <textarea class="form-control mb-2" name="description">
+<%= topic.description%></textarea
+      >
     </div>
 
     <div class="form-group">
-      <label for="exampleInputPassword1">Category</label>
+      <label for="exampleInputPassword1" class="fw-bold mb-2">Category</label>
       <select class="form-control" name="category_id">
         <option selected class="font-weight-bold">
           <%= topic.category_id.name%>
@@ -39,5 +37,8 @@
       </select>
     </div>
     <button type="submit" class="btn btn-primary mt-4">Submit</button>
+    <a href="/admin/topics" type="button" class="btn btn-secondary mt-4 ms-3"
+      >Back</a
+    >
   </form>
 </div>

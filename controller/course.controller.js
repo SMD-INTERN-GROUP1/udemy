@@ -14,7 +14,7 @@ function getDetailCourse(req, res, next) {
 
 const renderCoursePage = async (req, res, next) => {
   const getListCourses = await Course.find().populate("topic_id");
-  res.render("template/master", {
+  res.render("dashboard_admin/master", {
     title: "Topic page",
     content: "../course/course_index",
     getListCourses,
@@ -23,7 +23,7 @@ const renderCoursePage = async (req, res, next) => {
 
 const renderTrashCourses = async (req, res, next) => {
   const getCoursesDeleted = await Course.findDeleted({}).populate("topic_id");
-  res.render("template/master", {
+  res.render("dashboard_admin/master", {
     title: "Trash courses",
     content: "../trash_view/trash_course",
     getCoursesDeleted,

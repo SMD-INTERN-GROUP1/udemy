@@ -1,20 +1,14 @@
 <!-- Topic section -->
 <h3 class="">Tables of topics</h3>
 <table class="table" id="table_2">
-  <div class="d-flex flex-row mt-3">
-    <div class="mr-3">
-      <a
-        href="/admin/addtopic"
-        class="btn btn-success rounded-pill"
-        style="margin-bottom: 20px"
-        >Create topic</a
+  <div class="row mt-3">
+    <div class="col-9">
+      <a href="/admin/new/topics" class="btn btn-success rounded-pill mb-4"
+        >Create</a
       >
     </div>
-    <div class="">
-      <a
-        href="/admin/trash/topics"
-        class="btn btn-success rounded-pill"
-        style="margin-bottom: 20px"
+    <div class="col-3 d-flex flex-row-reverse">
+      <a href="/admin/trash/topics" class="btn btn-success rounded-pill mb-4"
         ><i class="fas fa-trash-restore"></i
       ></a>
     </div>
@@ -40,7 +34,7 @@
           ><i class="fas fa-info-circle"></i
         ></a> -->
         <a
-          href="/admin/updatetopic/<%= topic.id %>"
+          href="/admin/topics/<%= topic.id %>"
           class="btn btn-primary"
           title="Update"
           ><i class="far fa-check-square"></i>
@@ -122,7 +116,7 @@
 
   btnDeleteTopic.onclick = function () {
     // alert(topicId);
-    deleteForm.action = "/admin/deletetopic/" + topicId + "?_method=DELETE";
+    deleteForm.action = "/admin/topics/" + topicId + "?_method=DELETE";
     deleteForm.submit();
   };
 </script>

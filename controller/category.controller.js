@@ -78,8 +78,8 @@ const forceDestroy = async (req, res, next) => {
 const renderTrashCategories = async (req, res, next) => {
   const getCategoriesDeleted = await CategoriesModel.findDeleted({})
     .then((categoriesDeleted) => {
-      res.render("template/master", {
-        title: "Trash topic",
+      res.render("dashboard_admin/master", {
+        title: "Bin of categories",
         content: "../trash_view/trash_category",
         categoriesDeleted,
       });
