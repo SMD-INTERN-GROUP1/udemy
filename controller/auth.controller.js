@@ -21,32 +21,44 @@ const authController ={
             }
             if(user && validPassword){
                 const accessToken = jwt.sign({
+                    user_id:user._id,
                     username: user.username,
                     isTeacher:user.isTeacher,
                     createdAt:user.createdAt,
                     updatedAt:user.updatedAt,
                 },process.env.JWT_ACCESS_KEY,
-                {expiresIn:"2h"}
+                {expiresIn:"1h"}
                 );
                  const refreshToken=jwt.sign({
+                    user_id:user._id,
                     username: user.username,
                     isTeacher:user.isTeacher,
                     createdAt:user.createdAt,
                     updatedAt:user.updatedAt,
                 },process.env.JWT_REFRESHTOKEN_KEY,
-                {expiresIn:"365d"}
+                {expiresIn:"2h"}
+                
                 );
-                res.cookie('user',user)
-                // res.status(200).json({user,accessToken,refreshToken});
-                // delete user.password;
-                // req.session.isAuthenticated=true;
-                // req.session.authUser=user;
-                // console.log(user)
+                res.cookie("user", user, {
+                    httpOnly: true,
+                    sameSite: "strict",
+                })
+                res.cookie("accessToken", accessToken, {
+                    httpOnly: true,
+                    sameSite: "strict",
+                })
                 res.redirect("/");
+                
             }
         }catch(err){
             return   res.status(500).json(err);
         }
+    },
+    logOut:(req,res)=>{
+        res.clearCookie("user");
+        res.clearCookie("accessToken");
+        res.redirect("/");
     }
+     
 }
 module.exports = authController;

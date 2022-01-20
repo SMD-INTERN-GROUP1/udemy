@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const user = new mongoose.Schema({
     username:{
@@ -50,8 +50,10 @@ const user = new mongoose.Schema({
             {"name": "LinkedIn", "url": ""}, 
             {"name": "Facebook", "url": ""}
         ]
-    }
+    },
+    wishList: [{ type: mongoose.Types.ObjectId, ref: "Courses" }],
+    courses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Courses" }],
 },{timestamps:true}
 );
 
-module.exports=mongoose.model("Users",user);
+module.exports = mongoose.model("Users", user);

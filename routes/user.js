@@ -2,6 +2,8 @@ const express = require('express');
 const multer = require('multer');
 
 const profileController = require('../controller/profile.controller');
+const authMiddleware = require("../middlerwares/auth.middleware");
+const { toggleWish } = require("../controller/user.controller");
 
 const router = express.Router();
 
@@ -42,6 +44,7 @@ router.get('/edit-account', profileController.renderEditAccountPage);
 router.patch('/edit-account', profileController.editAccount);
 router.get('/edit-photo', profileController.renderEditPhotoPage);
 router.patch('/edit-photo', upload.single('avatar'), profileController.editPhoto);
+router.patch("/wish/:id", authMiddleware, toggleWish);
 
 // router.get('/public-profile', async (req, res, next) => {
 //   res.render("profile/public-profile.ejs", { title: "User account" });

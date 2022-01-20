@@ -5,19 +5,20 @@ const adminRouter = require("./admin");
 const paypalRouter=require('./payment');
 const registerRouter = require('./register');
 const userRouter = require('./user');
-const authenticateToken= require('../middlerwares/auth.middleware');
 const cartRouter=require('./cart');
+const logoutRouter=require('./logout');
 
 function route(app) {
   //write URL here
-  // app.use(authenticateToken.verifyToken)
   app.use('/course', courseDetailRoute);
   app.use('/pay', paypalRouter);
   app.use("/admin", adminRouter);
+  app.use('/', homeRouter);
   app.use('/cart',cartRouter);
   app.use('/login', authRouter);
+  app.use('/logout',logoutRouter);
   app.use('/register', registerRouter);
-  app.use('/user', userRouter)
+  app.use("/user",userRouter)
   app.use("/", homeRouter);
 }
 
