@@ -5,8 +5,8 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const paypal = require('paypal-rest-sdk');
-const session = require('express-session');
+// const paypal = require('paypal-rest-sdk');
+// const session = require('express-session');
 const methodOverride = require('method-override')
 const mongoose = require("mongoose");
 
@@ -39,11 +39,11 @@ const app = express();
 app.use(methodOverride('_method'))
 
 //payment
-paypal.configure({
-  'mode': 'sandbox', //sandbox or live
-  'client_id': 'AZlQWdxUbFxt5Vz566Z9lxmlA-EkzApcaWaaVYSQfPI52gkUFh3HErNudlDxc88F_LIJtVIdbq0cBShI',
-  'client_secret': 'EB_HyN6R9XSQgznNum1nnO_xvCeiTdyUuPUdUx5OrMknrfv4N7B0UX58dN7keVSFoxY0IxUsVYBDSwAc'
-});
+// paypal.configure({
+//   'mode': 'sandbox', //sandbox or live
+//   'client_id': 'AZlQWdxUbFxt5Vz566Z9lxmlA-EkzApcaWaaVYSQfPI52gkUFh3HErNudlDxc88F_LIJtVIdbq0cBShI',
+//   'client_secret': 'EB_HyN6R9XSQgznNum1nnO_xvCeiTdyUuPUdUx5OrMknrfv4N7B0UX58dN7keVSFoxY0IxUsVYBDSwAc'
+// });
 
 
 // view engine setup
