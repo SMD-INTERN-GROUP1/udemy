@@ -7,6 +7,7 @@ const instructorRouter = require("./instructor");
 const paypalRouter = require("./payment");
 const authenticateToken = require("../middlerwares/auth.middleware");
 const cartRouter = require("./cart");
+const myLearningRouter = require("./my_learning");
 
 function route(app) {
   //write URL here
@@ -18,6 +19,7 @@ function route(app) {
   app.use("/cart", cartRouter);
   app.use("/login", authRouter);
   app.use("/register", registerRouter);
+  app.use("/myLearning", myLearningRouter);
   app.use("/", homeRouter);
 }
 

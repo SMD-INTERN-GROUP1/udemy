@@ -1,48 +1,71 @@
-<head>
-  <link
-    rel="stylesheet"
-    href="<%= process.env.BASE_URL %>/stylesheets/course-detail.css"
-  />
-</head>
-
+<link
+  rel="stylesheet"
+  href="<%= process.env.BASE_URL %>/stylesheets/course-detail.css"
+/>
 <div class="container">
   <div class="row g-3">
-    <div class="col-lg-3">
-      <button type="submit" class="btn btn-dark fw-bold">Add chapter</button>
+    <div class="col-lg">
+      <h3><%= course.title %></h3>
     </div>
-
-    <div class="col-12 d-flex">
-      <div class="col-lg-7">
-        <h3><%= course.title %></h3>
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/<%= course.video_id %>"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
-        <p><%= course.description %></p>
-      </div>
-
-      <div class="col-6">
-        <div class="dropdown">
-          <div class="dropdown__select">
-            <span class="dropdown__selected">Chapter 1: NPM and Setup</span>
-            <i class="fa fa-caret-down dropdown__caret"></i>
-          </div>
-          <ul class="dropdown__list dropdown-menu">
-            <li class="dropdown__item dropdown-item">
-              <span class="dropdown__text">Lecture 1:</span>
-              <i class="fas fa-play-circle dropdown__icon"></i>
-            </li>
-            <li class="dropdown__item dropdown-item">
-              <span class="dropdown__text">Lecture 2:</span>
-              <i class="fas fa-play-circle dropdown__icon"></i>
-            </li>
-          </ul>
+    <div class="col-md-12 d-flex">
+      <div class="col-md-6">
+        <div class="new-chapter">
+          <form method="POST" action="/instructor/courses/<%= course.slug %>/chapters/store" class="chapter-form">
+            <div class="form-group">
+              <label for="position">Chapter</label>
+              <input type="text" name="position" id="chapter-number">
+            </div>
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text" name="title">
+            </div>
+            <button type="submit" class="btn-add-chapter">Add chapter</button>
+          </form>
         </div>
+          <ul class="chapter-list">
+            <% for(let i = 0; i < listChapter.length; i++) {%>
+              <li>
+                Chapter <span><%= listChapter[i].position%>: </span><%= listChapter[i].title %>
+                <ul class="list-video">
+                  <% listChapter[i].list_video.forEach(video => {%>
+                    <li>
+                      <iframe src="<%= video.video_url%>" frameborder="0"></iframe>
+                    </li>
+                  <% }) %>
+                </ul>
+              </li>
+            <% } %>
+          </ul>
+      </div>
+      <div class="col-md-6">
+          <!-- form upload video -->
+          <form method="POST" action="/instructor/courses/<%= course.slug %>/videos/store" enctype="multipart/form-data" class="video-form">
+            <div class="form-group">
+              <label for="">Chapter</label>
+              <select name="chapters" id="chapter" class="id">
+                <% for(let i = 0; i<  listChapter.length; i++) {%>
+                  <option value="<%= listChapter[i]._id %>"><%= listChapter[i].title %></option>
+                <% } %>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="position">Position</label>
+              <input type="text" name="position" id="chapter-number">
+            </div>
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text" name="title">
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <input type="text" name="description">
+            </div>
+            <div class="form-group">
+              <label for="video_url">Choose video</label>
+              <input type="file" name="video_url"/>
+            </div>
+            <button type="submit" class="btn-add-video">Add video</button>
+          </form>
       </div>
     </div>
   </div>

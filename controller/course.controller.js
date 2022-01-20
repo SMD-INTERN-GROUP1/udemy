@@ -1,9 +1,10 @@
 const Course = require("../database/models/Courses");
 const Topic = require("../database/models/Topics");
+const Chapter = require("../database/models/Chapters");
+
 
 function getDetailCourse(req, res, next) {
   const title = req.params.title;
-  //query, raw query
   Course.findOne({ title: title }, function (err, course) {
     if (!err) {
       res.render("component/course_detail", { course });
@@ -83,12 +84,16 @@ const create = async (req, res, next) => {
 };
 
 const showCourse = async (req, res, next) => {
+  const slug = req.params.slug;
+  const course = await Course.findOne({slug: slug});
+  const course_id = course._id;
+  const listChapter = await Chapter.find({course_id: course_id});
   const findCourseBySlug = await Course.findOne({ slug: req.params.slug })
     .then((course) => {
       res.render("template_instructor/master", {
         title: "Instructor page",
         content: "../instructor_view/instructor_course",
-        course,
+        course, listChapter
       });
     })
     .catch(next);
@@ -131,9 +136,73 @@ const destroy = async (req, res, next) => {
       res.redirect("/instructor");
     })
     .catch((error) => {
-      res.status(500).send(error);
+      res.status(500).json({ msg: error});
     });
 };
+
+//chapter
+const getChapters = async(req, res, next) => {
+  try {
+    const slug = req.params.slug;
+    const course = await Course.findOne({slug: slug});
+    const course_id = course._id;
+    const listChapter = await Chapter.find({course_id: course_id});
+  } catch(error) {
+    res.status(500).json({ msg: error });
+  }
+}
+
+const createChapter = async(req, res, next) => {
+  try {
+    //get course id 
+    const slug = req.params.slug;
+    const course = await Course.findOne({slug: slug});
+    let formData = req.body;
+    formData.course_id = course._id;
+    console.log('formData: ', formData);
+    let chapter = new Chapter(formData);
+    chapter.save(function(err, data) {
+      if(!err) console.log("create successful");
+      else console.log(err);
+    })
+    res.redirect("/instructor");
+  } catch(error) {
+    console.log('error: ', error);
+    res.status(500).json({ msg: error });
+  }
+}
+
+//video 
+const createVideo = async(req, res, next) => {
+  try {
+    let video_url = '/' + req.file.path.split('\\').slice(6).join('/');
+    let formData = req.body;
+    Chapter.updateOne({_id: formData.chapters}, 
+        {
+          $push: {
+            list_video: {
+              $each: [
+                {
+                  "video_url": video_url,
+                  "title": formData.title,
+                  "description": formData.description,
+                  "position": formData.position,
+                }
+              ]
+            }
+          }
+        },
+        function(err, data) {
+          if(err) console.log('error update: ', err);
+          else console.log('update successful!');
+        }
+      )
+    //res.json(req.body);
+    res.redirect("/instructor");
+  } catch(error) {
+    res.json({ msg: error })
+  }
+}
 
 module.exports = {
   getDetailCourse,
@@ -145,4 +214,7 @@ module.exports = {
   destroy,
   renderUpdateView,
   update,
+  getChapters,
+  createChapter,
+  createVideo
 };
