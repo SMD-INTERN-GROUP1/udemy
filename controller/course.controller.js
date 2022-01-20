@@ -1,9 +1,7 @@
-const Course = require("../database/models/course");
-const categoryService = require("../services/category.services");
-const User = require("../database/models/Users");
 const { format } = require("timeago.js");
-const Users = require("../database/models/Users");
-
+const Course = require("../database/models/Courses");
+const categoryService = require("../services/category.services");
+const UserModal = require("../database/models/Users");
 const getDetailCourse = async (req, res, next) => {
   const slug = req.params.slug;
   const categories = await categoryService.getListCategory();
@@ -13,18 +11,68 @@ const getDetailCourse = async (req, res, next) => {
     isLogin = true;
     console.log("cookies", req.cookies.user);
   }
-
-  course.reviews.sort(function (a, b) {
+  course.reviews && course.reviews.sort(function (a, b) {
     return new Date(b.createdAt) - new Date(a.createdAt);
   });
+
+
 
   res.render("component/course_detail", {
     course,
     categories,
     isLogin,
     format,
-    user: req.cookies.user || null,
+    user: await UserModal.findById(req.cookies.user?._id) || null,
   });
+};
+
+const getSearch = async (req, res, next) => {
+  try {
+    const categories = await categoryService.getListCategory();
+    const courses = await Course.find();
+    const title = req.query.title;
+    const data = courses.filter(function (item) {
+      return item.title.toLowerCase().indexOf(title.toLowerCase()) !== -1;
+    });
+
+    // req.query.sort["fieldname"] =  asc | desc
+
+    const productnumber = 4;
+    const total_pages = Math.ceil(data.length / productnumber);
+    const num = Number(req.params.page);
+    const pagination = data.slice(
+      productnumber * num,
+      productnumber * (1 + num)
+    );
+    let isLogin = false;
+    if (!req.cookies.user && !req.cookies.user.username) {
+      isLogin = true;
+    } 
+
+    const sort = req.query.sort;
+    if (sort) {
+      const keys = Object.keys(req.query.sort)[0];
+
+      pagination.sort((objecta, objectb) => {
+        return sort[keys] === "asc"
+          ? objecta.price - objectb.price
+          : objectb.price - objecta.price;
+      });
+    }
+
+
+    res.render("search", {
+      categories,
+      pagination,
+      title,
+      total_pages,
+      result: data.length,
+      isLogin,
+      user : await UserModal.findOne({username : req.cookies.user.username}) || { wishList : [] },
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
 };
 
 const renderCoursePage = async (req, res, next) => {
@@ -41,7 +89,7 @@ const createReview = async (req, res) => {
     return res.redirect("back");
   }
   const course = await Course.findById(req.params.id);
-  const user = await User.findOne({ username: req.cookies.user.username });
+  const user = await UserModal.findOne({ username: req.cookies.user.username });
 
   if (!course) {
     return res.status(400).json({ err: "course is not exist !" });
@@ -74,7 +122,7 @@ const createReview = async (req, res) => {
 
 const deleteReview = async (req, res) => {
   const course = await Course.findById(req.params.idCourse);
-  const user = await User.findOne({ username: req.cookies.user.username });
+  const user = await UserModal.findOne({ username: req.cookies.user.username });
 
   if (!course) {
     return res.status(400).json({ err: "course is not exist !" });
@@ -117,9 +165,39 @@ const deleteReview = async (req, res) => {
   return res.redirect("back");
 };
 
+
+const wishListFunc = async (req, res) => {
+  const categories = await categoryService.getListCategory();
+  let isLogin = false;
+  if (!req.user.username) {
+    isLogin = true;
+  } 
+
+
+
+  const user = await UserModal.findOne({
+    username: req.user.username,
+  }).populate("wishList");
+
+  const newUser = await UserModal.findOne({
+    username: req.user.username,
+  });
+
+
+  return res.render("wish", {
+    wishList: user.wishList,
+    isLogin,
+    user: newUser,
+    lengthlist: user.wishList.length,
+    categories,
+  });
+};
+
 module.exports = {
   getDetailCourse,
   renderCoursePage,
+  getSearch,
+  wishListFunc,
   createReview,
   deleteReview,
 };

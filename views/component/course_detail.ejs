@@ -35,9 +35,16 @@
                 >
               </div>
               <div class="col-sm-3">
-                <a href="#" class="btn btn-secondary h-100 w-100"
-                  ><i class="far fa-heart mt-1 text-light fw-bold"></i
-                ></a>
+                <ul class="list-inline list-inline-dotted mb-0 py-1">
+                  <% if(isLogin) {%>
+                      <a href="/login" class="btn btn-danger" style="color: white !important;">Add to wishlist</a>
+                      <% } else {%>
+                     <!-- da dang nhap -->
+                     <form action="/user/wish/<%= course._id %>?_method=PATCH" method="post">  
+                      <button class="btnlike"><i class="fas fa-heart <% const check=user.wishList.includes(course._id); if(check===true) {%> active <%}%>"></i></button>
+                   </form>
+                      <%}%> 
+              </ul>
               </div>
             </div>
             <div class="mt-2">
@@ -214,7 +221,7 @@
       <div class="mt-4">
         <div class="d-flex" style="justify-content: end;">
           <div class="delete">
-            <% if(isLogin==false && user === data.name ) {%>
+            <% if(isLogin==false && user.username === data.name ) {%>
               <form action="/course/review/delete/<%= data._id %>/<%= course._id %>" method="post" style="float: right;">
                 <button type="submit" style="border: none; font-size: 20px;"><i class="fas fa-times"></i></i></button>
               </form>
@@ -249,8 +256,8 @@
               <% } %>
             </div>
             <p class="pt-2" style="font-size: 12px !important;"><%= format(data.createdAt) %></p>
-            <div class="comment mt-3">
-              <p><%= data.comment %></p>
+            <div class="comment mt-2">
+              <p style="font-size: 20px; font-weight: 600;"><%= data.comment %></p>
             </div>
             <div class="interaction">
               <a href="" class="btn btn-light rounded-circle interaction-like"

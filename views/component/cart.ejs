@@ -6,7 +6,190 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>cart</title>
 </head>
+<style>
+  *{
+    padding: 0;
+    margin: 0;
+  }
+  h1{
+    font-size: 50px;
+  }
+  .wrapper{
+    width: 1200px;
+    margin: 50px auto;
+  }
+  .container{
+    display: flex;
+    justify-content: space-between;
+  }
+  .container-title{
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+  .container-empty{
+    border:1px solid rgb(239, 239, 243);
+    width: 1200px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .product{
+      width: 850px;
+      margin: 30px 0;
+  }
+  .product-card{
+    display: flex;
+    height: 80px;
+    border: 1px solid rgb(239, 239, 243);
+    margin-bottom: 5px;
+  }
+  .product-card-img{
+    flex: 1;
+    width: 150px;
+    object-fit: cover;
+    margin-right: 5px;
+  }
+  .product-card-content{
+    flex: 4;
+    padding: 10px 5px 0 0;
+  }
+  .product-card-price{
+    display: flex;
+    flex: 1;
+    padding: 10px 15px;
+  }
+  span{
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .remove{
+    padding-right: 10px;
+    text-decoration: none;
+  }
+  .remove-product{
+    display: inline-block;
+  }
+  .payment{
+    margin: 30px 0;
+    width: 300px;
+    height: 300px;
+  }
+  .payment-price{
+    font-size: 50px;
+    font-weight: 700;
+    margin-top: 10px;
+  }
+  .payment-price-discount{
+    text-decoration: line-through;
+    color: #aaaaaa;
+    margin-bottom: 10px;
+  }
+  .product-price{
+    padding: 0 20px;
+  }
+  .product-price-first{
+      display: block;
+      color: #a435f0;
+      font-size: 16px;
+      font-weight: 600;
+  }
+  .product-price-last{
+      text-decoration: line-through;
+      display: block;
+      color: #aaaaaa;
+      font-size: 16px;
+      font-weight: 600;
+  }
+  .btn{
+    width: 100%;
+    height: 60px;
+    padding: 10px;
+    border: 1px solid transparent;
+    background-color: #a435f0;
+    font-size: 18px;
+    font-weight: bold;
+    color:#FFFFFF;
+    }
+  .btn:hover{
+    background-color: #7f0fc9;
+  }
+</style>
 <body>
-  <h1>Shopping Cart</h1>
+  <div class="wrapper">
+    <h1>Shopping Cart</h1>
+    <div class="container">
+        <div class="product">
+          <p class="container-title">0 Courses in Cart</p>
+          <% if(list.length === 0){%>
+            <div class="container-empty">
+              <img src="https://s.udemycdn.com/browse_components/flyout/empty-shopping-cart-v2.jpg" alt="empty">
+              <p>Your cart is empty. Keep shopping to find a course!</p>
+              <a href="/">
+                <button class="btn">Keep Shopping</button>
+              </a>
+            </div>
+          <%}else{%>
+            <% for(let i=0 ; i < course.length ; i++){ %>
+              <%   for(let j=0 ; j < list.length ; j++){ %>
+                  <% if(course[i]._id.toString()===list[j].toString()){ %>
+                    <div class="product-card">
+                      <img class="product-card-img" src="<%= course[i].image %>" alt="">
+                      <div class="product-card-content">
+                        <h3><%=course[i].title%></h3>
+                        <p><%=course[i].author%></p>
+                      </div>
+                      <div  class="product-card-price">
+                        <form class="remove-product" action="/cart/delete/<%=course[i]._id%>" method="delete">
+                          <a href="" class="remove">remove</a>
+                        </form>
+                        <div class="product-price">
+                        <% if(typeof course[i].price_discount === 'number' && course[i].price_discount !== 0 ){%>
+                                  <span class="product-price-first">
+                                    $ <%= course[i].price_discount %>
+                                  </span>
+                                  <span class="product-price-last">
+                                    $ <%= course[i].price %>
+                                  </span>
+                        <%}else{%>
+                            <span class="product-price-first">
+                              $ <%= course[i].price %>
+                            </span>
+                        <%}%>
+                        </div>
+                      </div>
+                  </div>
+                  <%}%>
+              <%}}%>
+          <%}%>
+        </div>
+        <% if(list.length !== 0){%>
+        <div class="payment">
+          <p class="container-title">Total:</p>
+          <p class="payment-price">$100</p>
+          <p class="payment-price-discount">$50</p>
+          <a href="/cart/checkout">
+            <button class="btn">Checkout</button>
+          </a>
+        </div>
+        <%}%>
+    </div>
+  </div>
 </body>
+  <script>
+    let quantity = document.querySelectorAll('.product-card');
+    let total = document.querySelector('.container-title');
+    let price = document.querySelectorAll('.product-price-first');
+    let discount = document.querySelectorAll('.product-price-last');
+    let showPrice =document.querySelector('.payment-price');
+    let showDiscount =document.querySelector('.payment-price-discount');
+    let sumTotal=0;
+    let sumDiscount=0;
+    price.forEach(e=> sumTotal+=Number(e.innerHTML.slice(1).trim().split(" ")[1]));
+    discount.forEach(e=> sumDiscount+=Number(e.innerHTML.slice(1).trim().split(" ")[1]));
+    total.innerHTML = `${quantity.length} Courses in Cart`;
+    showPrice.innerHTML = `$${sumTotal}`;
+    showDiscount.innerHTML = `$${sumDiscount}`;
+  </script>
 </html>
