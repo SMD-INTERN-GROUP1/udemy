@@ -11,18 +11,17 @@ const getDetailCourse = async (req, res, next) => {
     isLogin = true;
     console.log("cookies", req.cookies.user);
   }
-  course.reviews && course.reviews.sort(function (a, b) {
-    return new Date(b.createdAt) - new Date(a.createdAt);
-  });
-
-
+  course.reviews &&
+    course.reviews.sort(function (a, b) {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
 
   res.render("component/course_detail", {
     course,
     categories,
     isLogin,
     format,
-    user: await UserModal.findById(req.cookies.user?._id) || null,
+    user: (await UserModal.findById(req.cookies.user?._id)) || null,
   });
 };
 
@@ -30,6 +29,7 @@ const getSearch = async (req, res, next) => {
   try {
     const categories = await categoryService.getListCategory();
     const courses = await Course.find();
+  
     const title = req.query.title;
     const data = courses.filter(function (item) {
       return item.title.toLowerCase().indexOf(title.toLowerCase()) !== -1;
@@ -45,9 +45,16 @@ const getSearch = async (req, res, next) => {
       productnumber * (1 + num)
     );
     let isLogin = false;
-    if (!req.cookies.user && !req.cookies.user.username) {
-      isLogin = true;
-    } 
+    let userSearch;
+
+    if (!req.cookies.user) {
+      req.cookies.user = {};
+
+      if (!req.cookies.user.username) isLogin = true;
+    } else {
+      if (req.cookies.user._id)
+        userSearch = await UserModal.findById(req.cookies.user._id);
+    }
 
     const sort = req.query.sort;
     if (sort) {
@@ -59,8 +66,6 @@ const getSearch = async (req, res, next) => {
           : objectb.price - objecta.price;
       });
     }
-
-
     res.render("search", {
       categories,
       pagination,
@@ -68,7 +73,7 @@ const getSearch = async (req, res, next) => {
       total_pages,
       result: data.length,
       isLogin,
-      user : await UserModal.findOne({username : req.cookies.user.username}) || { wishList : [] },
+      user: userSearch || { wishList: [] },
     });
   } catch (error) {
     console.log(error.message);
@@ -133,6 +138,13 @@ const deleteReview = async (req, res) => {
   //     reviews: req.params.id,
   //   },
   // });
+  // number, boolean, string
+  // object, funtion, array => const a = {a : ""}
+  
+ // void afunc(* ){ num = 3 } 
+ // int a = 4;
+ // afunc(a)
+
 
   const index = course.reviews.findIndex((review) => {
     return review._id == req.params.id;
@@ -165,16 +177,12 @@ const deleteReview = async (req, res) => {
   return res.redirect("back");
 };
 
-
 const wishListFunc = async (req, res) => {
   const categories = await categoryService.getListCategory();
   let isLogin = false;
   if (!req.user.username) {
     isLogin = true;
-  } 
-
-
-
+  }
   const user = await UserModal.findOne({
     username: req.user.username,
   }).populate("wishList");
@@ -182,8 +190,6 @@ const wishListFunc = async (req, res) => {
   const newUser = await UserModal.findOne({
     username: req.user.username,
   });
-
-
   return res.render("wish", {
     wishList: user.wishList,
     isLogin,

@@ -25,12 +25,12 @@
                         <p class="mb-3"><%= data.description %></p></p>
                         <ul class="list-inline list-inline-dotted mb-0">
                             <li class="pb-1">All level</li>
-                            <% if(isLogin) {%>
+                            <% if(isLogin){%>
                                 <a href="/login" class="btnlike"><i class="fas fa-heart"></i></a>
                                 <% } else {%>
                                <!-- da dang nhap -->
                              <form action="/user/wish/<%= data._id %>?_method=PATCH" method="post">  
-                                <button class="btnlike"><i class="fas fa-heart <% var wishLists=user.wishList.includes(data._id); if(wishLists==true) {%> active <%}%>"></i></button>
+                                <button class="btnlike"><i class=" fas fa-heart <% var wishLists=user.wishList.includes(data._id);if(wishLists==true) {%> active <%}%>"></i></button>
                              </form>
                                 <%}%> 
                         </ul>
