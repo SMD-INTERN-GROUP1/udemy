@@ -1,4 +1,9 @@
+const Course = require("../database/models/Courses");
+const Banner = require("../database/models/banners");
+const Instructor = require("../database/models/Instrutor");
+const User = require("../database/models/Users");
 const categoryService = require("../services/category.services");
+
 const Course = require('../database/models/Courses');
 const Topic = require('../database/models/Topics');
 const Banner = require('../database/models/banners');
@@ -57,5 +62,9 @@ const getHomePage = async (req, res, next) => {
 }
 
 module.exports = {
-    getHomePage
+    getHomePage,
+  renderTeachingPage,
+  renderTeachingRegister,
+  teachingRegister,
 } 
+

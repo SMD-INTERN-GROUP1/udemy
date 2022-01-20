@@ -1,3 +1,129 @@
+
+:root {
+  --primary: #08aeea;
+  --secondary: #13d2b8;
+  --purple: #bd93f9;
+  --pink: #ff6bcb;
+  --blue: #8be9fd;
+  --gray: #333;
+  --font: "Poppins", sans-serif;
+  --gradient: linear-gradient(40deg, #ff6ec4, #7873f5);
+  --shadow: 0 0 15px 0 rgba(0, 0, 0, 0.05);
+}
+* {
+  box-sizing: border-box;
+}
+input,
+button,
+textarea {
+  border: 0;
+  outline: none;
+}
+/* Main code */
+
+.dropdown {
+  --primary: #0f0f0f;
+  --secondary: #080808;
+  width: 100%;
+  position: relative;
+  color: white;
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 4px;
+  margin-top: 2rem;
+}
+.dropdown__select {
+  border-radius: inherit;
+}
+.dropdown__list {
+  margin-top: 2.5rem;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  display: none;
+  z-index: 9999;
+}
+.dropdown__list:before {
+  content: "";
+  height: 2rem;
+  position: absolute;
+  left: 0;
+  right: 0;
+  background-color: transparent;
+  transform: translateY(-100%);
+}
+.dropdown:hover .dropdown__list {
+  display: block;
+}
+.dropdown__select,
+.dropdown__item {
+  width: 100%;
+  padding: 2rem;
+  background-color: var(--primary);
+  display: flex;
+  color: #fff;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.dropdown__item {
+  transition: background-color 0.2s linear;
+}
+.dropdown__item:first-child {
+  border-radius: 4px 4px 0 0;
+  position: relative;
+}
+.dropdown__item:first-child:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 3rem;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid var(--primary);
+  transform: translateY(-100%);
+  transition: border-color 0.2s linear;
+}
+.dropdown__item:first-child:hover:before {
+  border-bottom-color: #0862ea;
+  color: #ffff;
+}
+.dropdown__item:last-child {
+  border-radius: 0 0 4px 4px;
+}
+.dropdown__item:hover {
+  background-color: #0862ea;
+  color: #ffff;
+}
+.chapter-form {
+  display: flex;
+}
+.chapter-form label {
+  font-weight: 600;
+}
+#chapter-number {
+  width: 60px;
+  margin: 0 4px;
+}
+input[type=text] {
+  border: 1px solid #bdc3c7;
+}
+.chapter-form .btn-add-chapter {
+  height: 26px;
+  margin-left: 2px;
+  background-color: #a29bfe;
+}
+.video-form label {
+  width: 80px;
+  margin-right: 60px;
+}
+.video-form .btn-add-video {
+  padding: 4px;
+  background-color: blueviolet;
+}
+
 .tab-list {
   display: none !important;
 }

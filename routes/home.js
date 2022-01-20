@@ -7,4 +7,10 @@ const router = express.Router();
 /* GET home page. */
 router.get("/", homeController.getHomePage);
 
+router.get("/teaching", homeController.renderTeachingPage);
+
+router.get("/teaching/register", homeController.renderTeachingRegister);
+
+router.post("/teaching/register", homeController.teachingRegister);
+
 module.exports = router;
