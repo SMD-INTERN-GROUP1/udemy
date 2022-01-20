@@ -64,7 +64,6 @@ app.use(methodOverride("_method"));
 // override using a query value
 app.use(methodOverride("_method"));
 
-
 route(app);
 
 // catch 404 and forward to error handler
