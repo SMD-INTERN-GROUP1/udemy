@@ -156,11 +156,32 @@ async function editPhoto (req, res, next) {
   }
 }
 
+async function renderCloseAccountPage (req, res, next) {
+  try {
+    const categories = await categoryService.getListCategory();
+  
+    if (req.cookies.user) {
+      isLogin = true;
+
+      Users.findOne({_id: req.cookies.user._id})
+      .then(user => {
+        res.render("profile/close-account.ejs", { title: "Edit profile", user, categories } );
+      })
+      .catch(next);
+    } else {
+      res.redirect('/login');
+    }
+  } catch(err) {
+    return   res.status(500).json(err);
+  };
+};
+
 module.exports = {
   renderEditProfilePage,
   editProfile,
   renderEditAccountPage,
   editAccount,
   renderEditPhotoPage,
-  editPhoto
+  editPhoto,
+  renderCloseAccountPage
 };

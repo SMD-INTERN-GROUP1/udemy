@@ -36,38 +36,21 @@
                 <ul class="nav">
                   <li><a href="edit-profile"><span class="fa fa-user"></span> Profile</a></li>
                   <li><a href="edit-account"><span class="fa fa-key"></span> Account</a></li>
-                  <li class="active"><a href="edit-photo"><span class="fa fa-picture-o"></span> Photo </a></li>
-                  <li><a href="close-account"><span class="fa fa-window-close"></span> Close account </a></li>
+                  <li><a href="edit-photo"><span class="fa fa-picture-o"></span> Photo </a></li>
+                  <li class="active"><a href="close-account"><span class="fa fa-window-close"></span> Close account </a></li>
                 </ul>
               </nav>
             </div>
             <div class="content-panel">
               <div class="content-title">
-                <h2 class="title">Photo</h2>
-                <h4 class="sub-title">Add a nice photo of yourself for your profile.</h4>
+                <h2 class="title"> Close Account </h2>
+                <h4 class="sub-title"> Close your account permanently. </h4>
               </div>
               <hr>
-              <div class="container">
-                <div>
-                    <form method="post" action="edit-photo?_method=PATCH" enctype="multipart/form-data">
-                      <div class="form-group">
-                          <div class="container-preview-img">
-                            <div class="preview">
-                              <img id="img-preview" src="https://img-c.udemycdn.com/user/200_H/anonymous_3.png" />
-                              <label for="file-input" class="upload-image">Upload image</label>
-                              <!-- accept="image/*" => chỉ chấp nhận các file dạng hình ảnh -->
-                              <input type="file" accept="image/*" name="avatar" class="input-group input-file" id="file-input" required/>
-                            </div>
-                          </div>
-                          <hr>
-                          <div style="text-align: center;">
-                            <button type="submit" class="btn btn-primary pull-center">Save</button>
-                          </div>
-                          <hr>
-                      </div>
-                    </form>
-                </div>
-              </div>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>  
+
             </div>
           </div>
         </section>
@@ -76,17 +59,8 @@
     <footer><%- include('../component/footer.ejs')%></footer>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script>
-      const input = document.getElementById("file-input");
-      const image = document.getElementById("img-preview");
-
-      input.addEventListener("change", (e) => {
-        if (e.target.files.length) {
-          const src = URL.createObjectURL(e.target.files[0]);
-          image.src = src;
-        }
-      });
-    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>       
+    <script src="../../javascript/profile.js"></script>
+    <script>$('.alert').alert()</script>
   </body>
 </html>
