@@ -68,17 +68,14 @@ const getHomePage = async (req, res, next) => {
 
 const renderTeachingPage = async (req, res, next) => {
   const categories = await categoryService.getListCategory();
-  let isLogin = false;
-  let user;
-  if (!req.cookies.user) {
-    isLogin = true;
-    console.log("cookies", req.cookies.user);
-  }
+  let user = req.cookies.user;
+    if (typeof user === "undefined") {
+      user = "";
+    }
 
   res.render("component/instructor", {
     title: "Instructor page",
     categories,
-    isLogin,
     user,
   });
 };
@@ -86,16 +83,12 @@ const renderTeachingPage = async (req, res, next) => {
 const renderTeachingRegister = async (req, res, next) => {
   const categories = await categoryService.getListCategory();
 
-  let isLogin = true;
-  let user;
-  if (req.cookies.user) {
-    isLogin = false;
-    console.log("cookies", req.cookies.user);
-    user = req.cookies.user;
-  }
+  let user = req.cookies.user;
+    if (typeof user === "undefined") {
+      user = "";
+    }
   res.render("component/teaching_register", {
     title: "Teaching Register",
-    isLogin,
     categories,
     user,
   });

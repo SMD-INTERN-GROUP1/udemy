@@ -125,7 +125,8 @@ a:hover {
   border: 0.5px solid black;
   padding: 10px 20px;
   background-color: black;
-  color: white;
+  color: white !important;
+  font-weight: 600;
 }
 .nav-noglogin {
   display: none;
@@ -371,31 +372,30 @@ a:hover {
   -webkit-appearance: none;
   -moz-appearance: none;
   color: #626262;
-  
 }
-.btnlike .fa-heart{
+.btnlike .fa-heart {
   font-size: 30px;
 }
-.fa-heart.active{
-  color: #A435F0 !important;
+.fa-heart.active {
+  color: #a435f0 !important;
 }
 .btnlike:hover,
 .btnlike:focus {
   background: none;
-  color: #A435F0;
+  color: #a435f0;
 }
 .btnlike:focus {
   outline: 1px solid transparent;
 }
-.pagetitle{
+.pagetitle {
   position: relative;
 }
-.pagetitle::after{
+.pagetitle::after {
   bottom: -3px;
   content: "";
   width: 80px;
   height: 4px;
-  background-color: #A435F0;
+  background-color: #a435f0;
   position: absolute;
 }
 
@@ -578,7 +578,7 @@ a:hover {
 
 /* component notice */
 .udlite-footer .inverted-link {
-  color: #cec0fc !important; 
+  color: #cec0fc !important;
   text-decoration: none;
 }
 
