@@ -14,9 +14,8 @@ router.get("/categories", categoryController.renderTrashCategories);
 router.patch("/category/:id/restore", categoryController.restore);
 router.delete("/category/:id/force", categoryController.forceDestroy);
 
-/* Trash courses section */
+// /* Trash courses section */
 router.get("/courses", courseController.renderTrashCourses);
-
 router.delete("/course/:id/force", courseController.forceDestroy);
 
 module.exports = router;

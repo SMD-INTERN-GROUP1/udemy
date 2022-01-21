@@ -5,8 +5,8 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const mongoose = require("mongoose");
 const methodOverride = require("method-override");
+const mongoose = require("mongoose");
 
 dotenv.config();
 
@@ -43,6 +43,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "node_modules")));
+
+// override using a query value
 app.use(methodOverride("_method"));
 
 route(app);
@@ -53,7 +55,7 @@ route(app);
 //   next(createError(404));
 // });
 
-// error handler
+// // error handler
 // app.use((err, req, res, next) => {
 //   // set locals, only providing error in development
 //   res.locals.message = err.message;

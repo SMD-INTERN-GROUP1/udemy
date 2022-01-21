@@ -65,6 +65,35 @@ const getHomePage = async (req, res, next) => {
     res.status(500).json({ msg: error });
   }
 };
+
+const renderTeachingPage = async (req, res, next) => {
+  const categories = await categoryService.getListCategory();
+  let user = req.cookies.user;
+  if (typeof user === "undefined") {
+    user = "";
+  }
+
+  res.render("component/instructor", {
+    title: "Instructor page",
+    categories,
+    user,
+  });
+};
+
+const renderTeachingRegister = async (req, res, next) => {
+  const categories = await categoryService.getListCategory();
+
+  let user = req.cookies.user;
+  if (typeof user === "undefined") {
+    user = "";
+  }
+  res.render("component/teaching_register", {
+    title: "Teaching Register",
+    categories,
+    user,
+  });
+};
+
 const teachingRegister = (req, res, next) => {
   let data;
   const id = req.body.user_id;
@@ -76,12 +105,14 @@ const teachingRegister = (req, res, next) => {
       { isTeacher: false, _id: id },
       { $set: { isTeacher: true } }
     ),
-  ]).then((instructor, user) => {
-    // res.send([instructor, user]);
+  ]).then(() => {
     res.redirect("/instructor");
   });
 };
 
 module.exports = {
   getHomePage,
+  renderTeachingPage,
+  renderTeachingRegister,
+  teachingRegister,
 };

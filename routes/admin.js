@@ -9,7 +9,12 @@ const userController = require("../controller/user.controller");
 const bannerController = require("../controller/banner.controller");
 
 /* GET admin page. */
-router.get("/", adminController.renderAdminPage);
+router.get("/", (req, res, next) => {
+  res.render("dashboard_admin/master", {
+    title: "Admin page",
+    content: "../dashboard_admin/main_content",
+  });
+});
 
 // Users section
 router.get("/users", userController.renderUserPage);
@@ -33,7 +38,6 @@ router.delete("/topics/:id", topicController.destroy);
 router.get("/courses", courseController.renderCoursePage);
 
 // Banner section
-// GET List banners /admin/banners
 router.get("/banners", bannerController.renderBannerPage);
 router.get("/addbanner", bannerController.renderCreateView);
 router.post("/createbanner", bannerController.create);

@@ -165,8 +165,7 @@
 
   btnDeleteCategory.onclick = function () {
     // alert(topicId);
-    deleteForm.action =
-      "/admin/deletecategories/" + categoryId + "?_method=DELETE";
+    deleteForm.action = "/admin/categories/" + categoryId + "?_method=DELETE";
     deleteForm.submit();
   };
 </script>
