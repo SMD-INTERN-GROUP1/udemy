@@ -66,7 +66,9 @@
   }
   .remove{
     padding-right: 10px;
-    text-decoration: none;
+    border: transparent;
+    background-color: transparent;
+    color:#a435f0;
   }
   .remove-product{
     display: inline-block;
@@ -141,8 +143,8 @@
                         <p><%=course[i].author%></p>
                       </div>
                       <div  class="product-card-price">
-                        <form class="remove-product" action="/cart/delete/<%=course[i]._id%>" method="delete">
-                          <a href="" class="remove">remove</a>
+                        <form class="remove-product" action="/cart/delete/<%=course[i]._id%>?_method=DELETE" method="POST">
+                          <button class="remove" type="submit">remove</button>
                         </form>
                         <div class="product-price">
                         <% if(typeof course[i].price_discount === 'number' && course[i].price_discount !== 0 ){%>
@@ -169,7 +171,7 @@
           <p class="container-title">Total:</p>
           <p class="payment-price">$100</p>
           <p class="payment-price-discount">$50</p>
-          <a href="/cart/checkout">
+          <a href="/pay">
             <button class="btn">Checkout</button>
           </a>
         </div>
@@ -190,6 +192,6 @@
     discount.forEach(e=> sumDiscount+=Number(e.innerHTML.slice(1).trim().split(" ")[1]));
     total.innerHTML = `${quantity.length} Courses in Cart`;
     showPrice.innerHTML = `$${sumTotal}`;
-    showDiscount.innerHTML = `$${sumDiscount}`;
+    showDiscount.innerHTML = `$${sumDiscount}`; 
   </script>
 </html>
