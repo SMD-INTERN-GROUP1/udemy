@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <% include header %>
+  <body>
+    <!-- Start sidebar -->
+    <% include sidebar %>
+    <!-- End sidebar -->
+
+    <!-- Start main-conntent -->
+    <div class="main-content">
+      <!-- Header section -->
+      <% include navbar %>
+      <!-- End header -->
+
+      <!-- Main section -->
+      <main>
+        <!-- Include content -->
+        <div class="container"><%- include(content) %></div>
+      </main>
+      <!-- End main -->
+    </div>
+    <!-- End main-conntent -->
+
+    <!-- Data Table  -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      type="text/javascript"
+      charset="utf8"
+      src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"
+    ></script>
+    <script>
+      $(document).ready(function () {
+        $("#table_1").DataTable({
+          language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Search records",
+          },
+          reponsive: true,
+          pagingType: "full_numbers",
+          lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"],
+          ],
+        });
+        $("#table_courses").DataTable({
+          language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Search records",
+          },
+          reponsive: true,
+          pagingType: "full_numbers",
+          lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"],
+          ],
+        });
+        $("#table_trash_topics").DataTable({
+          language: {
+            search: "_INPUT_",
+            searchPlaceholder: "Search records",
+          },
+          reponsive: true,
+          pagingType: "full_numbers",
+          lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"],
+          ],
+        });
+      });
+    </script>
+  </body>
+</html>

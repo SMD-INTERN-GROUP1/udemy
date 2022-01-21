@@ -1,8 +1,8 @@
-const renderAdminPage = async (req, res, next) => {
-  res.render("template/master", {
+const renderAdminPage = (req, res, next) => {
+  res.render("dashboard_admin/master", {
     title: "Admin page",
-    content: "../admin_view/admin_index",
+    content: "../dashboard_admin/main_content",
   });
 };
 
-module.exports = { renderAdminPage };
+module.exports = renderAdminPage;
