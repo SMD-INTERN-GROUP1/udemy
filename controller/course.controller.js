@@ -30,10 +30,26 @@ const getDetailCourse = async (req, res, next) => {
 };
 
 const renderCoursePage = async (req, res, next) => {
-  res.render("template/master", {
+  const getListCourses = await Course.find().populate("topic_id");
+  res.render("dashboard_admin/master", {
     title: "Topic page",
     content: "../course/course_index",
+    getListCourses,
   });
+};
+
+const renderTrashCourses = async (req, res, next) => {
+  const getCoursesDeleted = await Course.findDeleted({}).populate("topic_id");
+  res.render("dashboard_admin/master", {
+    title: "Trash courses",
+    content: "../trash_view/trash_course",
+    getCoursesDeleted,
+  });
+};
+
+const forceDestroy = async (req, res, next) => {
+  const forceCourse = await Course.deleteOne({ _id: req.params.id });
+  res.redirect("/admin/trash/courses");
 };
 
 const getListCourserOfInstructor = async (req, res, next) => {
@@ -105,15 +121,16 @@ const create = async (req, res, next) => {
 
 const showCourse = async (req, res, next) => {
   const slug = req.params.slug;
-  const course = await Course.findOne({slug: slug});
+  const course = await Course.findOne({ slug: slug });
   const course_id = course._id;
-  const listChapter = await Chapter.find({course_id: course_id});
+  const listChapter = await Chapter.find({ course_id: course_id });
   const findCourseBySlug = await Course.findOne({ slug: req.params.slug })
     .then((course) => {
       res.render("template_instructor/master", {
         title: "Instructor page",
         content: "../instructor_view/instructor_course",
-        course, listChapter
+        course,
+        listChapter,
       });
     })
     .catch(next);
@@ -156,72 +173,73 @@ const destroy = async (req, res, next) => {
       res.redirect("/instructor");
     })
     .catch((error) => {
-      res.status(500).json({ msg: error});
+      res.status(500).json({ msg: error });
     });
 };
 
 //chapter
-const getChapters = async(req, res, next) => {
+const getChapters = async (req, res, next) => {
   try {
     const slug = req.params.slug;
-    const course = await Course.findOne({slug: slug});
+    const course = await Course.findOne({ slug: slug });
     const course_id = course._id;
-    const listChapter = await Chapter.find({course_id: course_id});
-  } catch(error) {
+    const listChapter = await Chapter.find({ course_id: course_id });
+  } catch (error) {
     res.status(500).json({ msg: error });
   }
-}
+};
 
-const createChapter = async(req, res, next) => {
+const createChapter = async (req, res, next) => {
   try {
-    //get course id 
+    //get course id
     const slug = req.params.slug;
-    const course = await Course.findOne({slug: slug});
+    const course = await Course.findOne({ slug: slug });
     let formData = req.body;
     formData.course_id = course._id;
     let chapter = new Chapter(formData);
-    chapter.save(function(err, data) {
-      if(!err) console.log("create successful");
+    chapter.save(function (err, data) {
+      if (!err) console.log("create successful");
       else console.log(err);
-    })
+    });
     res.redirect("/instructor");
-  } catch(error) {
-    console.log('error: ', error);
+  } catch (error) {
+    console.log("error: ", error);
     res.status(500).json({ msg: error });
   }
-}
+};
 
-//video 
-const createVideo = async(req, res, next) => {
+//video
+const createVideo = async (req, res, next) => {
   try {
-    let video_url = '/' + req.file.path.split('\\').slice(6).join('/');
+    let video_url = "/" + req.file.path.split("\\").slice(6).join("/");
     let formData = req.body;
-    Chapter.updateOne({_id: formData.chapters}, 
-        {
-          $push: {
-            list_video: {
-              $each: [
-                {
-                  "video_url": video_url,
-                  "title": formData.title,
-                  "description": formData.description,
-                  "position": formData.position,
-                }
-              ]
-            }
-          }
+    Chapter.updateOne(
+      { _id: formData.chapters },
+      {
+        $push: {
+          list_video: {
+            $each: [
+              {
+                video_url: video_url,
+                title: formData.title,
+                description: formData.description,
+                position: formData.position,
+              },
+            ],
+          },
         },
-        function(err, data) {
-          if(err) console.log('error update: ', err);
-          else console.log('update successful!');
-        }
-      )
+      },
+      function (err, data) {
+        if (err) console.log("error update: ", err);
+        else console.log("update successful!");
+      }
+    );
     //res.json(req.body);
     res.redirect("/instructor");
-  } catch(error) {
-    res.json({ msg: error })
+  } catch (error) {
+    res.json({ msg: error });
   }
-}
+};
 const wishListFunc = async (req, res) => {
   const categories = await categoryService.getListCategory();
   let isLogin = false;
@@ -297,10 +315,9 @@ const deleteReview = async (req, res) => {
   // number, boolean, string
   // object, funtion, array => const a = {a : ""}
 
- // void afunc(* ){ num = 3 } 
- // int a = 4;
- // afunc(a)
-
+  // void afunc(* ){ num = 3 }
+  // int a = 4;
+  // afunc(a)
 
   const index = course.reviews.findIndex((review) => {
     return review._id == req.params.id;
@@ -391,6 +408,8 @@ const getSearch = async (req, res, next) => {
 module.exports = {
   getDetailCourse,
   renderCoursePage,
+  renderTrashCourses,
+  forceDestroy,
   getListCourserOfInstructor,
   renderCreateCoursePage,
   create,
@@ -404,5 +423,5 @@ module.exports = {
   wishListFunc,
   getSearch,
   deleteReview,
-  createReview
+  createReview,
 };
