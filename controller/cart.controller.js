@@ -20,6 +20,7 @@ const listCart = async (req, res) => {
           if(course[i]._id.toString()=== list[j].toString())
           {
             let form={
+                img: course[i].image,
                 name: course[i].title,
                 price: course[i].price_discount > 0 ? course[i].price_discount : course[i].price,
                 currency: 'USD',

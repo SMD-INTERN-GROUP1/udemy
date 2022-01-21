@@ -8,8 +8,10 @@ paypal.configure({
     'client_secret': 'EB_HyN6R9XSQgznNum1nnO_xvCeiTdyUuPUdUx5OrMknrfv4N7B0UX58dN7keVSFoxY0IxUsVYBDSwAc'
 });
 
-router.get('/',(req, res) => { 
-  return res.render('component/payment')
+router.get('/',(req, res) => {
+  const listProducts = req.cookies.listPaypal;
+  console.log(listProducts);
+  return res.render('component/payment',{listProducts})
 });
 
 router.post('/thanhtoan', (req, res) => {

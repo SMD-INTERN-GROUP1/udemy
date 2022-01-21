@@ -1,58 +1,57 @@
 <div class="search pt-5" >
-    <div class="container">
-        <div class="pagetitle">
-            <h1>WishList</h1>
-        </div>
-     <div href="" class="search-product" style="min-height: 500px;">
-        <% if(lengthlist==0) {%>
-            <h3>No courses in your wishlist</h3>
-            <% }%>
-            <div class="row">
-                <%wishList.forEach(function(data) { %>
-                <div class="col-sm-6 col-lg-4 mt-3 mh-100">
-                  <div class="card mb-3">
-                    <img src="<%= data.image%>" class="card-img-top" alt="..." />
-                    <div class="card-body">
-                      <h5 class="card-title fs-5 fw-bold"><%= data.title%></h5>
-                      <p class="card-text fs-5"><%= data.author%></p>
-                      <p class="card-text fs-6">Price: $<%= data.price%></p>
-                      <ul class="list-inline list-inline-dotted mb-0 py-1">
-                        <% if(isLogin) {%>
-                            <a href="/login" class="btn btn-danger" style="color: white !important;">Add to wishlist</a>
-                            <% } else {%>
-                           <!-- da dang nhap -->
-                           <form action="/user/wish/<%= data._id %>?_method=PATCH" method="post">  
-                            <button class="btnlike"><i class="fas fa-heart <% var wishLists=user.wishList.includes(data._id); if(wishLists==true) {%> active <%}%>"></i></button>
-                         </form>
-                            <%}%> 
-                    </ul>
-                      <a
-                        href="/instructor/datas/<%= data.slug%>"
-                        class="btn btn-dark w-100 fw-bold"
-                        style="color: white !important;"
-                        >View Details</a
-                      >
-                     
-                    </div>
+  <div class="container">
+      <div class="pagetitle">
+          <h1>WishList</h1>
+      </div>
+   <div href="" class="search-product" style="min-height: 500px;">
+      <% if(lengthlist==0) {%>
+          <h3>No courses in your wishlist</h3>
+          <% }%>
+          <div class="row">
+              <%wishList.forEach(function(data) { %>
+              <div class="col-sm-6 col-lg-4 mt-3 mh-100">
+                <div class="card mb-3">
+                  <img src="<%= data.image%>" class="card-img-top" alt="..." />
+                  <div class="card-body">
+                    <h5 class="card-title fs-5 fw-bold"><%= data.title%></h5>
+                    <p class="card-text fs-5"><%= data.author%></p>
+                    <p class="card-text fs-6">Price: $<%= data.price%></p>
+                    <ul class="list-inline list-inline-dotted mb-0 py-1">
+                      <% if(isLogin) {%>
+                          <a href="/login" class="btn btn-danger" style="color: white !important;">Add to wishlist</a>
+                          <% } else {%>
+                         <!-- da dang nhap -->
+                         <form action="/user/wish/<%= data._id %>?_method=PATCH" method="post">  
+                          <button class="btnlike"><i class="fas fa-heart <% var wishLists=user.wishList.includes(data._id); if(wishLists==true) {%> active <%}%>"></i></button>
+                       </form>
+                          <%}%> 
+                  </ul>
+                    <a
+                      href="/course/<%-data.slug%>"
+                      class="btn btn-dark w-100 fw-bold"
+                      style="color: white !important;"
+                      >View Details</a
+                    >
                   </div>
                 </div>
-                <% }); %>
               </div>
+              <% }); %>
+            </div>
 
 
-   </div>
-   <nav>
-    
-</nav>
-    </div>
  </div>
- 
- <script>
-    // const buttonsWish = document.getElementsByClassName("toggle-wish");
-    // for(let btn of buttonsWish) {
-    //     btn.onclick = function() {
-    //         const id = this.getAttribute("data-id")
-           
-    //     }
-    // }
- </script>
+ <nav>
+  
+</nav>
+  </div>
+</div>
+
+<script>
+  // const buttonsWish = document.getElementsByClassName("toggle-wish");
+  // for(let btn of buttonsWish) {
+  //     btn.onclick = function() {
+  //         const id = this.getAttribute("data-id")
+         
+  //     }
+  // }
+</script>
