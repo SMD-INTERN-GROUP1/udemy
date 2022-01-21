@@ -16,7 +16,7 @@
         <ul>
             <%for(let i = 0; i < list_chapter.length; i++) { %>
                 <li class="chapter-item">
-                    <span class="chapter-position">Chapter <%= list_chapter[i].position%>:</span> <%= list_chapter[i].title %>
+                    <span class="chapter-position">Chapter <%= list_chapter[i].chapter_position%>:</span> <%= list_chapter[i].title %>
                     <ul>
                         <% list_chapter[i].list_video.forEach(video => {%>
                             <li class="video-item" data-url="<%=video.video_url%>">
@@ -78,7 +78,6 @@
             console.log('a again: ',sourceUrl);
         })
     });
-
 </script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

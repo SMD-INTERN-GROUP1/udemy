@@ -11,7 +11,9 @@ a:hover {
     text-decoration: none !important;
 }
 .card-course {
-   
+   background-color: #b2bec3;
+   padding: 6px;
+   border-radius: 5px;
 }
 .card-course .image-course {
     width: 300px;

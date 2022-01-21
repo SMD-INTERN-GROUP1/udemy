@@ -12,8 +12,8 @@
         <div class="new-chapter">
           <form method="POST" action="/instructor/courses/<%= course.slug %>/chapters/store" class="chapter-form">
             <div class="form-group">
-              <label for="position">Chapter</label>
-              <input type="text" name="position" id="chapter-number">
+              <label for="chapter_position">Chapter</label>
+              <input type="text" name="chapter_position" id="chapter-number">
             </div>
             <div class="form-group">
               <label for="title">Title</label>
@@ -25,11 +25,15 @@
           <ul class="chapter-list">
             <% for(let i = 0; i < listChapter.length; i++) {%>
               <li>
-                Chapter <span><%= listChapter[i].position%>: </span><%= listChapter[i].title %>
+                Chapter <span><%= listChapter[i].chapter_position%>: </span><%= listChapter[i].title %>
                 <ul class="list-video">
                   <% listChapter[i].list_video.forEach(video => {%>
                     <li>
-                      <iframe src="<%= video.video_url%>" frameborder="0"></iframe>
+                      <video id="myVideo" width="250" height="150" controls>
+                        <source id="my_video_url" src="<%= video.video_url%>" type="video/mp4">
+                        <source src="mov_bbb.ogg" type="video/ogg">
+                        Your browser does not support HTML5 video.
+                      </video>
                     </li>
                   <% }) %>
                 </ul>
@@ -49,8 +53,8 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="position">Position</label>
-              <input type="text" name="position" id="chapter-number">
+              <label for="video_position">Position</label>
+              <input type="text" name="video_position" id="chapter-number">
             </div>
             <div class="form-group">
               <label for="title">Title</label>
