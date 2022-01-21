@@ -8,43 +8,36 @@ paypal.configure({
     'client_secret': 'EB_HyN6R9XSQgznNum1nnO_xvCeiTdyUuPUdUx5OrMknrfv4N7B0UX58dN7keVSFoxY0IxUsVYBDSwAc'
 });
 
-router.get('/',(req, res) => {
+router.get('/',(req, res) => { 
   return res.render('component/payment')
 });
 
 router.post('/thanhtoan', (req, res) => {
+    const items=req.cookies.listPaypal;
+    let total=0;
+    for(let i=0;i<items.length;i++)
+    {
+        total+=items[i].price;
+    }
+    console.log(total);
     const create_payment_json = {
       "intent": "sale",
       "payer": {
           "payment_method": "paypal"
       },
       "redirect_urls": {
-          "return_url": "http://localhost:4000/success",
+          "return_url": "http://localhost:4000/pay/success",
           "cancel_url": "http://localhost:4000/cancel"
       },
       "transactions": [{
           "item_list": {
-              "items": [{
-                  "name": "iphone",
-                  "sku": "001",
-                  "price": "50.00",
-                  "currency": "USD",
-                  "quantity": 1
-              },
-              {
-                "name": "iphone1",
-                "sku": "001",
-                "price": "50.00",
-                "currency": "USD",
-                "quantity": 1
-            }
-            ]
+              "items": items
           },
           "amount": {
               "currency": "USD",
-              "total": "100.00"
+              "total": `${total}.00`
           },
-          "description": "săn sale"
+          "description": "san sale"
       }]
   };
 
@@ -57,7 +50,7 @@ router.post('/thanhtoan', (req, res) => {
             res.redirect(payment.links[i].href);
           }
         }
-        console.log('payment',payment);
+        console.log('payment',payment,payment.transactions[0].item_list,'amount',payment.transactions[0].amount);
     }
   });
 
@@ -65,13 +58,19 @@ router.post('/thanhtoan', (req, res) => {
 router.get('/success', (req, res) => {
   const payerId = req.query.PayerID;
   const paymentId = req.query.paymentId;
-
+  const items=req.cookies.listPaypal;
+    let total = 0;
+    for(let i=0;i<items.length;i++)
+    {
+        total+=items[i].price;
+    }
+    console.log(total, items.length);
   const execute_payment_json = {
     "payer_id": payerId,
     "transactions": [{
         "amount": {
             "currency": "USD",
-            "total": "25.00"
+            "total": `${total}.00`
         }
     }]
   };

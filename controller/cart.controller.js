@@ -12,6 +12,29 @@ const listCart = async (req, res) => {
   else{
     const list=cart.listCarts;
     const course = await CourseModel.find();
+    let listPaypal=[];
+    for(let i=0;i<course.length;i++)
+    {
+      for(let j=0;j<list.length;j++)
+      {
+          if(course[i]._id.toString()=== list[j].toString())
+          {
+            let form={
+                name: course[i].title,
+                price: course[i].price_discount > 0 ? course[i].price_discount : course[i].price,
+                currency: 'USD',
+                quantity: 1
+            }
+            listPaypal.push(form);
+          }
+      }
+    }
+    // let handleString = JSON.stringify(listPaypal);
+    
+    res.cookie("listPaypal", listPaypal, {
+      httpOnly: true,
+      sameSite: "strict",
+  })
     return res.render('component/cart',{list,course});
   }
  }catch(err){
