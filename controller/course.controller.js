@@ -200,9 +200,9 @@ const createChapter = async (req, res, next) => {
     let chapter = new Chapter(formData);
     chapter.save(function (err, data) {
       if (!err) console.log("create successful");
-      else console.log("This is err: ", err);
+      else console.log(err);
     });
-    res.redirect("/instructor/courses/" + slug);
+    res.redirect("/instructor");
   } catch (error) {
     console.log("error: ", error);
     res.status(500).json({ msg: error });
@@ -212,7 +212,6 @@ const createChapter = async (req, res, next) => {
 //video
 const createVideo = async (req, res, next) => {
   try {
-    const slug = req.params.slug;
     let video_url = "/" + req.file.path.split("\\").slice(6).join("/");
     let formData = req.body;
     Chapter.updateOne(
@@ -225,7 +224,7 @@ const createVideo = async (req, res, next) => {
                 video_url: video_url,
                 title: formData.title,
                 description: formData.description,
-                position: formData.video_position,
+                position: formData.position,
               },
             ],
           },
@@ -237,7 +236,7 @@ const createVideo = async (req, res, next) => {
       }
     );
     //res.json(req.body);
-    res.redirect("/instructor/courses/" + slug);
+    res.redirect("/instructor");
   } catch (error) {
     res.json({ msg: error });
   }

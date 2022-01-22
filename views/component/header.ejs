@@ -80,8 +80,67 @@
           <li><a href="/logout" >Logout</a></li>
         </ul>
       </div>
-    </div>   
-    <%}%>
-   </div>
-  </div>
-</header>
+       </div>
+        <div class="nav-search">
+            <form action="/course/search/page=0", method="GET">
+              <input name="title" type="text" placeholder="Search for anything">
+            </form>
+            <i class="fas fa-search"></i>
+        </div>
+       <!-- chua dang nhap -->
+        <% if(!user) {%>
+          <div class="nav-noglogin active">
+            <a class="nav-sbusiness">
+              <span>Udemy Business</span>
+            </a>
+            <a class="nav-teach">
+              <span>Teach on Udemy</span>
+            </a>
+            <div class="mob-search">
+              <i class="fas fa-search"></i>
+            </div>
+            <a href="/cart" class="nav-cart">
+              <span><i class="far fa-shopping-cart"></i></span>
+            </a>
+            <div class="nav-user">
+              <a href="/login" class="nav-login">
+                <span>Log in</span>
+              </a>
+              <a href="/register" class="nav-sign">
+                <span>Sign up</span>
+              </a>
+            </div>
+           </div>
+        <% } else {%>
+       <!-- da dang nhap -->
+        <div class="nav-logged active">
+          <a class="nav-sbusiness">
+            <span>Udemy Business</span>
+          </a>
+          <a href="/teaching" class="nav-instructor">
+            <span>Instructor</span>
+          </a>
+          <a class="nav-learn">
+            <span>My Learning</span>
+          </a>
+          <a href="/course/wishlist" class="nav-like">
+            <span><i class="far fa-heart"></i></span>
+          </a>
+          <a href="/cart" class="nav-cart">
+            <span><i class="far fa-shopping-cart"></i></span>
+          </a>
+          <div class="nav-username">
+            <a>
+              <span><%= user.username %></span>
+            </a>
+            <div class="logout">
+            <ul>
+              <li><a href="/user/edit-profile">Edit profile</a></li>
+              <li><a href="/logout" >Logout</a></li>
+            </ul>
+          </div>
+        </div>   
+        <%}%>
+       </div>
+      </div>
+    </header>
