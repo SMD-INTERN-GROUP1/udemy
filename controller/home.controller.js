@@ -3,7 +3,6 @@ const Banner = require("../database/models/banners");
 const Instructor = require("../database/models/Instrutor");
 const User = require("../database/models/Users");
 const categoryService = require("../services/category.services");
-
 const Topic = require("../database/models/Topics");
 const Category = require("../database/models/Categories");
 const getHomePage = async (req, res, next) => {

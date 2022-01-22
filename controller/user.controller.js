@@ -16,6 +16,7 @@ const renderUserPage = async (req, res, next) => {
 //my learning
 const getMyLearning = async (req, res, next) => {
   try {
+    const categories = await categoryService.getListCategory();
     //get user id
     //find course by user id
     let isLogin = true;

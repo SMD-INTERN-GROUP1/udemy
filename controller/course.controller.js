@@ -196,6 +196,7 @@ const createChapter = async (req, res, next) => {
     const course = await Course.findOne({ slug: slug });
     let formData = req.body;
     formData.course_id = course._id;
+    console.log("fomrData: ", formData);
     let chapter = new Chapter(formData);
     chapter.save(function (err, data) {
       if (!err) console.log("create successful");
