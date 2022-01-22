@@ -1,7 +1,6 @@
 const UsersModel = require("../database/models/Users");
 const Cart = require("../database/models/Cart");
 const Course = require("../database/models/Courses");
-const Chapter = require("../database/models/Chapters");
 const Proccess = require("../database/models/Proccess");
 
 const renderUserPage = async (req, res, next) => {
@@ -16,6 +15,7 @@ const renderUserPage = async (req, res, next) => {
 //my learning
 const getMyLearning = async (req, res, next) => {
   try {
+    const categories = await categoryService.getListCategory();
     //get user id
     //find course by user id
     let isLogin = true;
