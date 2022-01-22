@@ -3,10 +3,6 @@ const Cart = require("../database/models/Cart");
 const Course = require("../database/models/Courses");
 const Chapter = require("../database/models/Chapters");
 const Proccess = require("../database/models/Proccess");
-<<<<<<< HEAD
-const CategoriesModel = require("../database/models/Categories");
-=======
->>>>>>> c3e306bde34ea60f791d71756f0486f673c6924d
 
 const renderUserPage = async (req, res, next) => {
   const users = await UsersModel.find();
@@ -39,11 +35,7 @@ const getMyLearning = async (req, res, next) => {
         list_course.push(course);
       }
     }
-<<<<<<< HEAD
-    // res.render("component/my-learning", { list_course, categories });
-=======
     res.render("component/my-learning", { list_course });
->>>>>>> c3e306bde34ea60f791d71756f0486f673c6924d
   } catch (error) {
     console.log("err: ", error);
     res.json({ msg: error });
@@ -77,10 +69,6 @@ const createProccess = async (req, res, next) => {
     console.log(error);
   }
 };
-<<<<<<< HEAD
-
-=======
->>>>>>> c3e306bde34ea60f791d71756f0486f673c6924d
 const toggleWish = async (req, res, next) => {
   const idCourse = req.params.id;
   const user = await UsersModel.findOne({ username: req.user.username });
