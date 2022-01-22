@@ -21,16 +21,18 @@
           <div class="module-inner">
             <div class="side-bar">
               <div class="user-info">
-                <img class="img-profile img-circle img-responsive center-block" style="object-fit: cover;" src="<%= user.avatar %>" alt="">
-                <ul class="meta list list-unstyled">
-                  <% if (user.fullName) { %>
-                  <li class="name"> <%=user.fullName%>
-                    <% if (user.headLine) { %>
-                    <label class="label label-info"><%=user.headLine%></label>
+                <%if (user) { %>
+                  <img class="img-profile img-circle img-responsive center-block" style="object-fit: cover;" src="<%= user.avatar %>" alt="">
+                  <ul class="meta list list-unstyled">
+                    <% if (user.fullName) { %>
+                    <li class="name"> <%=user.fullName%>
+                      <% if (user.headLine) { %>
+                      <label class="label label-info"><%=user.headLine%></label>
+                      <% } %>
+                    </li>
                     <% } %>
-                  </li>
-                  <% } %>
-                </ul>
+                  </ul>
+                <% } %>
               </div>
               <nav class="side-menu">
                 <ul class="nav">
@@ -47,10 +49,42 @@
                 <h4 class="sub-title"> Close your account permanently. </h4>
               </div>
               <hr>
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>  
+              <div class="form-section" id="close-account">
+                <div> Close Your Account </div>
+                <div id="remove-account">
+                  <p>
+                    <b class="text-danger-dark">Warning:</b> If you close your account, you will be unsubscribed from all your 0 courses, and will lose access forever.
+                  </p>
 
+                  <div class="container">
+                    <!-- Trigger the modal with a button -->
+                    <button type="button" class="btn btn-secondary btn-close-account" data-toggle="modal" data-target="#myModal"> Close account </button>
+    
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" role="dialog">
+                      <div class="modal-dialog">
+                      
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title">Close your account</h4>
+                            <button type="button" class="close" data-dismiss="modal" class="close">&times;</button>
+                          </div>
+                          <div class="modal-body">
+                            <p>Are you sure you want to delete your account?</p>
+                          </div>
+                          <div class="modal-footer">
+                            <% if (user) {%>
+                              <button type="button" class="btn btn-default btn-confirm-close-account" data-dismiss="modal" data-id="<%= user._id%>" id="btn-confirm" onclick="deleteAccount(event)"> Confirm </button>
+                            <% }%>
+                            <button type="button" class="btn btn-default btn-close-account" data-dismiss="modal"> Close </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -60,7 +94,23 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>       
-    <script src="../../javascript/profile.js"></script>
-    <script>$('.alert').alert()</script>
+    <script>
+      let submit = document.getElementById("btn-confirm");
+
+      function deleteAccount(e) {
+        console.log(submit.getAttribute("data-id"));
+        let idUser = {"userId": submit.getAttribute("data-id")};
+        $.ajax({
+                    url : "close-account",
+                    type : "POST",
+                    dataType:"json",
+                    data : idUser,
+                    success : function (result){
+                        console.log("Successful");
+                    }
+                });
+        }
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   </body>
 </html>

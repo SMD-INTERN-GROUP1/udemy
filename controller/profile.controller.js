@@ -161,8 +161,6 @@ async function renderCloseAccountPage (req, res, next) {
     const categories = await categoryService.getListCategory();
   
     if (req.cookies.user) {
-      isLogin = true;
-
       Users.findOne({_id: req.cookies.user._id})
       .then(user => {
         res.render("profile/close-account.ejs", { title: "Edit profile", user, categories } );
@@ -176,6 +174,30 @@ async function renderCloseAccountPage (req, res, next) {
   };
 };
 
+async function closeAccount (req, res, next) {
+  // console.log(req.body.userId);
+  // Users.deleteOne({_id: req.body.userId}, function (err) {
+  //   if(err)
+  //     console.log(err);
+  // });
+
+  await Users.deleteOne({_id: req.body.userId})
+  .then(() => {
+    console.log("đã xóa");
+    res.redirect("");
+    // res.clearCookie("user");
+    // res.clearCookie("accessToken");
+    
+  })
+  .catch(err => console.log(err));
+
+
+  // console.log(req.body.userId);
+  // res.clearCookie("user");
+  // res.clearCookie("accessToken");
+  // res.redirect("/");
+}
+
 module.exports = {
   renderEditProfilePage,
   editProfile,
@@ -183,5 +205,6 @@ module.exports = {
   editAccount,
   renderEditPhotoPage,
   editPhoto,
-  renderCloseAccountPage
+  renderCloseAccountPage,
+  closeAccount
 };

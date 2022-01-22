@@ -647,3 +647,46 @@ body {
 	padding: 10px 20px;
 	background-color: #a435f0
 }
+
+/* CSS edit close account */
+#remove-account .btn-close-account {
+	background: #1c1d1f;
+	color: #fff;
+	font-weight: 600;
+}
+
+#remove-account .btn-close-account:hover {
+	background: black;
+	color: #fff;
+	font-weight: 600; 
+}
+
+#remove-account .btn-confirm-close-account {
+	background: #a435f0;
+	color: #fff;
+}
+
+#remove-account .btn-confirm-close-account:hover {
+	background: #5c0297;
+	color: #fff;
+}
+
+#close-account {
+	padding-left: 5rem;
+	padding-right: 5rem;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 64.8rem;
+}
+
+#remove-account .container {
+	padding: 0px !important;
+}
+
+.modal-header .close {
+	color: none;
+}
+
+.modal-footer {
+	justify-content: space-around
+}
