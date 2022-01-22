@@ -13,7 +13,7 @@ const video = new mongoose.Schema(
       type: String,
       default: "",
     },
-    position: {
+    video_position: {
       type: Number,
       unique: true
     }
@@ -25,7 +25,7 @@ const chapter = new mongoose.Schema(
       type: String,
       default: "",
     },
-    position: {
+    chapter_position: {
       type: Number,
       unique: true
     },
