@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt');
+const { render } = require('ejs');
 
 const Users = require('../database/models/Users');
+const Carts = require('../database/models/Cart');
 const categoryService = require("../services/category.services");
 
 async function renderEditProfilePage (req, res, next) {
@@ -121,7 +123,7 @@ async function editAccount (req, res, next) {
   } catch(err) {
     return   res.status(500).json(err);
   };
-}
+};
 
 async function renderEditPhotoPage (req, res, next) {
   try {
@@ -154,49 +156,55 @@ async function editPhoto (req, res, next) {
       })
       .catch(err => console.log(err));
   }
-}
+};
 
 async function renderCloseAccountPage (req, res, next) {
   try {
     const categories = await categoryService.getListCategory();
+    let message = "";
   
     if (req.cookies.user) {
       Users.findOne({_id: req.cookies.user._id})
       .then(user => {
-        res.render("profile/close-account.ejs", { title: "Edit profile", user, categories } );
+        res.render("profile/close-account.ejs", { title: "Edit profile", user, categories, message } );
       })
       .catch(next);
     } else {
       res.redirect('/login');
     }
   } catch(err) {
-    return   res.status(500).json(err);
+    return res.status(500).json(err);
   };
 };
 
 async function closeAccount (req, res, next) {
-  // console.log(req.body.userId);
-  // Users.deleteOne({_id: req.body.userId}, function (err) {
-  //   if(err)
-  //     console.log(err);
-  // });
+    try {
+      const categories = await categoryService.getListCategory();
 
-  await Users.deleteOne({_id: req.body.userId})
-  .then(() => {
-    console.log("đã xóa");
-    res.redirect("");
-    // res.clearCookie("user");
-    // res.clearCookie("accessToken");
+      if(req.cookies.user) {
+        let id = req.body.id;
+        let message = "";
+
+        await Carts.deleteOne({ $and: [ { user_id : id }, { isTeacher: false } ]});
+        let deletedCount = await Users.deleteOne({ $and: [ { _id: id }, { isTeacher: false } ]});
     
-  })
-  .catch(err => console.log(err));
-
-
-  // console.log(req.body.userId);
-  // res.clearCookie("user");
-  // res.clearCookie("accessToken");
-  // res.redirect("/");
-}
+        if(deletedCount.deletedCount) {
+          res.clearCookie("user");
+          res.clearCookie("accessToken");
+          res.redirect('/');
+        } else {
+          Users.findOne({_id: req.cookies.user._id})
+          .then(user => {
+            message = "You cannot delete your account !!!";
+            res.render("profile/close-account.ejs", { title: "Edit profile", user, categories, message } );
+          })
+          .catch(err => console.log(err));
+        }
+      }
+    } catch(err) {
+      return res.status(500).json(err);
+    }; 
+};
 
 module.exports = {
   renderEditProfilePage,

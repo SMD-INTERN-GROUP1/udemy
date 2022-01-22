@@ -690,3 +690,8 @@ body {
 .modal-footer {
 	justify-content: space-around
 }
+
+#remove-account #notification {
+	color: red; 
+	font-weight: 600;
+}

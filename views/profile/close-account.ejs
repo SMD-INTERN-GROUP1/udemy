@@ -54,8 +54,10 @@
                 <div id="remove-account">
                   <p>
                     <b class="text-danger-dark">Warning:</b> If you close your account, you will be unsubscribed from all your 0 courses, and will lose access forever.
+                    <% if(message) {%>
+                      <div id="notification"><%= message %></div>
+                    <% } %>
                   </p>
-
                   <div class="container">
                     <!-- Trigger the modal with a button -->
                     <button type="button" class="btn btn-secondary btn-close-account" data-toggle="modal" data-target="#myModal"> Close account </button>
@@ -75,7 +77,10 @@
                           </div>
                           <div class="modal-footer">
                             <% if (user) {%>
-                              <button type="button" class="btn btn-default btn-confirm-close-account" data-dismiss="modal" data-id="<%= user._id%>" id="btn-confirm" onclick="deleteAccount(event)"> Confirm </button>
+                              <form method="POST" action="close-account?_method=DELETE">
+                                <input type="hidden" name="id" value="<%= user._id%>">
+                                <button type="submit" class="btn btn-default btn-confirm-close-account" id="btn-confirm"> Confirm </button>
+                              </form>
                             <% }%>
                             <button type="button" class="btn btn-default btn-close-account" data-dismiss="modal"> Close </button>
                           </div>
@@ -100,15 +105,15 @@
       function deleteAccount(e) {
         console.log(submit.getAttribute("data-id"));
         let idUser = {"userId": submit.getAttribute("data-id")};
-        $.ajax({
-                    url : "close-account",
-                    type : "POST",
-                    dataType:"json",
-                    data : idUser,
-                    success : function (result){
-                        console.log("Successful");
-                    }
-                });
+        // $.ajax({
+        //             url : "close-account/close",
+        //             type : "delete",
+        //             dataType:"json",
+        //             data : idUser,
+        //             success : function (result){
+        //               console.log("Successful");
+        //             }
+        //         });
         }
     </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
