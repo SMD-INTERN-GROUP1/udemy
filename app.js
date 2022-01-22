@@ -5,9 +5,6 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-
-const paypal = require('paypal-rest-sdk');
-const session = require('express-session');
 const methodOverride = require('method-override')
 const mongoose = require("mongoose");
 
@@ -34,18 +31,10 @@ mongoose.connect(process.env.MONGO_DB, function (err) {
 //   cookie: { secure: true }
 // }))
 
-//payment
-
-paypal.configure({
-
-  'mode': 'sandbox', //sandbox or live
-  'client_id': 'AStfnCB1MGhO7ngndwNoy6nywUsoZkbyrRJzuJ-zH7HonwXM5MMwcembTy7xPmci7YCiL54fKMmbHFMx',
-  'client_secret': 'EHjOl8-nGvtxGmVeeBiVCiFpVzJNv9NJhVxComQz3ppJ7Nm4_xc-0jqQY8XgVyo6kCFVkZpIHAf-Td2C'
-
-});
-
 const app = express();
-app.use(methodOverride('_method'))
+
+
+
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -58,8 +47,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "node_modules")));
-app.use(methodOverride("_method"));
-
 
 // override using a query value
 app.use(methodOverride("_method"));
@@ -72,8 +59,7 @@ route(app);
 //   next(createError(404));
 // });
 
-
-// error handler
+// // error handler
 // app.use((err, req, res, next) => {
 //   // set locals, only providing error in development
 //   res.locals.message = err.message;

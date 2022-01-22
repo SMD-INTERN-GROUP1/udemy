@@ -1,0 +1,38 @@
+<div class="container">
+  <form class="mt-4" action="/admin/topics" method="POST">
+    <h3>Add new topic</h3>
+    <div class="form-group">
+      <label for="exampleInputEmail1" class="fw-bold mb-2">Topic:</label>
+      <input
+        type="text"
+        class="form-control mb-2"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        name="name"
+      />
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1" class="fw-bold mb-2"
+        >Description:</label
+      >
+      <textarea
+        class="form-control mb-2"
+        id="exampleInputPassword1"
+        name="description"
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="exampleInputPassword1" class="fw-bold mb-2">Category:</label>
+      <select class="form-control" name="category_id">
+        <% getCategories.forEach(category => { %>
+        <option value="<%= category._id %>"><%= category.category%></option>
+        <% }); %>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary mt-4">Submit</button>
+    <a href="/admin/topics" type="button" class="btn btn-secondary mt-4 ms-3"
+      >Back</a
+    >
+  </form>
+</div>
