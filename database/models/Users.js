@@ -19,9 +19,9 @@ const user = new mongoose.Schema(
       required: true,
       minlength: 6,
     },
-    role_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Role",
+    isAdmin: {
+      type: Boolean,
+      default: false,
     },
     isTeacher: {
       type: Boolean,

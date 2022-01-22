@@ -16,6 +16,11 @@ router.get("/", (req, res, next) => {
   });
 });
 
+//Account section
+router.get("/accounts", adminController.renderAccountPage);
+router.get("/accounts/:id", adminController.renderUpdatePage);
+router.put("/accounts/:id", adminController.updateAccount);
+
 // Users section
 router.get("/users", userController.renderUserPage);
 

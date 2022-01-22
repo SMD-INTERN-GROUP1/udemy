@@ -27,7 +27,7 @@ const role = new Schema(
   { timestamps: true }
 );
 
-// const RoleModel = mongoose.model("Role", role);
+const RoleModel = mongoose.model("Role", role);
 
 // RoleModel.find({}).then((data) => {
 //   console.log("🚀 ~ file: Roles.js ~ line 33 ~ RoleModel.find ~ data", data);
@@ -38,4 +38,4 @@ const role = new Schema(
 //   description: "Role super admin",
 // });
 
-module.exports = mongoose.model("Role", role);
+module.exports = RoleModel;
