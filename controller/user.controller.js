@@ -1,7 +1,6 @@
 const UsersModel = require("../database/models/Users");
 const Cart = require("../database/models/Cart");
 const Course = require("../database/models/Courses");
-const Chapter = require("../database/models/Chapters");
 const Proccess = require("../database/models/Proccess");
 
 const renderUserPage = async (req, res, next) => {

@@ -25,13 +25,13 @@
           <ul class="chapter-list">
             <% for(let i = 0; i < listChapter.length; i++) {%>
               <li>
-                Chapter <span><%= listChapter[i].position%>: </span><%= listChapter[i].title %>
-                <ul class="list-video">
-                  <% listChapter[i].list_video.forEach(video => {%>
-                    <li>
-                      <iframe src="<%= video.video_url%>" frameborder="0"></iframe>
-                    </li>
-                  <% }) %>
+                Chapter <span><%= listChapter[i].chapter_position%>: </span><%= listChapter[i].title %>
+                <ul class="list-video">                  
+                    <% listChapter[i].list_video.forEach(video => {%>
+                      <li>
+                        <iframe src="<%= video.video_url%>" frameborder="0"></iframe>
+                      </li>
+                    <% }) %>                 
                 </ul>
               </li>
             <% } %>
@@ -42,7 +42,7 @@
           <form method="POST" action="/instructor/courses/<%= course.slug %>/videos/store" enctype="multipart/form-data" class="video-form">
             <div class="form-group">
               <label for="">Chapter</label>
-              <select name="chapters" id="chapter" class="id">
+              <select name="chapter_id" id="chapter" class="id">
                 <% for(let i = 0; i<  listChapter.length; i++) {%>
                   <option value="<%= listChapter[i]._id %>"><%= listChapter[i].title %></option>
                 <% } %>
