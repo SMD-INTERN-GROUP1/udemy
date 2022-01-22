@@ -1,5 +1,6 @@
-const UserModel = require("../database/models/Users");
 const bcrypt = require("bcrypt");
+
+const UserModel = require("../database/models/Users");
 
 let errs = [];
 

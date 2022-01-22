@@ -1,0 +1,65 @@
+<div class="container">
+  <form
+    class="mt-4"
+    action="/admin/createbanner"
+    method="POST"
+    enctype="multipart/form-data"
+  >
+    <h2>Banner page</h2>
+    <%= typeof msg != 'undefined' ? msg : '' ; %>
+    <!-- <div class="form-group">
+      <label for="exampleInputEmail1">Title</label>
+      <input
+        type="text"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        name="title"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="exampleInputEmail1">Content</label>
+      <input
+        type="text"
+        class="form-control"
+        aria-describedby="emailHelp"
+        name="content"
+      />
+    </div> -->
+
+    <div class="input-group mb-3">
+      <label class="input-group-text" for="inputGroupFile02">Image</label>
+      <input
+        type="file"
+        accept="image/*"
+        class="form-control"
+        id="inputGroupFile02"
+        onchange="loadFile(event)"
+        name="img"
+      />
+      <label class="input-group-text" for="inputGroupFile02">Upload</label>
+    </div>
+
+    <figure class="figure">
+      <img id="output" />
+    </figure>
+
+    <button type="submit" name="upload" class="btn btn-primary mt-4">
+      Submit
+    </button>
+  </form>
+
+  <br />
+  <img src="<%= typeof file != 'undefined' ? file : '' ; %>" alt="" />
+</div>
+
+<script>
+  var loadFile = function (event) {
+    var output = document.getElementById("output");
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function () {
+      URL.revokeObjectURL(output.src);
+    };
+  };
+</script>

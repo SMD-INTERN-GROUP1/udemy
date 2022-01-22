@@ -9,7 +9,7 @@
 }
 
 .wrapper .item {
-  width: 230px;
+  width: 274px;
   height: 60px;
   line-height: 60px;
   text-align: center;
@@ -21,7 +21,7 @@
 }
 
 .wrapper .item-below {
-  width: 230px;
+  width: 274px;
   height: 60px;
   line-height: 60px;
   text-align: center;
@@ -30,6 +30,14 @@
   border: 2px solid rgb(22, 21, 21);
   cursor: pointer;
   display: inline-block;
+}
+
+.wrapper .item:last-child {
+  margin-right: -5.3px;
+}
+
+.wrapper .item-below:last-child {
+  margin-right: -5.3px;
 }
 
 .wrapper .item .link-item {
