@@ -4,7 +4,40 @@ const slug = require("mongoose-slug-generator");
 const mongooseDelete = require("mongoose-delete");
 mongoose.plugin(slug);
 
-mongoose.plugin(slug);
+const video = new mongoose.Schema(
+  {
+    video_url: {
+      type: String,
+      default: "",
+    },
+    title: {
+      type: String,
+      default: "",
+    },
+    description: {
+      type: String,
+      default: "",
+    },
+    video_position: {
+      type: Number,
+      unique: true
+    }
+  }
+)
+
+const chapter = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      default: ''
+    },
+    chapter_position: {
+      type: Number,
+      unique: true
+    },
+    list_video: [video]
+  }
+)
 
 const reviewSchema = new mongoose.Schema(
   {
@@ -47,10 +80,6 @@ const course = new mongoose.Schema(
       type: String,
       default: "",
     },
-    video_id: {
-      type: String,
-      default: "",
-    },
     slug: {
       type: String,
       slug: "title",
@@ -63,10 +92,7 @@ const course = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    chapter_id: {
-      type: mongoose.Types.ObjectId,
-      ref: "Chapter",
-    },
+    list_chapter: [chapter],
     topic_id: {
       type: mongoose.Types.ObjectId,
       ref: "Topic",
@@ -88,6 +114,6 @@ const course = new mongoose.Schema(
 // Add plugin
 // mongoose.plugin(slug);
 course.plugin(mongooseDelete, { deletedAt: true, overrideMethods: "all" });
-module.exports = mongoose.model("Courses", course);
+module.exports = mongoose.model("Course", course);
 
 

@@ -1,6 +1,27 @@
+.header-my-learning {
+    height: 80px;
+    background-color: #636e72;
+    display: flex;
+    align-items: center;
+}
+.header-my-learning p {
+    font-size: 20px;
+    color: #FFFFFF;
+    padding-left: 50px;
+}
+.error-course {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.error-course h2 {
+    width: 100%;
+    text-align: center;
+}
 .list-course-container {
     display: flex;
     padding: 0 10px;
+    min-height: 500px;
 }
 a {
     width: calc(100%/4);
@@ -11,7 +32,9 @@ a:hover {
     text-decoration: none !important;
 }
 .card-course {
-   
+   background-color: #b2bec3;
+   padding: 6px;
+   border-radius: 5px;
 }
 .card-course .image-course {
     width: 300px;
