@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="/stylesheets/learning-course.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <div class="col-md-12 d-flex">
+
     <% if(list_chapter.length === 0 || list_chapter === null) { %>
         <div class="col-md-12">
             <p>This course not has any videos</p>
@@ -33,6 +34,7 @@
             </ul>
         </div>
     <% } %>
+
 </div>
 <script>
     var vid = document.getElementById("myVideo");
@@ -85,7 +87,6 @@
             console.log('source: ',source.src);
         })
     });
-
 </script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

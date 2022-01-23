@@ -6,9 +6,10 @@ const cart = new mongoose.Schema(
       type: String,
       unique: true,
     },
-    listCarts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Courses" }],
-  },
-  { timestamps: true }
+
+    listCarts: [{type:mongoose.Schema.Types.ObjectId,ref:'Courses',unique:false}]
+},{timestamps:true}
+
 );
 
 module.exports = mongoose.model("Cart", cart);
