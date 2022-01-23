@@ -1,0 +1,33 @@
+<!-- Header section -->
+<header class="main-header">
+  <div class="main-header">
+    <h3>
+      <label for="nav-toggle">
+        <span class="las la-bars"></span>
+      </label>
+      Instructor
+    </h3>
+      <form action="/instructor/search?courses=<%= title %>" method="GET">
+        <div class="search-wrapper">
+          <span class="las la-search"> </span>
+          <input type="search" name="courses" placeholder="Search here" id="myInput" onkeyup="showResults(this.value)" />
+          <input type="submit" value="Search" class="h-100"></input>
+        </div>
+      </form>
+    <div class="user-wrapper">
+      <img
+        src="<%= process.env.BASE_URL %>img/imageDesktop.jpg"
+        width="40px"
+        height="40px"
+        alt=""
+      />
+      <div>
+        <h4>Instructor</h4>
+        <small>Specialty: Full stack</small>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- End header -->
+
+<script type="text/javascript"></script>

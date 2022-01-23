@@ -1,5 +1,4 @@
 const CartModel = require("../database/models/Cart");
-const UserModel = require('../database/models/Users');
 const CourseModel = require('../database/models/Courses');
 
 const listCart = async (req, res) => {
@@ -48,18 +47,14 @@ const addCart = async (req, res) => {
       const {id} = req.params;
       const user=req.cookies.user._id;
       const cart = await CartModel.findOne({user_id:user});
-      console.log('cart1',cart);
       if(!cart)
       {
         const newCart =await new CartModel({user_id:user})
         newCart.listCarts.push(id);
-        console.log('cart2',newCart);
         await newCart.save();
       }
       else{ 
-        console.log('cart2');
         const {listCarts} = cart ;
-        console.log('list',listCarts,listCarts.includes(id))
         if(!listCarts.includes(id))
         {
           cart.listCarts.push(id);
@@ -71,13 +66,12 @@ const addCart = async (req, res) => {
       }
       res.redirect('back');
     }catch(err){
-      console.log(err,'sao roi may')
+      console.log(err)
     }
   
 };
 
 const removeCart = async (req, res) => {
-  console.log('remove')
   try{
     const {id} = req.params;
     const user=req.cookies.user._id;

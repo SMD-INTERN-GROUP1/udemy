@@ -11,7 +11,7 @@ const getListCourser = async (req, res, next) => {
   }
   const getCourses = await Course.find()
     .then((courses) => {
-      res.render("template_instructor/master", {
+      res.render("dashboard_instructor/master", {
         title: "Instructor page",
         content: "../instructor_view/instructor_index",
         courses,
