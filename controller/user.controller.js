@@ -1,7 +1,6 @@
 const UsersModel = require("../database/models/Users");
-const Cart = require("../database/models/Cart");
+const User = require("../database/models/Users");
 const Course = require("../database/models/Courses");
-const Chapter = require("../database/models/Chapters");
 const Proccess = require("../database/models/Proccess");
 
 const renderUserPage = async (req, res, next) => {
@@ -22,18 +21,10 @@ const getMyLearning = async (req, res, next) => {
     let user;
     if (req.cookies.user) {
       isLogin = false;
-      console.log("cookies", req.cookies.user);
       user = req.cookies.user;
     }
-    let user_id = "61d696d0896327cb23460f8c";
-    let cart = await Cart.findOne({ user_id: user_id });
-    let list_course = [];
-    for (let i = 0; i < cart.listCarts.length; i++) {
-      let course = await Course.findById({ _id: cart.listCarts[i] });
-      if (course !== null) {
-        list_course.push(course);
-      }
-    }
+    let customer = await User.findOne({ user_id: user._id });
+    let list_course = customer.courses;
     res.render("component/my-learning", { list_course });
   } catch (error) {
     console.log("err: ", error);
@@ -46,7 +37,6 @@ const getListVideoToLearn = async (req, res, next) => {
   try {
     const course = await Course.findOne({ slug: req.params.slug });
     const list_chapter = await Chapter.find({ course_id: course._id });
-    console.log("This is list_chapter: ", list_chapter);
     res.render("component/learning-course", { course, list_chapter });
   } catch (error) {
     res.status(500).json({ msg: error });

@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const video = new mongoose.Schema(
   {
     video_url: {
@@ -14,12 +13,16 @@ const video = new mongoose.Schema(
       type: String,
       default: "",
     },
-    position: {
+    video_position: {
       type: Number,
+      unique: true
     },
-    // kids: [{ type: mongoose.Schema.Types.ObjectId }],
+    chapter_id: {
+      type: mongoose.Types.ObjectId
+    }
   },
   { timestamps: true }
 );
+
 
 module.exports = mongoose.model("Video", video);
