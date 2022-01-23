@@ -14,12 +14,15 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 const courseController = require("../controller/course.controller");
+const questionController = require("../controller/questionController");
 // const instructorController = require("../controller/instructor.controller");
 
 /* GET instructor page. */
 router.get("/", courseController.getListCourserOfInstructor);
+router.get("/courses/:slug/quizz/admin", questionController.admintest);
 router.get("/addcourse", courseController.renderCreateCoursePage);
 router.post("/createcourse", courseController.create);
+router.get("/courses/:slug/quiz",courseController.quizcontroller );
 router.get("/courses/:slug", courseController.showCourse);
 router.get("/courses/:slug/update", courseController.renderUpdateView);
 router.put("/courses/:slug/updated", courseController.update);
