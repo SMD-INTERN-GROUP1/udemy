@@ -5,7 +5,7 @@ const cart = new mongoose.Schema({
         type:String,
         unique:true,
     },
-    listCarts: [{type:mongoose.Schema.Types.ObjectId,ref:'Courses'}]
+    listCarts: [{type:mongoose.Schema.Types.ObjectId,ref:'Courses',unique:false}]
 },{timestamps:true}
 );
 
