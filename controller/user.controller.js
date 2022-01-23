@@ -21,22 +21,35 @@ const getMyLearning = async (req, res, next) => {
     let isLogin = true;
     let user;
     const userID = req.cookies.user._id;
-   
+
     if (req.cookies.user) {
       isLogin = false;
       user = req.cookies.user;
     }
-    let customer = await User.findOne({_id: userID });
+    let customer = await User.findOne({ _id: userID });
     // let courseCollection = await Course.find({});
-    let {courses} = customer;
-    let list_course=[];
-    for(let i=0;i<courses.length;i++)
-    {
-      let item = await Course.findById({_id:courses[i]});
+    let { courses } = customer;
+    let list_course = [];
+    for (let i = 0; i < courses.length; i++) {
+      let item = await Course.findById({ _id: courses[i] });
       list_course.push(item);
     }
 
-    res.render("component/my-learning", { list_course });
+    let page = parseInt(req.query.page) || 1;
+    let perPage = 4;
+    let start = (page - 1) * perPage;
+    let end = page * perPage;
+    Course.countDocuments((err, count) => {
+      if (err) return next(err);
+      res.render("component/my-learning", {
+        list_course,
+        list_course: list_course.slice(start, end),
+        isLogin,
+        user,
+        current: page,
+        pages: Math.ceil(count / perPage),
+      });
+    });
   } catch (error) {
     console.log("err: ", error);
     res.json({ msg: error });
@@ -49,7 +62,7 @@ const getListVideoToLearn = async (req, res, next) => {
     const course = await Course.findOne({ slug: req.params.slug });
 
     const list_chapter = await course.list_chapter;
-    console.log('list chapter: ', list_chapter);
+    console.log("list chapter: ", list_chapter);
 
     res.render("component/learning-course", { course, list_chapter });
   } catch (error) {
