@@ -24,12 +24,18 @@
         </div>
           <ul class="chapter-list">
             <% for(let i = 0; i < listChapter.length; i++) {%>
-              <li>
+              <li class="chapter-item">
                 Chapter <span><%= listChapter[i].chapter_position%>: </span><%= listChapter[i].title %>
                 <ul class="list-video">                  
                     <% listChapter[i].list_video.forEach(video => {%>
                       <li>
-                        <iframe src="<%= video.video_url%>" frameborder="0"></iframe>
+                        <p><%= video.title%></p>
+                        <!-- <iframe src="<%= video.video_url%>" frameborder="0" auto></iframe> -->
+                        <video id="myVideo" max-width="60%" height="120" controls class="video-tag">
+                          <source id="my_video_url" src="<%= video.video_url%>" type="video/mp4">
+                          <source src="mov_bbb.ogg" type="video/ogg">
+                          Your browser does not support HTML5 video.
+                      </video>
                       </li>
                     <% }) %>                 
                 </ul>
@@ -64,7 +70,7 @@
               <label for="video_url">Choose video</label>
               <input type="file" name="video_url"/>
             </div>
-            <button type="submit" class="btn-add-video">Add video</button>
+            <button type="submit" class="btn-add-video">Upload video</button>
           </form>
       </div>
     </div>

@@ -1,5 +1,5 @@
 const UsersModel = require("../database/models/Users");
-const Cart = require("../database/models/Cart");
+const User = require("../database/models/Users");
 const Course = require("../database/models/Courses");
 const Proccess = require("../database/models/Proccess");
 
@@ -15,7 +15,6 @@ const renderUserPage = async (req, res, next) => {
 //my learning
 const getMyLearning = async (req, res, next) => {
   try {
-    const categories = await categoryService.getListCategory();
     //get user id
     //find course by user id
     let isLogin = true;
@@ -25,15 +24,9 @@ const getMyLearning = async (req, res, next) => {
       console.log("cookies", req.cookies.user);
       user = req.cookies.user;
     }
-    let user_id = "61d696d0896327cb23460f8c";
-    let cart = await Cart.findOne({ user_id: user_id });
-    let list_course = [];
-    for (let i = 0; i < cart.listCarts.length; i++) {
-      let course = await Course.findById({ _id: cart.listCarts[i] });
-      if (course !== null) {
-        list_course.push(course);
-      }
-    }
+    let customer = await User.findOne({ user_id: user._id });
+    let list_course = customer.courses;
+    console.log('list course: ', list_course);
     res.render("component/my-learning", { list_course });
   } catch (error) {
     console.log("err: ", error);
