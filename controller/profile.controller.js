@@ -10,8 +10,6 @@ async function renderEditProfilePage (req, res, next) {
     const categories = await categoryService.getListCategory();
   
     if (req.cookies.user) {
-      isLogin = true;
-
       Users.findOne({_id: req.cookies.user._id})
       .then(user => {
         res.render("profile/profile.ejs", { title: "Edit profile", user, categories } );
@@ -27,12 +25,9 @@ async function renderEditProfilePage (req, res, next) {
 
 function editProfile (req, res, next) {
   try {
-    let isLogin = false;
-    let idUser;
-    
     if (req.cookies.user) {
       isLogin = true;
-      idUser = req.cookies.user._id;
+      let idUser = req.cookies.user._id;
 
       let personalWebsite = req.body.Website;
       let twitter = req.body.Twitter;
@@ -185,8 +180,13 @@ async function closeAccount (req, res, next) {
         let id = req.body.id;
         let message = "";
 
-        await Carts.deleteOne({ $and: [ { user_id : id }, { isTeacher: false } ]});
-        let deletedCount = await Users.deleteOne({ $and: [ { _id: id }, { isTeacher: false } ]});
+        let checkCart = await Carts.findOne({user_id : id});
+        if(checkCart !== null) {
+          await Carts.deleteOne({ $and: [ { user_id : id }, { isTeacher: false } ]});
+          console.log('cart', checkCart);
+        }
+        // await Carts.deleteOne({ $and: [ { user_id : id }, { isTeacher: false } ]});
+        let deletedCount = await Users.deleteOne({ $and: [ { _id: id }, { isTeacher: true } ]});
     
         if(deletedCount.deletedCount) {
           res.clearCookie("user");
@@ -195,7 +195,7 @@ async function closeAccount (req, res, next) {
         } else {
           Users.findOne({_id: req.cookies.user._id})
           .then(user => {
-            message = "You cannot delete your account !!!";
+            message = "You can't delete a teacher account!!! !!!";
             res.render("profile/close-account.ejs", { title: "Edit profile", user, categories, message } );
           })
           .catch(err => console.log(err));
