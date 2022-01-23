@@ -62,12 +62,12 @@ const getListCourserOfInstructor = async (req, res, next) => {
     user = req.cookies.user;
   }
   let page = parseInt(req.query.page) || 1;
-  let perPage = 6;
+  let perPage = 3;
   let start = (page - 1) * perPage;
   let end = page * perPage;
   Course.countDocuments((err, count) => {
     if (err) return next(err);
-    res.render("template_instructor/master", {
+    res.render("dashboard_instructor/master", {
       title: "Instructor page",
       content: "../instructor_view/instructor_index",
       getCoursesOfInstructor: getCoursesOfInstructor.slice(start, end),
@@ -90,7 +90,7 @@ const renderCreateCoursePage = async (req, res, next) => {
     isLogin = false;
     user = req.cookies.user;
   }
-  res.render("template_instructor/master", {
+  res.render("dashboard_instructor/master", {
     title: "Instructor page",
     content: "../course/create",
     getTopics,
@@ -105,6 +105,8 @@ const create = async (req, res, next) => {
     const id = req.body.user_id;
     const formData = req.body;
     formData.image = `https://img.youtube.com/vi/${req.body.video_id}/sddefault.jpg`;
+    // formData.course_image = req.file.path;
+    // console.log(req.file);
     const createCourse = new Course(formData);
     await createCourse.save();
     res.redirect("/instructor");
@@ -124,7 +126,7 @@ const showCourse = async (req, res, next) => {
   console.log(listVideo);
   const findCourseBySlug = await Course.findOne({ slug: req.params.slug })
     .then((course) => {
-      res.render("template_instructor/master", {
+      res.render("dashboard_instructor/master", {
         title: "Instructor page",
         content: "../instructor_view/instructor_course",
         course,
@@ -140,7 +142,7 @@ const renderUpdateView = (req, res, next) => {
     Topic.find(),
   ])
     .then(([courses, getTopics]) => {
-      res.render("template_instructor/master", {
+      res.render("dashboard_instructor/master", {
         title: "Instructor page",
         content: "../course/update",
         courses,
