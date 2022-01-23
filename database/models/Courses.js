@@ -16,13 +16,11 @@ const reviewSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-
 const course = new mongoose.Schema(
   {
     title: {
       type: String,
       default: "",
-
     },
     description: {
       type: String,
@@ -33,6 +31,10 @@ const course = new mongoose.Schema(
       default: "",
     },
     image: {
+      type: String,
+      default: "",
+    },
+    course_image: {
       type: String,
       default: "",
     },
@@ -67,15 +69,12 @@ const course = new mongoose.Schema(
     reviews: [reviewSchema],
     rating: { type: Number, default: 0 },
     numberReview: { type: Number, default: 0 },
-    // kids: [{type:mongoose.Schema.Types.ObjectId}]  
+    // kids: [{type:mongoose.Schema.Types.ObjectId}]
   },
   { timestamps: true }
 );
-
 
 // Add plugin
 // mongoose.plugin(slug);
 course.plugin(mongooseDelete, { deletedAt: true, overrideMethods: "all" });
 module.exports = mongoose.model("Courses", course);
-
-

@@ -1,7 +1,12 @@
 <div class="container">
-  <form class="row g-3" action="/instructor/createcourse" method="POST">
+  <form
+    class="row g-3"
+    action="/instructor/createcourse"
+    method="POST"
+    enctype="multipart/form-data"
+  >
     <h2>Create Course page</h2>
-    <div class="form-group col-12">
+    <div class="form-group col-12 d-none">
       <label for="exampleInputEmail1" class="fw-bold">Instructor ID:</label>
       <input
         type="text"
@@ -14,7 +19,7 @@
       />
     </div>
     <div class="form-group col-12">
-      <label for="exampleInputEmail1" class="fw-bold">Title</label>
+      <label for="exampleInputEmail1" class="fw-bold mb-2">Title:</label>
       <input
         type="text"
         class="form-control"
@@ -24,16 +29,19 @@
       />
     </div>
     <div class="form-group col-12">
-      <label for="exampleInputPassword1">Description</label>
-      <input
-        type="text"
+      <label for="exampleInputPassword1" class="fw-bold mb-2"
+        >Description:</label
+      >
+      <textarea
         class="form-control"
         id="exampleInputPassword1"
         name="description"
-      />
+      ></textarea>
     </div>
-    <div class="form-group col-12">
-      <label for="exampleInputPassword1">Image</label>
+    <div class="form-group col-md-6">
+      <label for="exampleInputPassword1" class="fw-bold mb-2"
+        >Image using video id:</label
+      >
       <input
         type="text"
         class="form-control"
@@ -42,7 +50,17 @@
       />
     </div>
     <div class="form-group col-md-6">
-      <label for="exampleInputPassword1">Author</label>
+      <label class="fw-bold mb-2">File image:</label>
+      <input
+        type="file"
+        class="form-control"
+        id="inputGroupFile02"
+        name="course_image"
+        accept="image/*"
+      />
+    </div>
+    <div class="form-group col-md-6">
+      <label for="exampleInputPassword1" class="fw-bold mb-2">Author:</label>
       <input
         type="text"
         class="form-control"
@@ -53,7 +71,7 @@
     </div>
 
     <div class="form-group col-md-6">
-      <label for="exampleInputPassword1">Topic</label>
+      <label for="exampleInputPassword1" class="fw-bold mb-2">Topic:</label>
       <select class="form-control" name="topic_id">
         <% getTopics.forEach(topic => { %>
         <option value="<%= topic._id %>"><%= topic.name%></option>
@@ -62,7 +80,7 @@
     </div>
 
     <div class="form-group col-md-6">
-      <label for="exampleInputPassword1">Price</label>
+      <label for="exampleInputPassword1" class="fw-bold mb-2">Price:</label>
       <input
         type="number"
         class="form-control"
@@ -72,7 +90,7 @@
     </div>
 
     <div class="form-group col-md-6">
-      <label for="exampleInputPassword1">Discount</label>
+      <label for="exampleInputPassword1" class="fw-bold mb-2">Discount:</label>
       <input
         type="number"
         class="form-control"
@@ -81,7 +99,7 @@
       />
     </div>
     <div class="col-12">
-      <button type="submit" class="btn btn-dark fw-bold mt-4">Submit</button>
+      <button type="submit" class="btn btn-primary fw-bold mt-4">Submit</button>
     </div>
   </form>
 </div>
