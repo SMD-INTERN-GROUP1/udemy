@@ -9,7 +9,7 @@
     <% } else { %>
         <div class="col-md-9">
             <video id="myVideo" width="100%" height="400" controls>
-                <source id="my_video_url" src="<%= list_chapter[0].list_video[1].video_url%>" type="video/mp4">
+                <source id="my_video_url" src="<%= list_chapter[0].list_video[0].video_url%>" type="video/mp4">
                 Your browser does not support HTML5 video.
             </video>
               <a href="/course/<%-course.slug%>" class="btn btn-star">Rate Star</a>
@@ -32,6 +32,7 @@
                     </li>
                 <% } %>
             </ul>
+            <p>Test your knowledge here <a href="/myLearning/quiz/<%-course.slug%>">FINAL EXAM</a></p>
         </div>
     <% } %>
 
@@ -39,9 +40,6 @@
 <script>
     var vid = document.getElementById("myVideo");
     var source = document.getElementById("my_video_url");
-    console.log(source);
-    var sourceUrl = source.getAttribute("src");
-    console.log('a: ',sourceUrl);
     let listVideo = document.getElementsByClassName("video-item");
     
     let count = 0;
@@ -66,19 +64,9 @@
                 });
          }
     }
-    let obj = {
-        "totalVideo": listVideo.length,
-        "videoFinish": 1,
-        "count": count
-    }
      setInterval(() => {
          load_ajax();
      }, 1000);
-     console.log(count);
-     if(count > 0) {
-         console.log("Stop post");
-         clearInterval(myInterval);
-     }
      console.log('Total video: ', listVideo.length);    
     Array.prototype.forEach.call(listVideo, video => {
         video.addEventListener('click', function(e) {
