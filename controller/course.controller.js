@@ -255,7 +255,9 @@ const wishListFunc = async (req, res) => {
   const user = await UserModal.findOne({
     username: req.user.username,
   }).populate("wishList");
-
+   // {
+  //   wishList : [{ khoa 1} , { khoa 2}]
+  //  }
   const newUser = await UserModal.findOne({
     username: req.user.username,
   });
@@ -292,9 +294,9 @@ const createReview = async (req, res) => {
   // await course.save();
 
   course.reviews.push(newReview);
-
+   // so binh luan
   course.numberReview = course.reviews.length;
-
+  // rate tong
   course.rating =
     course.reviews.reduce((total, review) => {
       return total + review.rate;

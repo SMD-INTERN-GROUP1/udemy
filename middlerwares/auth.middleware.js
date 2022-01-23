@@ -6,6 +6,8 @@ const middlewareController = {
     verifyToken:(req,res,next)=>{
         // const token = decodeURIComponent(req.headers.cookie);
         const token = decodeURIComponent(req.cookies.accessToken);
+        // Authrization : 
+        // token 
         if(token){
             const accessToken=token;
            try{

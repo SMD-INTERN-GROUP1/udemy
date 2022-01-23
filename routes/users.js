@@ -45,7 +45,7 @@ router.patch('/edit-account', profileController.editAccount);
 router.get('/edit-photo', profileController.renderEditPhotoPage);
 router.patch('/edit-photo', upload.single('avatar'), profileController.editPhoto);
 router.patch("/wish/:id", authMiddleware, toggleWish);
-
+// .httpacess
 // router.get('/public-profile', async (req, res, next) => {
 //   res.render("profile/public-profile.ejs", { title: "User account" });
 // });
