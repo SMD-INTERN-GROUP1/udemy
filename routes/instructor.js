@@ -44,12 +44,16 @@ const uploadImage = multer({
 });
 
 const courseController = require("../controller/course.controller");
+const questionController = require("../controller/questionController");
 const Course = require("../database/models/Courses");
 // const instructorController = require("../controller/instructor.controller");
 
 /* GET instructor page. */
 router.get("/", courseController.getListCourserOfInstructor);
+router.get("/courses/:slug/quizz/admin", questionController.admintest);
 router.get("/addcourse", courseController.renderCreateCoursePage);
+router.post("/createcourse", courseController.create);
+router.get("/courses/:slug/quiz",courseController.quizcontroller );
 router.post(
   "/createcourse",
   uploadImage.single("course_image"),

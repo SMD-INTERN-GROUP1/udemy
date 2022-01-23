@@ -50,8 +50,8 @@ const user = new mongoose.Schema({
             {"name": "LinkedIn", "url": ""}, 
             {"name": "Facebook", "url": ""}
         ]
-    },
-    wishList: [{ type: mongoose.Types.ObjectId, ref: "Courses" }],
+    }, // ["1",",2"]
+    wishList: [{ type: mongoose.Types.ObjectId, ref: "Courses" }], // populate("wishList")
     courses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Courses" }],
 },{timestamps:true}
 );
