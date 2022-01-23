@@ -20,7 +20,7 @@
                 <div class="module-inner">
                     <div class="side-bar">
                         <div class="user-info">
-                            <img class="img-profile img-circle img-responsive center-block" style="object-fit: cover;" src="<%= user.avatar %>" alt="">
+                            <img class="img-profile img-responsive center-block" src="<%= user.avatar %>" alt="">
                             <ul class="meta list list-unstyled">
                                 <% if (user.fullName) { %>
                                     <li class="name"> <%=user.fullName%>
@@ -89,11 +89,11 @@
                                         <label class="col-md-2  col-sm-3 col-xs-12 control-label"><%= user.list_social[i].name %></label>
                                         <div class="col-md-10 col-sm-9 col-xs-12">
                                             <input type="text" name="<%= user.list_social[i].name %>" class="form-control" value="<%= user.list_social[i].url %>" placeholder="Rebecca@website.com">
-                                            <p class="help-block" style="margin-top: 5px;">Add your <%= user.list_social[i].name %></p>
+                                            <p class="help-block sub">Add your <%= user.list_social[i].name %></p>
                                         </div>
                                     </div>
                                 <% } %>
-                                <div class="form-group" style="text-align: center;">
+                                <div class="form-group" id="btn-update-profile">
                                     <div class="col-md-10 col-sm-9 col-xs-12 col-md-push-2 col-sm-push-3 col-xs-push-0">
                                         <input class="btn btn-primary" type="submit" value="Update Profile">
                                     </div>
