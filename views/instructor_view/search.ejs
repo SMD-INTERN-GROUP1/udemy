@@ -17,7 +17,7 @@
   </div>
 
   <div class="row">
-    <% getCoursesOfInstructor.forEach(course=> { %>
+    <% data.forEach(course=> { %>
     <div class="col-sm-6 col-lg-4 mb-4 mh-100">
       <div class="card" id="item">
         <img src="<%= course.image%>" class="card-img-top" alt="..." />
@@ -58,11 +58,6 @@
             href="/instructor/courses/<%= course.slug%>/quiz"
             class="btn btn-dark w-100 fw-bold mt-2"
             >Add Quizz</a
-          >
-          <a
-            href="/instructor/courses/<%= course.slug%>/quizz/admin"
-            class="btn btn-dark w-100 fw-bold mt-2"
-            >Manager Quiz</a
           >
         </div>
       </div>

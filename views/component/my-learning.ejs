@@ -9,7 +9,7 @@
         <p>My learning</p>
     </div>
     <div class="list-course-container">
-        <% if (list_course.length === 0) {%>
+        <% if (list_course.length === 0 || list_course === null) {%>
             <div class="error-course">
                 <h2>You are not have any courses</h2>
             </div>
