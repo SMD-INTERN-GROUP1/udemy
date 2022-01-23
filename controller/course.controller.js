@@ -216,12 +216,9 @@ const createVideo = async (req, res, next) => {
   try {
     const slug = req.params.slug;
     const course = await Course.findOne({ slug: slug });
-    console.log('course: ', course);
     let chapter_id = req.body.chapter_id;
     let video_url = "/" + req.file.path.split("\\").slice(6).join("/");
     let formData = req.body;
-    console.log(formData);
-    console.log('chapter_id: ', chapter_id);
     let a = 2;
     Course.updateOne(
       {"_id": course._id, "list_chapter._id": chapter_id},
