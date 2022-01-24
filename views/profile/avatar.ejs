@@ -21,7 +21,7 @@
           <div class="module-inner">
             <div class="side-bar">
               <div class="user-info">
-                <img class="img-profile img-circle img-responsive center-block" style="object-fit: cover;" src="<%= user.avatar %>" alt="">
+                <img class="img-profile img-responsive center-block" src="<%= user.avatar %>" alt="">
                 <ul class="meta list list-unstyled">
                   <% if (user.fullName) { %>
                   <li class="name"> <%=user.fullName%>
@@ -37,7 +37,7 @@
                   <li><a href="edit-profile"><span class="fa fa-user"></span> Profile</a></li>
                   <li><a href="edit-account"><span class="fa fa-key"></span> Account</a></li>
                   <li class="active"><a href="edit-photo"><span class="fa fa-picture-o"></span> Photo </a></li>
-                  <li><a href="#"><span class="fa fa-window-close"></span> Close account </a></li>
+                  <li><a href="close-account"><span class="fa fa-window-close"></span> Close account </a></li>
                 </ul>
               </nav>
             </div>

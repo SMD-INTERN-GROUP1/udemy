@@ -73,12 +73,18 @@ const toggleWish = async (req, res, next) => {
   const idCourse = req.params.id;
   const user = await UsersModel.findOne({ username: req.user.username });
   const { wishList } = user;
+  // const wishList = user.wishList
   if (wishList.includes(idCourse)) {
     const newUser = await UsersModel.findByIdAndUpdate(user._id, {
       $pull: {
         wishList: idCourse,
       },
     });
+
+    // filter
+    // wishList.filter((id) => id !== idCourse)
+    // await user.save()
+
     return res.redirect("back");
   } else {
     const newUser = await UsersModel.findByIdAndUpdate(user._id, {

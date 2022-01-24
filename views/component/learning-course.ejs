@@ -33,6 +33,7 @@
                     </li>
                 <% } %>
             </ul>
+            <p>Test your knowledge here <a href="/myLearning/quiz/<%-course.slug%>">FINAL EXAM</a></p>
         </div>
     <% } %>
 
@@ -75,6 +76,7 @@
             console.log('Total time watched video: ', totalTimeWatched);
         }
     })
+
     // When video watched than 90 percent, it's finish.
     // function load_ajax() {
     //     let percent;
@@ -98,6 +100,7 @@
     
 
      //change video when click to another video by Dung, Nguyen Anh    
+
     Array.prototype.forEach.call(listVideo, video => {
         video.addEventListener('click', function(e) {
             let url_video = e.target.getAttribute('data-url');
