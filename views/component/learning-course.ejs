@@ -1,119 +1,150 @@
-<link rel="stylesheet" href="/stylesheets/learning-course.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link
+  rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+  crossorigin="anonymous"
+/>
+<link rel="stylesheet" href="/stylesheets/learning-course.css" />
+
 <div class="col-md-12 d-flex">
-
-    <% if(list_chapter.length === 0 || list_chapter === null) { %>
-        <div class="col-md-12">
-            <p>This course not has any videos</p>
-        </div>
-    <% } else { %>
-        <div class="col-md-9">
-            <video id="myVideo" width="100%" height="400" controls>
-                <source id="my_video_url" src="<%= list_chapter[0].list_video[0].video_url%>" type="video/mp4">
-                Your browser does not support HTML5 video.
-            </video>
-            <!-- <iframe src="" frameborder="0"></iframe> -->
-              <a href="/course/<%-course.slug%>" class="btn btn-star">Rate Star</a>
-            <p><%= list_chapter[0].list_video[0].title %></p>
-            <p><%= list_chapter[0].list_video[0].description %></p>
-        </div>
-        <div class="col-md-3">
-            <ul>
-                <%for(let i = 0; i < list_chapter.length; i++) { %>
-                    <li class="chapter-item">
-                        <span class="chapter-position">Chapter <%= list_chapter[i].position%>:</span> <%= list_chapter[i].title %>
-                        <ul>
-                            <% list_chapter[i].list_video.forEach(video => {%>
-                                <li class="video-item" data-url="<%=video.video_url%>">
-                                    <span class="video-position">Video <%= video.position %>:</span>
-                                    <%= video.title %>
-                                </li>
-                            <% }) %>
-                        </ul>
-                    </li>
-                <% } %>
-            </ul>
-            <p>Test your knowledge here <a href="/myLearning/quiz/<%-course.slug%>">FINAL EXAM</a></p>
-        </div>
-    <% } %>
-
+  <% if(list_chapter.length === 0 || list_chapter === null) { %>
+  <div class="col-md-12">
+    <p>This course not has any videos</p>
+  </div>
+  <% } else { %>
+  <div class="col-md-9">
+    <video id="myVideo" width="100%" height="400" controls>
+      <source
+        id="my_video_url"
+        src="<%= list_chapter[0].list_video[0].video_url%>"
+        type="video/mp4"
+      />
+      Your browser does not support HTML5 video.
+    </video>
+    <!-- <iframe src="" frameborder="0"></iframe> -->
+    <a href="/course/<%-course.slug%>" class="btn btn-star">Rate Star</a>
+    <p><%= list_chapter[0].list_video[0].title %></p>
+    <p><%= list_chapter[0].list_video[0].description %></p>
+  </div>
+  <div class="col-md-3">
+    <ul>
+      <%for(let i = 0; i < list_chapter.length; i++) { %>
+      <li class="chapter-item">
+        <span class="chapter-position"
+          >Chapter <%= list_chapter[i].position%>:</span
+        >
+        <%= list_chapter[i].title %>
+        <ul>
+          <% list_chapter[i].list_video.forEach(video => {%>
+          <li class="video-item" data-url="<%=video.video_url%>">
+            <span class="video-position">Video <%= video.position %>:</span>
+            <%= video.title %>
+          </li>
+          <% }) %>
+        </ul>
+      </li>
+      <% } %>
+    </ul>
+    <p>
+      Test your knowledge here
+      <a href="/myLearning/quiz/<%-course.slug%>">FINAL EXAM</a>
+    </p>
+  </div>
+  <% } %>
 </div>
+
 <script>
-    //line 41 to 107 written by Dung and Hanh
-    var vid = document.getElementById("myVideo");
-    var source = document.getElementById("my_video_url");
-    let listVideo = document.getElementsByClassName("video-item");
-    let timeLoadedVideo = 0;
-    let totalTimeWatched = 0;
-    let countSecond;
-    let timeStopedVideo;
-    let timeOfnightyPercent;
-    vid.addEventListener('play', function() {
-        console.log('playing video...');
-        countSecond = setInterval(() => {
-            timeLoadedVideo++;
-            console.log('time load video: ', timeLoadedVideo);
-            
-        }, 1000)
+  //line 41 to 107 written by Dung and Hanh
+  var vid = document.getElementById("myVideo");
+  var source = document.getElementById("my_video_url");
+  let listVideo = document.getElementsByClassName("video-item");
+  let timeLoadedVideo = 0;
+  let totalTimeWatched = 0;
+  let countSecond;
+  let timeStopedVideo;
+  let timeOfnightyPercent;
+  vid.addEventListener("play", function () {
+    console.log("playing video...");
+    countSecond = setInterval(() => {
+      timeLoadedVideo++;
+      console.log("time load video: ", timeLoadedVideo);
+    }, 1000);
+  });
+  //isFinished
+  vid.addEventListener("pause", function () {
+    console.log("stop video");
+    clearInterval(countSecond);
+    timeStopedVideo = Math.floor(vid.currentTime);
+    totalTimeWatched += timeLoadedVideo;
+    console.log("Total time: ", totalTimeWatched);
+    console.log("Total time of video: ", vid.duration);
+    timeOfnightyPercent = (vid.duration * 10) / 100;
+    console.log(timeOfnightyPercent);
+    if (
+      totalTimeWatched > vid.duration - timeOfnightyPercent ||
+      totalTimeWatched === vid.duration - timeOfnightyPercent
+    ) {
+      console.log("video finished");
+    }
+  });
+  // get current time when click on video
+  vid.addEventListener("canplay", function () {
+    let percent;
+    percent = Math.round((vid.currentTime / vid.duration) * 100);
+    if (vid.currentTime > timeStopedVideo) {
+      console.log("time loaded video when i tua video: ", timeLoadedVideo);
+      console.log("Total time watched video: ", totalTimeWatched);
+    }
+  });
+
+  // When video watched than 90 percent, it's finish.
+  // function load_ajax() {
+  //     let percent;
+  //     percent = Math.round((vid.currentTime / vid.duration) * 100);
+  //      if(percent > 90) {
+  //          count++;
+  //         $.ajax({
+  //                 url : "process/store",
+  //                 type : "POST",
+  //                 dataType:"json",
+  //                 data : obj,
+  //                 success : function (result){
+  //                     console.log("Successful");
+  //                 }
+  //             });
+  //      }
+  // }
+  //  setInterval(() => {
+  //      load_ajax();
+  //  }, 1000);
+
+  //change video when click to another video by Dung, Nguyen Anh
+
+  Array.prototype.forEach.call(listVideo, (video) => {
+    video.addEventListener("click", function (e) {
+      let url_video = e.target.getAttribute("data-url");
+      source.setAttribute("src", url_video);
+      vid.load();
     });
-    //isFinished
-    vid.addEventListener('pause', function() {
-        console.log('stop video');
-        clearInterval(countSecond);
-        timeStopedVideo = Math.floor(vid.currentTime);
-        totalTimeWatched+=timeLoadedVideo;
-        console.log('Total time: ', totalTimeWatched);
-        console.log('Total time of video: ', vid.duration);
-        timeOfnightyPercent = (vid.duration *10)/100;
-        console.log(timeOfnightyPercent);
-        if(totalTimeWatched > (vid.duration - timeOfnightyPercent) || totalTimeWatched === (vid.duration - timeOfnightyPercent)) {
-            console.log("video finished");
-        }
-    })
-    // get current time when click on video
-    vid.addEventListener('canplay', function(){
-        let percent;
-        percent = Math.round((vid.currentTime / vid.duration) * 100);
-        if(vid.currentTime > timeStopedVideo) {
-            console.log('time loaded video when i tua video: ',timeLoadedVideo);
-            console.log('Total time watched video: ', totalTimeWatched);
-        }
-    })
-
-    // When video watched than 90 percent, it's finish.
-    // function load_ajax() {
-    //     let percent;
-    //     percent = Math.round((vid.currentTime / vid.duration) * 100);
-    //      if(percent > 90) {
-    //          count++;
-    //         $.ajax({
-    //                 url : "process/store",
-    //                 type : "POST",
-    //                 dataType:"json",
-    //                 data : obj,
-    //                 success : function (result){
-    //                     console.log("Successful");
-    //                 }
-    //             });
-    //      }
-    // }
-    //  setInterval(() => {
-    //      load_ajax();
-    //  }, 1000);
-    
-
-     //change video when click to another video by Dung, Nguyen Anh    
-
-    Array.prototype.forEach.call(listVideo, video => {
-        video.addEventListener('click', function(e) {
-            let url_video = e.target.getAttribute('data-url');
-            source.setAttribute("src", url_video);
-            vid.load();
-        })
-    });
+  });
 </script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  crossorigin="anonymous"
+></script>
+<script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"
+></script>
