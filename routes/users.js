@@ -44,10 +44,8 @@ router.get('/edit-account', profileController.renderEditAccountPage);
 router.patch('/edit-account', profileController.editAccount);
 router.get('/edit-photo', profileController.renderEditPhotoPage);
 router.patch('/edit-photo', upload.single('avatar'), profileController.editPhoto);
+router.get('/close-account', profileController.renderCloseAccountPage);
+router.delete('/close-account', profileController.closeAccount);
 router.patch("/wish/:id", authMiddleware, toggleWish);
-// .httpacess
-// router.get('/public-profile', async (req, res, next) => {
-//   res.render("profile/public-profile.ejs", { title: "User account" });
-// });
 
 module.exports = router;
