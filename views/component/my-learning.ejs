@@ -1,12 +1,17 @@
 <head>
-    <% include _head %>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+     <% include _head %>
     <link rel="stylesheet" href="stylesheets/my-learning.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
 <body>
-    <div class="header-my-learning">
-        <p>My learning</p>
+    <div class="header-my-learning mb-5">
+        <div>
+            <h4 class="text-light ms-4">My learning</h4>
+        </div>
+        <div class="btn-home">
+            <a href="/" class="text-light fs-5 fw-bold">Home</a>
+        </div>
     </div>
     <div class="list-course-container">
         <% if (list_course.length === 0 || list_course === null) {%>
@@ -24,7 +29,7 @@
                         <p class="author"><%= list_course[i].title %></p>
                         <p class="description"><%= list_course[i].description %></p>
                         <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                            <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
                         </div>
                     </div>
                 </a>
@@ -32,9 +37,54 @@
         <% } %>
     </div>
 
+    <!-- Pagination -->
+    <% if(pages > 0) { %>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <!-- FIRST ITEM -->
+            <% if(current == 1) { %>
+                <li class="page-item disabled"><a class="page-link w-auto" href="/myLearning">First</a></li>
+            <% } else { %>
+                <li class="page-item"><a class="page-link w-auto" href="/myLearning">First</a></li>
+            <% } %>
+            <!-- ITEMS  -->
+            <% var i = (Number(current) > 3 ? Number(current) - 2 : 1) %>
+            <!-- if page = 1 -->
+            <% if(i !== 1) { %>
+                <li class="page-item disabled">
+                    <a class="page-link w-auto" href="#">...</a>
+                </li>
+            <% } %>
+            <!-- for loop -->
+            <% for(; i <= (Number(current) + 2) && i <= pages; i++) { %>
+            <!-- ---- -->
+            <% if(i == current) { %>
+                <li class="page-item active"><a class="page-link  w-auto" href="/myLearning?page=<%= i %>"><%= i %></a></li>
+            <% } else { %>
+                <li class="page-item"><a class="page-link  w-auto" href="/myLearning?page=<%= i %>"><%= i %></a></li>
+            <% } %>
+            <!-- ---- -->
+            <% if (i == Number(current) + 2 && i < pages) { %>
+                <li class="page-item disabled">
+                    <a class="page-link w-auto" href="#">...</a>
+                </li>
+            <% } %>
+            <!-------->
+            <% } %>
+            <!-- LAST ITEM -->
+            <% if(current == pages) { %>
+                <li class="page-item disabled">
+                    <a class="page-link w-auto" href="#">Last</a>
+                </li>
+            <% } else { %>
+            <li class="page-item"><a class="page-link  w-auto" href="/myLearning?page=<%= pages %>">Last</a></li>
+            <% } %>
+        </ul>
+    </nav>
+    <% } %>
 
     <footer><%- include('footer')%></footer>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
