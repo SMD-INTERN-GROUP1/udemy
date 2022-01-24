@@ -1,18 +1,30 @@
 const mongoose = require('mongoose');
 
-const proccess = new mongoose.Schema({
-    user_id:{
-        type: mongoose.Types.ObjectId,
-    },
-    course_id: {
-        type: mongoose.Types.ObjectId,
-    },
-    videoFinish: {
-        type: Number,
-    },
-    totalVideo: {
-        type: Number,
+const processCouser = new mongoose.Schema(
+    {
+        couserId: {
+            type: String,
+            default: ""
+        },
+        totalVideo: {
+            type: Number
+        },
+        totalVideoFinish: {
+            type: Number,
+            default: 1
+        },
+        processOfVideo: {
+            type: Number, 
+            default: 0
+        }
     }
+);
+
+const proccess = new mongoose.Schema({
+    userId:{
+        type: mongoose.Types.ObjectId,
+    },
+    listCourse: [processCouser],
 },{timestamps:true}
 );
 
