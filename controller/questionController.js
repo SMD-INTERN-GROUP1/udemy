@@ -32,9 +32,7 @@ const checkQuestion = async (req, res) => {
       .status(400)
       .json({ success: false, msg: "Couse is not found !" });
   const questions = course.questions;
-  const newQuestions = [];
   let trueNumber = 0;
-
   for (const [key, value] of Object.entries(req.body)) {
     const question = questions.find(
       (q) => JSON.stringify(q._id) === JSON.stringify(key)
@@ -42,15 +40,12 @@ const checkQuestion = async (req, res) => {
     if (question && question.result === Number(value)) {
       trueNumber++;
     }
-    const newQ = { ...question._doc, userAnswer: Number(value) };
-    newQuestions.push(newQ);
   }
   const mark = (trueNumber / questions.length) * 100;
   console.log(mark);
   return res.render("quizforuser/checkanswer", {
     trueNumber,
-    mark,
-    newQuestions,
+    mark
   });
 };
 
