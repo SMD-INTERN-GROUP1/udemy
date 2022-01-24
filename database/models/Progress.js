@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const proccess = new mongoose.Schema({
+const progress = new mongoose.Schema({
     user_id:{
         type: mongoose.Types.ObjectId,
     },
@@ -16,4 +16,4 @@ const proccess = new mongoose.Schema({
 },{timestamps:true}
 );
 
-module.exports=mongoose.model("Proccess", proccess);
+module.exports=mongoose.model("Progress", progress);
