@@ -21,7 +21,8 @@
       />
       Your browser does not support HTML5 video.
     </video>
-    <a href="/course/<%-course.slug%>" class="btn btn-star w-25">Rate Star</a>
+    <!-- <iframe src="" frameborder="0"></iframe> -->
+    <a href="/course/<%-course.slug%>" class="btn btn-star">Rate Star</a>
     <p><%= list_chapter[0].list_video[0].title %></p>
     <p><%= list_chapter[0].list_video[0].description %></p>
   </div>
@@ -53,41 +54,77 @@
 </div>
 
 <script>
+  //line 41 to 107 written by Dung and Hanh
   var vid = document.getElementById("myVideo");
   var source = document.getElementById("my_video_url");
   let listVideo = document.getElementsByClassName("video-item");
-
-  let count = 0;
+  let timeLoadedVideo = 0;
+  let totalTimeWatched = 0;
+  let countSecond;
+  let timeStopedVideo;
+  let timeOfnightyPercent;
+  vid.addEventListener("play", function () {
+    console.log("playing video...");
+    countSecond = setInterval(() => {
+      timeLoadedVideo++;
+      console.log("time load video: ", timeLoadedVideo);
+    }, 1000);
+  });
+  //isFinished
+  vid.addEventListener("pause", function () {
+    console.log("stop video");
+    clearInterval(countSecond);
+    timeStopedVideo = Math.floor(vid.currentTime);
+    totalTimeWatched += timeLoadedVideo;
+    console.log("Total time: ", totalTimeWatched);
+    console.log("Total time of video: ", vid.duration);
+    timeOfnightyPercent = (vid.duration * 10) / 100;
+    console.log(timeOfnightyPercent);
+    if (
+      totalTimeWatched > vid.duration - timeOfnightyPercent ||
+      totalTimeWatched === vid.duration - timeOfnightyPercent
+    ) {
+      console.log("video finished");
+    }
+  });
+  // get current time when click on video
   vid.addEventListener("canplay", function () {
     let percent;
     percent = Math.round((vid.currentTime / vid.duration) * 100);
-    console.log("ok: ", percent + "%");
-  });
-  function load_ajax() {
-    let percent;
-    percent = Math.round((vid.currentTime / vid.duration) * 100);
-    if (percent > 90) {
-      count++;
-      $.ajax({
-        url: "process/store",
-        type: "POST",
-        dataType: "json",
-        data: obj,
-        success: function (result) {
-          console.log("Successful");
-        },
-      });
+    if (vid.currentTime > timeStopedVideo) {
+      console.log("time loaded video when i tua video: ", timeLoadedVideo);
+      console.log("Total time watched video: ", totalTimeWatched);
     }
-  }
-  setInterval(() => {
-    load_ajax();
-  }, 1000);
-  console.log("Total video: ", listVideo.length);
+  });
+
+  // When video watched than 90 percent, it's finish.
+  // function load_ajax() {
+  //     let percent;
+  //     percent = Math.round((vid.currentTime / vid.duration) * 100);
+  //      if(percent > 90) {
+  //          count++;
+  //         $.ajax({
+  //                 url : "process/store",
+  //                 type : "POST",
+  //                 dataType:"json",
+  //                 data : obj,
+  //                 success : function (result){
+  //                     console.log("Successful");
+  //                 }
+  //             });
+  //      }
+  // }
+  //  setInterval(() => {
+  //      load_ajax();
+  //  }, 1000);
+
+  //change video when click to another video by Dung, Nguyen Anh
+
   Array.prototype.forEach.call(listVideo, (video) => {
     video.addEventListener("click", function (e) {
       let url_video = e.target.getAttribute("data-url");
       source.setAttribute("src", url_video);
-      console.log("source: ", source.src);
+      vid.load();
     });
   });
 </script>
