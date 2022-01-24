@@ -1,8 +1,7 @@
 const UsersModel = require("../database/models/Users");
 const User = require("../database/models/Users");
 const Course = require("../database/models/Courses");
-const Proccess = require("../database/models/Proccess");
-const Courses = require("../database/models/Courses");
+const Progress = require("../database/models/Progress");
 
 const renderUserPage = async (req, res, next) => {
   const users = await UsersModel.find();
@@ -49,29 +48,27 @@ const getListVideoToLearn = async (req, res, next) => {
     const course = await Course.findOne({ slug: req.params.slug });
 
     const list_chapter = await course.list_chapter;
-    console.log('list chapter: ', list_chapter);
-
     res.render("component/learning-course", { course, list_chapter });
   } catch (error) {
     res.status(500).json({ msg: error });
   }
 };
 
-const createProccess = async (req, res, next) => {
+//progress of course
+const createProgress = async (req, res, next) => {
   try {
     let obj = req.body;
-    obj.user_id = "61d696d0896327cb23460f8c";
-    obj.course_id = "61e2d7cddf1e49b94d069a84";
-    console.log(obj);
-    let proccessObj = new Proccess(obj);
-    console.log("count: ", req.body.count);
+    const userId = req.cookies.user._id; 
+    const course = Course.find({slug: req.param.lug});
+    const courseId = course._id; 
     if (req.body.count > 0) {
-      proccessObj.save();
+      
     }
   } catch (error) {
     console.log(error);
   }
 };
+
 const toggleWish = async (req, res, next) => {
   const idCourse = req.params.id;
   const user = await UsersModel.findOne({ username: req.user.username });
@@ -102,6 +99,6 @@ module.exports = {
   renderUserPage,
   getMyLearning,
   getListVideoToLearn,
-  createProccess,
+  createProgress,
   toggleWish,
 };
