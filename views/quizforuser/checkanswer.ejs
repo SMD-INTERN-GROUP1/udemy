@@ -1,0 +1,296 @@
+<link
+  rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+  crossorigin="anonymous"
+/>
+<div class="container mt-sm-5 my-1">
+    <div id="container">
+      <% if(Math.round(mark)>80) { %>
+    <div id="success-box">
+      <div class="dot"></div>
+      <div class="dot two"></div>
+      <div class="face">
+        <div class="eye"></div>
+        <div class="eye right"></div>
+        <div class="mouth happy"></div>
+      </div>
+      <div class="shadow scale"></div>
+      <div class="message"><h1 class="alert">Success! <p class="mt-2">You have passed the test</p></h1></div>
+      <h1 class="mt-3">Your score:<%=Math.round(mark)%></h1>
+      <a class="button-box mt-2" href="/myLearning">Back to myLearning</a>
+    </div>
+    <% } else { %>
+      <div id="error-box">
+        <div class="dot"></div>
+        <div class="dot two"></div>
+        <div class="face2">
+          <div class="eye"></div>
+          <div class="eye right"></div>
+          <div class="mouth sad"></div>
+        </div>
+        <div class="shadow move"></div>
+        <div class="message"><h1 class="alert">Failed!</h1><p>Please study again</p></div>
+        <h1 class="mt-3">Your score:<%=Math.round(mark)%></h1>
+          <a class="button-box mt-2" href="/myLearning">Back to myLearning</a>
+      </div>
+      <% } %>
+   
+  </div>
+  
+</div>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+
+
+
+body {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  overflow: hidden;
+  font-family: 'Lato', sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  background: url("https://wallpapercave.com/wp/wp6942356.png");
+  background-size: contain;
+}
+
+#container {
+  position: relative;
+  margin: auto;
+  overflow: hidden;
+  width: 800px;
+  height: 400px;
+}
+
+h1 {
+  font-size: 30px;
+  font-weight: 100;
+  letter-spacing: 3px;
+  padding-top: 5px;
+  color:#FCFCFC;
+  padding-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.green {
+  color: darken(#99DBB4, 20%);
+}
+
+.red {
+  color: darken(#EF8D9C, 10%);
+}
+
+.alert {
+  font-weight: 700;
+  letter-spacing: 5px;
+}
+
+p {
+  margin-top: -5px;
+  font-size: 0.5em;
+  font-weight: 100;
+  color: darken(#777777, 10%);
+  letter-spacing: 1px;
+}
+
+button, .dot {
+  cursor: pointer;
+}
+
+#success-box {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom right, #B0DB7D 40%, #99DBB4 100%);
+  border-radius: 20px;
+  box-shadow: 5px 5px 20px rgba(#CBCDD3, 10%);
+  perspective: 40px;
+}
+
+#error-box {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom left, #EF8D9C 40%, #FFC39E 100%);
+  border-radius: 20px;
+  box-shadow: 5px 5px 20px rgba(#CBCDD3, 10%);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background:#FCFCFC;
+  border-radius: 50%;
+  position: absolute;
+  top: 4%;
+  right: 6%;
+ 
+}
+.dot:hover {
+    background: darken(#FCFCFC, 20%);
+  }
+.two {
+  right: 12%;
+  opacity: .5;
+}
+
+.face {
+  position: absolute;
+  width: 22%;
+  height: 22%;
+  background:#FCFCFC;
+  border-radius: 50%;
+  border: 1px solid #777777;
+  top: 21%;
+  left: 37.5%;
+  z-index: 2;
+  animation: bounce 1s ease-in infinite;
+}
+
+.face2 {
+  position: absolute;
+  width: 22%;
+  height: 22%;
+  background:#FCFCFC;
+  border-radius: 50%;
+  border: 1px solid #777777;
+  top: 21%;
+  left: 37.5%;
+  z-index: 2;
+  animation: roll 3s ease-in-out infinite;
+}
+
+.eye {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: #777777;
+  border-radius: 50%;
+  top: 40%;
+  left: 20%;
+}
+
+.right {
+  left: 68%;
+}
+
+.mouth {
+  position:absolute;
+  top: 43%;
+  left: 41%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.happy {
+  border: 2px solid;
+  border-color: transparent #777777 #777777 transparent;
+  transform: rotate(45deg);
+}
+
+.sad {
+  top: 49%;
+  border: 2px solid;
+  border-color: #777777 transparent transparent #777777;
+  transform: rotate(45deg);
+}
+
+.shadow {
+  position: absolute;
+  width: 21%;
+  height: 3%;
+  opacity: .5;
+  background: #777777;
+  left: 40%;
+  top: 43%;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.scale {
+  animation: scale 1s ease-in infinite;
+}
+.move {
+  animation: move 3s ease-in-out infinite;
+}
+
+
+.message {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  height: 40%;
+  top: 47%;
+  font-size: 30px;
+}
+
+.button-box {
+  position: absolute;
+  background:#FCFCFC;
+  border-radius: 20px;
+  top: 73%;
+  left: 50%;
+  transform: translateX(-50%);
+  outline: 0;
+  border: none;
+  box-shadow: 2px 2px 10px rgba(#777777, .5);
+  transition: all .5s ease-in-out;
+  padding: 5px;
+  
+}
+@keyframes bounce {
+  50% {
+     transform: translateY(-10px);
+  }
+}
+
+@keyframes scale {
+  50% {
+    transform: scale(0.9);
+  }
+}
+
+@keyframes roll {
+  0% {
+    transform: rotate(0deg);
+    left: 25%;
+  }
+  50% {
+    left: 60%;
+    transform: rotate(168deg);
+  }
+  100% {
+    transform: rotate(0deg);
+    left: 25%;
+  }
+}
+
+@keyframes move {
+  0% {
+    left: 25%;
+  }
+  50% {
+    left: 60%;
+  }
+  100% {
+    left: 25%;
+  }
+}
+a {
+    color: #B0DB7D;
+    text-decoration: none;
+}
+  a:hover {
+      color:#FFC39E;
+    }
+
+</style>

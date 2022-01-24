@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://image.winudf.com/v2/image1/Y29tLnVkZW15LmFuZHJvaWRfaWNvbl8xNjI2MjkxNzQzXzAxMA/icon.png?w=&fakeurl=1" />
+    <title><%= title%></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/profile.css" />     
+  </head>
+  <body>
+    <%- include('../component/header')%>
+    <div class="container">
+      <div class="view-account">
+        <section class="module">
+          <div class="module-inner">
+            <div class="side-bar">
+              <div class="user-info">
+                <%if (user) { %>
+                  <img class="img-profile img-responsive center-block" src="<%= user.avatar %>" alt="">
+                  <ul class="meta list list-unstyled">
+                    <% if (user.fullName) { %>
+                    <li class="name"> <%=user.fullName%>
+                      <% if (user.headLine) { %>
+                      <label class="label label-info"><%=user.headLine%></label>
+                      <% } %>
+                    </li>
+                    <% } %>
+                  </ul>
+                <% } %>
+              </div>
+              <nav class="side-menu">
+                <ul class="nav">
+                  <li><a href="edit-profile"><span class="fa fa-user"></span> Profile</a></li>
+                  <li><a href="edit-account"><span class="fa fa-key"></span> Account</a></li>
+                  <li><a href="edit-photo"><span class="fa fa-picture-o"></span> Photo </a></li>
+                  <li class="active"><a href="close-account"><span class="fa fa-window-close"></span> Close account </a></li>
+                </ul>
+              </nav>
+            </div>
+            <div class="content-panel">
+              <div class="content-title">
+                <h2 class="title"> Close Account </h2>
+                <h4 class="sub-title"> Close your account permanently. </h4>
+              </div>
+              <hr>
+              <div class="form-section" id="close-account">
+                <div> Close Your Account </div>
+                <div id="remove-account">
+                  <p>
+                    <b class="text-danger-dark">Warning:</b> If you close your account, you will be unsubscribed from all your 0 courses, and will lose access forever.
+                    <% if(message) {%>
+                      <div id="notification"><%= message %></div>
+                    <% } %>
+                  </p>
+                  <div class="container">
+                    <!-- Trigger the modal with a button -->
+                    <button type="button" class="btn btn-secondary btn-close-account" data-toggle="modal" data-target="#myModal"> Close account </button>
+    
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" role="dialog">
+                      <div class="modal-dialog">
+                      
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title">Close your account</h4>
+                            <button type="button" class="close" data-dismiss="modal" class="close">&times;</button>
+                          </div>
+                          <div class="modal-body">
+                            <p>Are you sure you want to delete your account?</p>
+                          </div>
+                          <div class="modal-footer">
+                            <% if (user) {%>
+                              <form method="POST" action="close-account?_method=DELETE">
+                                <input type="hidden" name="id" value="<%= user._id%>">
+                                <button type="submit" class="btn btn-default btn-confirm-close-account" id="btn-confirm"> Confirm </button>
+                              </form>
+                            <% }%>
+                            <button type="button" class="btn btn-default btn-close-account" data-dismiss="modal"> Close </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <footer><%- include('../component/footer.ejs')%></footer>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>       
+    <script>
+      let submit = document.getElementById("btn-confirm");
+
+      function deleteAccount(e) {
+        console.log(submit.getAttribute("data-id"));
+        let idUser = {"userId": submit.getAttribute("data-id")};
+        // $.ajax({
+        //             url : "close-account/close",
+        //             type : "delete",
+        //             dataType:"json",
+        //             data : idUser,
+        //             success : function (result){
+        //               console.log("Successful");
+        //             }
+        //         });
+        }
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  </body>
+</html>

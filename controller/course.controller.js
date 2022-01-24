@@ -1,7 +1,7 @@
 const Course = require("../database/models/Courses");
 const Topic = require("../database/models/Topics");
 const Video = require("../database/models/Videos");
-const Instrutor = require("../database/models/Instrutor");
+const Instrutor = require("../database/models/instructor");
 const { format } = require("timeago.js");
 const categoryService = require("../services/category.services");
 const UserModal = require("../database/models/Users");
@@ -130,7 +130,7 @@ const showCourse = async (req, res, next) => {
         title: "Instructor page",
         content: "../instructor_view/instructor_course",
         course,
-        listChapter
+        listChapter,
       });
     })
     .catch(next);
@@ -179,7 +179,6 @@ const destroy = async (req, res, next) => {
 
 //chapter
 
-
 const createChapter = async (req, res, next) => {
   try {
     //get course id
@@ -187,26 +186,26 @@ const createChapter = async (req, res, next) => {
     const course = await Course.findOne({ slug: slug });
     let formData = req.body;
     Course.updateOne(
-      {_id: course._id},
+      { _id: course._id },
       {
         $push: {
           list_chapter: {
             $each: [
               {
                 title: formData.title,
-                chapter_position: formData.chapter_position
-              }
-            ]
-          }
-        }
+                chapter_position: formData.chapter_position,
+              },
+            ],
+          },
+        },
       },
-      function(err, data) {
-        if(err) {
-          console.log('error create chapter: ',err);
+      function (err, data) {
+        if (err) {
+          console.log("error create chapter: ", err);
         }
-      } 
-    )
-    res.redirect("/instructor/courses/"+slug);
+      }
+    );
+    res.redirect("/instructor/courses/" + slug);
   } catch (error) {
     console.log("error: ", error);
     res.status(500).json({ msg: error });
@@ -223,25 +222,24 @@ const createVideo = async (req, res, next) => {
     let formData = req.body;
     let a = 2;
     Course.updateOne(
-      {"_id": course._id, "list_chapter._id": chapter_id},
+      { _id: course._id, "list_chapter._id": chapter_id },
       {
-        "$push": {
-          "list_chapter.$[c].list_video": {           
-                title: formData.title,
-                video_position: formData.video_position,
-                description: formData.description,
-                video_url: video_url
-
-          }
-        }
+        $push: {
+          "list_chapter.$[c].list_video": {
+            title: formData.title,
+            video_position: formData.video_position,
+            description: formData.description,
+            video_url: video_url,
+          },
+        },
       },
-      { arrayFilters: [ { "c._id": chapter_id }]},
-      function(err, data) {
-        if(err) console.log('upload video ko đc: ', err);
+      { arrayFilters: [{ "c._id": chapter_id }] },
+      function (err, data) {
+        if (err) console.log("upload video ko đc: ", err);
       }
-    )
+    );
     //res.json(req.body);
-    res.redirect("/instructor/courses/"+slug);
+    res.redirect("/instructor/courses/" + slug);
   } catch (error) {
     res.json({ msg: error });
   }
@@ -255,7 +253,9 @@ const wishListFunc = async (req, res) => {
   const user = await UserModal.findOne({
     username: req.user.username,
   }).populate("wishList");
-
+   // {
+  //   wishList : [{ khoa 1} , { khoa 2}]
+  //  }
   const newUser = await UserModal.findOne({
     username: req.user.username,
   });
@@ -292,9 +292,9 @@ const createReview = async (req, res) => {
   // await course.save();
 
   course.reviews.push(newReview);
-
+   // so binh luan
   course.numberReview = course.reviews.length;
-
+  // rate tong
   course.rating =
     course.reviews.reduce((total, review) => {
       return total + review.rate;
@@ -312,19 +312,6 @@ const deleteReview = async (req, res) => {
   if (!course) {
     return res.status(400).json({ err: "course is not exist !" });
   }
-
-  // await course.updateOne({
-  //   $pull: {
-  //     reviews: req.params.id,
-  //   },
-  // });
-  // number, boolean, string
-  // object, funtion, array => const a = {a : ""}
-
-  // void afunc(* ){ num = 3 }
-  // int a = 4;
-  // afunc(a)
-
   const index = course.reviews.findIndex((review) => {
     return review._id == req.params.id;
   });
@@ -410,6 +397,10 @@ const getSearch = async (req, res, next) => {
     console.log(error.message);
   }
 };
+const quizcontroller = async (req, res, next) => {
+  const course = await Course.findOne({ slug: req.params.slug });
+  return res.render("quizforuser/quiz", { idCourse: course._id });
+};
 
 module.exports = {
   getDetailCourse,
@@ -429,4 +420,5 @@ module.exports = {
   getSearch,
   deleteReview,
   createReview,
+  quizcontroller,
 };
