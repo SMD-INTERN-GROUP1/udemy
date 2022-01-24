@@ -20,7 +20,7 @@
           <div class="module-inner">
             <div class="side-bar">
               <div class="user-info">
-                <img class="img-profile img-circle img-responsive center-block" style="object-fit: cover;" src="<%= user.avatar %>" alt="">
+                <img class="img-profile img-responsive center-block" src="<%= user.avatar %>" alt="">
                 <ul class="meta list list-unstyled">
                   <% if (user.fullName) { %>
                   <li class="name"> <%=user.fullName%>
@@ -36,7 +36,7 @@
                   <li><a href="edit-profile"><span class="fa fa-user"></span> Profile</a></li>
                   <li class="active"><a href="edit-account"><span class="fa fa-key"></span> Account</a></li>
                   <li><a href="edit-photo"><span class="fa fa-picture-o"></span> Photo </a></li>
-                  <li><a href="#"><span class="fa fa-window-close"></span> Close account </a></li>
+                  <li><a href="close-account"><span class="fa fa-window-close"></span> Close account </a></li>
                 </ul>
               </nav>
             </div>
@@ -51,7 +51,7 @@
                   <div class="form-group">
                     <label class="col-md-2 col-sm-3 col-xs-12 control-label">Email:</label>
                     <div class="col-md-10 col-sm-9 col-xs-12">
-                      <div class="form-control" style="border: 1px solid #1c1d1f; background-color: #ecf0f1">
+                      <div class="form-control" id="user-email">
                         Your email address is <b><%= user.email %></b>
                       </div>
                     </div>
@@ -61,19 +61,19 @@
                     <label class="col-md-2 col-sm-3 col-xs-12 control-label">Password:</label>
                     <div class="col-md-10 col-sm-9 col-xs-12">
                       <% if(notification === "Incorrect") { %>
-                      <div class="alert alert-danger" role="alert" style="text-align: center; font-weight: 600;">
+                      <div class="alert alert-danger" role="alert" id="incorrect-password">
                         Incorrect password !!!
                       </div>
                       <% } %>
                       <% if(notification === "Successful") { %>
-                      <div class="alert alert-success" role="alert" style="text-align: center; font-weight: 600;">
+                      <div class="alert alert-success" role="alert" id="successful-password">
                         Update successful !!!
                       </div>
                       <% } %>
                     </div>
                     <div class="col-md-10 col-sm-9 col-xs-12">
                       <input type="password" name="password" class="form-control" id="current-password" placeholder="Enter Current Password" required>
-                      <h5 id="current-password-check" style="color: #dc3545; font-size: 80%; margin-top: 5px;">
+                      <h5 id="current-password-check">
                         Please enter your current password.
                       </h5>
                     </div>
@@ -81,7 +81,7 @@
                   <div class="form-group">
                     <div class="col-md-10 col-sm-9 col-xs-12">
                       <input type="password" name="newPassword" class="form-control" id="new-password" placeholder="Enter New Password" required>
-                      <h5 id="new-password-check" style="color: #dc3545; font-size: 80%; margin-top: 5px;">
+                      <h5 id="new-password-check">
                         Please enter your new password.
                       </h5>
                     </div>
@@ -89,7 +89,7 @@
                   <div class="form-group">
                     <div class="col-md-10 col-sm-9 col-xs-12">
                       <input type="password" name="reTypePassword" class="form-control" id="re-type-password" placeholder="Re-type New Password" required>
-                      <h5 id="re-type-password-check" style="color: #dc3545; font-size: 80%; margin-top: 5px;">
+                      <h5 id="re-type-password-check">
                         Please enter your re-type new password.
                       </h5>
                     </div>
@@ -99,7 +99,7 @@
                 <div class="form-group">
                   <div class="col-md-10 col-sm-9 col-xs-12 col-md-push-2 col-sm-push-3 col-xs-push-0" style="text-align: center;">
                     <input class="btn btn-primary" type="submit" value="Change Password">
-                    <input class="btn btn-primary" type="button" id="btn-cancel" style="background-color: #1c1d1f" value="Cancel">
+                    <input class="btn btn-primary" type="button" id="btn-cancel" value="Cancel">
                   </div>
                 </div>
               </form>
