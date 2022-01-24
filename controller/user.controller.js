@@ -48,6 +48,32 @@ const getListVideoToLearn = async (req, res, next) => {
   try {
     const course = await Course.findOne({ slug: req.params.slug });
 
+    let userId = req.cookies.user._id;
+    let totalVideo = 0;
+    let courseId = course._id;
+
+    let isLearningProcessOfUser = await Proccess.findOne({ userId: userId });
+
+    for(let i = 0; i < course.list_chapter.length; i++){
+      totalVideo += course.list_chapter[i].list_video.length;
+      console.log('count:', i ,':', totalVideo);
+    }
+
+    if(isLearningProcessOfUser === null) {
+      formData = {
+        userId: req.cookies.user._id,
+        listProcessCourse: {
+          couserId: courseId,
+          totalVideo: totalVideo
+        }
+      }
+
+      const createProcessCouser = new Proccess(formData);
+      await createProcessCouser.save();
+      
+      console.log('idhello', userId);
+    }
+
     const list_chapter = await course.list_chapter;
     console.log('list chapter: ', list_chapter);
 

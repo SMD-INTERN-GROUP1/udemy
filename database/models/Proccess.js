@@ -24,7 +24,7 @@ const proccess = new mongoose.Schema({
     userId:{
         type: mongoose.Types.ObjectId,
     },
-    listCourse: [processCouser],
+    listProcessCourse: [processCouser],
 },{timestamps:true}
 );
 
