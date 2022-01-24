@@ -13,9 +13,10 @@
                 Your browser does not support HTML5 video.
             </video>
             <!-- <iframe src="" frameborder="0"></iframe> -->
-              <a href="/course/<%-course.slug%>" class="btn btn-star">Rate Star</a>
-            <p><%= list_chapter[0].list_video[0].title %></p>
-            <p><%= list_chapter[0].list_video[0].description %></p>
+            <a href="/course/<%-course.slug%>" class="btn btn-star">Rate Star</a>
+
+            <p class="video-title"><%= list_chapter[0].list_video[0].title %></p>
+            <p class="video-description"><%= list_chapter[0].list_video[0].description %></p>
         </div>
         <div class="col-md-3">
             <ul>
@@ -23,8 +24,8 @@
                     <li class="chapter-item">
                         <span class="chapter-position">Chapter <%= list_chapter[i].position%>:</span> <%= list_chapter[i].title %>
                         <ul>
-                            <% list_chapter[i].list_video.forEach(video => {%>
-                                <li class="video-item" data-url="<%=video.video_url%>">
+                            <% list_chapter[i].list_video.forEach((video, index) => {%>
+                                <li class="video-item" data-url="<%=video.video_url%>;<%=video.video_position%>">
                                     <span class="video-position">Video <%= video.position %>:</span>
                                     <%= video.title %>
                                 </li>
@@ -43,6 +44,8 @@
     var vid = document.getElementById("myVideo");
     var source = document.getElementById("my_video_url");
     let listVideo = document.getElementsByClassName("video-item");
+    let videoTitle = document.getElementsByClassName("video-title");
+    let videoDescription = document.getElementsByClassName("video-desciption");
     let timeLoadedVideo = 0;
     let totalTimeWatched = 0;
     let countSecond;
@@ -103,11 +106,12 @@
     
 
      //change video when click to another video by Dung, Nguyen Anh    
-
     Array.prototype.forEach.call(listVideo, video => {
         video.addEventListener('click', function(e) {
             let url_video = e.target.getAttribute('data-url');
-            source.setAttribute("src", url_video);
+            console.log('url video: ',url_video);
+            let index = url_video.split(';');
+            source.setAttribute("src", index[0]);
             vid.load();
         })
     });
