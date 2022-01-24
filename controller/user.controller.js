@@ -2,6 +2,8 @@ const UsersModel = require("../database/models/Users");
 const User = require("../database/models/Users");
 const Course = require("../database/models/Courses");
 const Proccess = require("../database/models/Proccess");
+const Note = require("../database/models/Note");
+const NoteTime = require("../database/models/NoteTime");
 const Courses = require("../database/models/Courses");
 
 const renderUserPage = async (req, res, next) => {
@@ -47,7 +49,6 @@ const getMyLearning = async (req, res, next) => {
 const getListVideoToLearn = async (req, res, next) => {
   try {
     const course = await Course.findOne({ slug: req.params.slug });
-
     const list_chapter = await course.list_chapter;
     console.log('list chapter: ', list_chapter);
 

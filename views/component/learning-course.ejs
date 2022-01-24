@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="/stylesheets/learning-course.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <div class="col-md-12 d-flex">
 
     <% if(list_chapter.length === 0 || list_chapter === null) { %>
@@ -12,9 +13,31 @@
                 <source id="my_video_url" src="<%= list_chapter[0].list_video[0].video_url%>" type="video/mp4">
                 Your browser does not support HTML5 video.
             </video>
-              <a href="/course/<%-course.slug%>" class="btn btn-star">Rate Star</a>
-            <p><%= list_chapter[0].list_video[0].title %></p>
-            <p><%= list_chapter[0].list_video[0].description %></p>
+            <div class="d-flex">
+                <a href="#" class="btn btn-star" onclick="handleNoteVideo('overview')">Overview</a>
+                <a href="#" class="btn btn-star" onclick="handleNoteVideo('notes')" >Notes</a>
+                <a href="/course/<%-course.slug%>" class="btn btn-star" onclick="handleNoteVideo('ratestar')" >Rate Star</a>
+            </div>
+            <div id="overview" class="note">
+                <p><%= list_chapter[0].list_video[0].title %></p>
+                <p><%= list_chapter[0].list_video[0].description %></p>
+            </div>
+            <div  id="notes" class="note" style="display:none">
+                <div class="create-note">
+                    <span>
+                        Create a new note
+                    </span>
+                    <i class="fas fa-plus-circle"></i>
+                </div>
+                <form action="" method="post" id="form-submit"> 
+                    <textarea name="" id="textarea" rows="2" cols="50" placeholder="Tạo ghi chú">
+                    </textarea>
+                   <div class="form-btn">
+                    <button type="button" id="cancel">Cancel</button>
+                    <button type="submit" id="save">Save note</button>
+                   </div>
+                </form>    
+            </div>
         </div>
         <div class="col-md-3">
             <ul>
@@ -22,8 +45,8 @@
                     <li class="chapter-item">
                         <span class="chapter-position">Chapter <%= list_chapter[i].position%>:</span> <%= list_chapter[i].title %>
                         <ul>
-                            <% list_chapter[i].list_video.forEach(video => {%>
-                                <li class="video-item" data-url="<%=video.video_url%>">
+                            <% list_chapter[i].list_video.forEach((video,index) => {%>
+                                <li class="video-item" data-url="<%=video.video_url%>" data-id="<%=list_chapter[i].list_video[index]._id%>">
                                     <span class="video-position">Video <%= video.position %>:</span>
                                     <%= video.title %>
                                 </li>
@@ -41,7 +64,14 @@
     var vid = document.getElementById("myVideo");
     var source = document.getElementById("my_video_url");
     let listVideo = document.getElementsByClassName("video-item");
-    
+    let createNote= document.querySelector('.create-note');
+    let cancel=document.querySelector('#cancel');
+    let save=document.querySelector('#save');
+    let formNote= document.querySelector('#form-submit');
+    let overView= document.querySelectorAll('.btn-star')[0];
+    let notes= document.querySelectorAll('.btn-star')[1];
+    let rateStar= document.querySelectorAll('.btn-star')[2];
+
     let count = 0;
     vid.addEventListener('canplay', function(){
         let percent;
@@ -75,6 +105,25 @@
             console.log('source: ',source.src);
         })
     });
+    // handle note video
+    function handleNoteVideo(e){
+        let note=document.querySelectorAll('.note');
+        for (i = 0; i < note.length; i++) {
+            note[i].style.display = "none";
+        }
+        document.getElementById(e).style.display = "block";
+    }
+    createNote.addEventListener('click',function(){
+        formNote.style.display = "block";
+    });
+    cancel.addEventListener('click',function(){
+        formNote.style.display = "none";
+    });
+
+    save.addEventListener('click',function(){
+        vid.currentTime=5;
+    }); 
+
 </script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
