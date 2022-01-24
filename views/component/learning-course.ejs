@@ -46,6 +46,7 @@
     let totalTimeWatched = 0;
     let countSecond;
     let timeStopedVideo;
+    let timeOfnightyPercent;
     vid.addEventListener('play', function() {
         console.log('playing video...');
         countSecond = setInterval(() => {
@@ -62,7 +63,9 @@
         totalTimeWatched+=timeLoadedVideo;
         console.log('Total time: ', totalTimeWatched);
         console.log('Total time of video: ', vid.duration);
-        if(totalTimeWatched > (vid.duration - 30) || totalTimeWatched === (vid.duration - 30)) {
+        timeOfnightyPercent = (vid.duration *10)/100;
+        console.log(timeOfnightyPercent);
+        if(totalTimeWatched > (vid.duration - timeOfnightyPercent) || totalTimeWatched === (vid.duration - timeOfnightyPercent)) {
             console.log("video finished");
         }
     })
