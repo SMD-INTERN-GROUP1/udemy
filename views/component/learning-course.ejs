@@ -1,3 +1,4 @@
+
 <link
   rel="stylesheet"
   href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -5,6 +6,7 @@
   crossorigin="anonymous"
 />
 <link rel="stylesheet" href="/stylesheets/learning-course.css" />
+
 
 <div class="col-md-12 d-flex">
   <% if(list_chapter.length === 0 || list_chapter === null) { %>
@@ -54,48 +56,50 @@
 </div>
 
 <script>
-  //line 41 to 107 written by Dung and Hanh
-  var vid = document.getElementById("myVideo");
-  var source = document.getElementById("my_video_url");
-  let listVideo = document.getElementsByClassName("video-item");
-  let timeLoadedVideo = 0;
-  let totalTimeWatched = 0;
-  let countSecond;
-  let timeStopedVideo;
-  let timeOfnightyPercent;
-  vid.addEventListener("play", function () {
-    console.log("playing video...");
-    countSecond = setInterval(() => {
-      timeLoadedVideo++;
-      console.log("time load video: ", timeLoadedVideo);
-    }, 1000);
-  });
-  //isFinished
-  vid.addEventListener("pause", function () {
-    console.log("stop video");
-    clearInterval(countSecond);
-    timeStopedVideo = Math.floor(vid.currentTime);
-    totalTimeWatched += timeLoadedVideo;
-    console.log("Total time: ", totalTimeWatched);
-    console.log("Total time of video: ", vid.duration);
-    timeOfnightyPercent = (vid.duration * 10) / 100;
-    console.log(timeOfnightyPercent);
-    if (
-      totalTimeWatched > vid.duration - timeOfnightyPercent ||
-      totalTimeWatched === vid.duration - timeOfnightyPercent
-    ) {
-      console.log("video finished");
-    }
-  });
-  // get current time when click on video
-  vid.addEventListener("canplay", function () {
-    let percent;
-    percent = Math.round((vid.currentTime / vid.duration) * 100);
-    if (vid.currentTime > timeStopedVideo) {
-      console.log("time loaded video when i tua video: ", timeLoadedVideo);
-      console.log("Total time watched video: ", totalTimeWatched);
-    }
-  });
+
+    //line 41 to 107 written by Dung and Hanh
+    var vid = document.getElementById("myVideo");
+    var source = document.getElementById("my_video_url");
+    let listVideo = document.getElementsByClassName("video-item");
+    let videoTitle = document.getElementsByClassName("video-title");
+    let videoDescription = document.getElementsByClassName("video-desciption");
+    let timeLoadedVideo = 0;
+    let totalTimeWatched = 0;
+    let countSecond;
+    let timeStopedVideo;
+    let timeOfnightyPercent;
+    vid.addEventListener('play', function() {
+        console.log('playing video...');
+        countSecond = setInterval(() => {
+            timeLoadedVideo++;
+            console.log('time load video: ', timeLoadedVideo);
+            
+        }, 1000)
+    });
+    //isFinished
+    vid.addEventListener('pause', function() {
+        console.log('stop video');
+        clearInterval(countSecond);
+        timeStopedVideo = Math.floor(vid.currentTime);
+        totalTimeWatched+=timeLoadedVideo;
+        console.log('Total time: ', totalTimeWatched);
+        console.log('Total time of video: ', vid.duration);
+        timeOfnightyPercent = (vid.duration *10)/100;
+        console.log(timeOfnightyPercent);
+        if(totalTimeWatched > (vid.duration - timeOfnightyPercent) || totalTimeWatched === (vid.duration - timeOfnightyPercent)) {
+            console.log("video finished");
+        }
+    })
+    // get current time when click on video
+    vid.addEventListener('canplay', function(){
+        let percent;
+        percent = Math.round((vid.currentTime / vid.duration) * 100);
+        if(vid.currentTime > timeStopedVideo) {
+            console.log('time loaded video when i tua video: ',timeLoadedVideo);
+            console.log('Total time watched video: ', totalTimeWatched);
+        }
+    })
+
 
   // When video watched than 90 percent, it's finish.
   // function load_ajax() {
@@ -118,13 +122,17 @@
   //      load_ajax();
   //  }, 1000);
 
-  //change video when click to another video by Dung, Nguyen Anh
 
-  Array.prototype.forEach.call(listVideo, (video) => {
-    video.addEventListener("click", function (e) {
-      let url_video = e.target.getAttribute("data-url");
-      source.setAttribute("src", url_video);
-      vid.load();
+     //change video when click to another video by Dung, Nguyen Anh    
+    Array.prototype.forEach.call(listVideo, video => {
+        video.addEventListener('click', function(e) {
+            let url_video = e.target.getAttribute('data-url');
+            console.log('url video: ',url_video);
+            let index = url_video.split(';');
+            source.setAttribute("src", index[0]);
+            vid.load();
+        })
+
     });
   });
 </script>
