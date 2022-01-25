@@ -20,8 +20,5 @@ const banner = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
-// Add plugins
 banner.plugin(mongooseDelete, { deletedAt: true, overrideMethods: "all" });
-
 module.exports = mongoose.model("Banners", banner);
