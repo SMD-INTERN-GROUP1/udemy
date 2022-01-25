@@ -1,14 +1,8 @@
 <div class="container">
-  <form
-    class="row g-3"
-    action="/instructor/createcourse"
-    method="POST"
-    enctype="multipart/form-data"
-  >
+  <form class="row g-3" action="/instructor/createcourse" method="POST">
     <h2>Create Course page</h2>
 
-    <div class="form-group col-12" style="display: none;">
-
+    <div class="form-group col-12" style="display: none">
       <label for="exampleInputEmail1" class="fw-bold">Instructor ID:</label>
       <input
         type="text"
@@ -51,7 +45,7 @@
         name="video_id"
       />
     </div>
-    <div class="form-group col-md-6">
+    <!-- <div class="form-group col-md-6">
       <label class="fw-bold mb-2">File image:</label>
       <input
         type="file"
@@ -60,7 +54,7 @@
         name="course_image"
         accept="image/*"
       />
-    </div>
+    </div> -->
     <div class="form-group col-md-6">
       <label for="exampleInputPassword1" class="fw-bold mb-2">Author:</label>
       <input
@@ -72,16 +66,7 @@
       />
     </div>
 
-    <div class="form-group col-md-6">
-      <label for="exampleInputPassword1" class="fw-bold mb-2">Topic:</label>
-      <select class="form-control" name="topic_id">
-        <% getTopics.forEach(topic => { %>
-        <option value="<%= topic._id %>"><%= topic.name%></option>
-        <% }); %>
-      </select>
-    </div>
-
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-4">
       <label for="exampleInputPassword1" class="fw-bold mb-2">Price:</label>
       <input
         type="number"
@@ -91,7 +76,7 @@
       />
     </div>
 
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-4">
       <label for="exampleInputPassword1" class="fw-bold mb-2">Discount:</label>
       <input
         type="number"
@@ -99,6 +84,15 @@
         id="exampleInputPassword1"
         name="price_discount"
       />
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="exampleInputPassword1" class="fw-bold mb-2">Topic:</label>
+      <select class="form-control" name="topic_id">
+        <% getTopics.forEach(topic => { %>
+        <option value="<%= topic._id %>"><%= topic.name%></option>
+        <% }); %>
+      </select>
     </div>
     <div class="col-12">
       <button type="submit" class="btn btn-primary fw-bold mt-4">Submit</button>

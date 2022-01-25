@@ -4,8 +4,8 @@
   integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
   crossorigin="anonymous"
 />
-<div class="container mt-5">
-  <h1>Create a question</h1>
+<div class="container mt-1">
+  <h1 class="mb-5">Create a question</h1>
   <form action="/question/<%= idCourse %>" method="post">
     <div class="form-group row">
       <label for="inputEmail3" class="col-sm-2 col-form-label">Questions</label>
@@ -15,6 +15,7 @@
           class="form-control"
           id="inputEmail3"
           name="question"
+          required
         />
       </div>
     </div>
@@ -26,6 +27,7 @@
           class="form-control"
           id="inputEmail3"
           name="answer_1"
+          required
         />
       </div>
     </div>
@@ -37,6 +39,7 @@
           class="form-control"
           id="inputEmail3"
           name="answer_2"
+          required
         />
       </div>
     </div>
@@ -48,6 +51,7 @@
           class="form-control"
           id="inputEmail3"
           name="answer_3"
+          required
         />
       </div>
     </div>
@@ -59,6 +63,7 @@
           class="form-control"
           id="inputEmail3"
           name="answer_4"
+          required
         />
       </div>
     </div>
@@ -111,12 +116,16 @@
       </div>
     </fieldset>
 
-    <div class="form-group row" style="justify-content: space-between;">
-      <div class="col-sm-10">
+    <div
+      class="form-group d-flex flex-row-reverse"
+      style="justify-content: space-between"
+    >
+      <div class="">
         <button type="submit" class="btn btn-primary">Create</button>
       </div>
-      <a href="/instructor" class="btn btn-warning my-3">Back</a>
+      <div class="">
+        <a href="/instructor" class="btn btn-dark">Back</a>
+      </div>
     </div>
   </form>
- 
 </div>
