@@ -80,7 +80,7 @@ const getListVideoToLearn = async (req, res, next) => {
         //đếm số lượng video có trong khóa học 
         for(let iChapter = 0; iChapter < userCourse.list_chapter.length; iChapter++){
           totalVideo += userCourse.list_chapter[iChapter].list_video.length;
-          console.log('count:', iChapter ,':', totalVideo);
+          console.log('count:', iChapter + 1 ,':', totalVideo);
         }
 
         listProcessCourse.push({
@@ -102,10 +102,10 @@ const getListVideoToLearn = async (req, res, next) => {
       let totalVideoInCourse = 0;
       let totalVideoInProcess = 0;
 
-      //đếm số lượng video có trong khóa học user đã mua
+      //tổng số lượng video hiện có
       for(let iChapter = 0; iChapter < course.list_chapter.length; iChapter++){
         totalVideoInCourse += course.list_chapter[iChapter].list_video.length;
-        console.log('count:', iChapter ,':', totalVideoInCourse);
+        console.log('count:', iChapter + 1 ,':', totalVideoInCourse);
       }
 
       //tổng số video có trong process
@@ -117,6 +117,7 @@ const getListVideoToLearn = async (req, res, next) => {
       }
       console.log('totalVideoInCourse: ', totalVideoInCourse, 'totalVideoInProcess: ', totalVideoInProcess );
 
+      //check số lượng video giữa course và process
       if(totalVideoInCourse === totalVideoInCourse) {
         Progress.updateOne(
           { userId : userId, 'listProcessCourse.courseId': courseId}, 
@@ -128,6 +129,7 @@ const getListVideoToLearn = async (req, res, next) => {
         );
       }
 
+      //Lấy totalVideoFinish
       for(let i = 0; i < learningProcessOfUser.listProcessCourse.length; i++) {
         if(learningProcessOfUser.listProcessCourse[i].courseId.toString() == courseId.toString()) {
           totalVideoFinish = learningProcessOfUser.listProcessCourse[i].totalVideoFinish;
