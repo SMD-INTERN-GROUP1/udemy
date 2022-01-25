@@ -61,11 +61,13 @@ const getListVideoToLearn = async (req, res, next) => {
     const course = await Course.findOne({ slug: req.params.slug });
 
     let userId = req.cookies.user._id;
-    let isLearningProcessOfUser = await Progress.findOne({ userId: userId });
+    let courseId = course._id;
+    let learningProcessOfUser = await Progress.findOne({ userId: userId });
     let user = await User.findOne({ _id : userId });
+    let totalVideoFinish = 1;
     // console.log('list', user);
 
-    if(isLearningProcessOfUser === null) {
+    if(learningProcessOfUser === null) {
       let formData;
       let listProcessCourse = [];
       
@@ -96,10 +98,38 @@ const getListVideoToLearn = async (req, res, next) => {
       //save in db
       const createProcessCouser = new Progress(formData);
       await createProcessCouser.save();
-    }
+    } else {
+      // totalVideoFinish = learningProcessOfUser.totalVideoFinish;
+      //
+      // console.log('id 1', learningProcessOfUser);
+
+      // getCourse = await Progress.find({ listProcessCourse : [courseId] });
+      // console.log('id 1', getCourse);
+
+      // console.log('id 1', learningProcessOfUser.listProcessCourse.length);
+
+      for(let i = 0; i < learningProcessOfUser.listProcessCourse.length; i++) {
+        // console.log('parser',  typeof courseId)
+        // console.log('parser 2', courseId.toString())
+
+        // console.log('get id', courseId);
+        // console.log('id', learningProcessOfUser.listProcessCourse[i].couserId);
+        if(learningProcessOfUser.listProcessCourse[i].couserId.toString() == courseId.toString()) {
+          console.log('ok');
+          console.log(learningProcessOfUser.listProcessCourse[i].totalVideoFinish);
+        }
+      }
+
+
+      // console.log('get od', courseId);
+      // console.log('id', course._id);
+      totalVideoFinish = 2;
+    };
+
+    console.log('total video finish: ', totalVideoFinish);
 
     const list_chapter = await course.list_chapter;
-    res.render("component/learning-course", { course, list_chapter });
+    res.render("component/learning-course", { course, list_chapter, totalVideoFinish });
   } catch (error) {
     res.status(500).json({ msg: error });
   }

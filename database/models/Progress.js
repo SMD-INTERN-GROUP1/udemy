@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const processCouser = new mongoose.Schema(
     {
         couserId: {
-            type: String,
+            type: mongoose.Types.ObjectId,
             default: ""
         },
         totalVideo: {
