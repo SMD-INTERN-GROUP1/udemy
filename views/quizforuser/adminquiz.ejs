@@ -6,20 +6,24 @@
 />
 <div class="container">
   <h1>Question Management</h1>
-<%questions.forEach(function(data, index) { %>
-  <div class="quenstion p-3 mt-5" style="background-color: rgb(231, 231, 231); border-radius: 20px;">
-    <p>Question <%= index + 1 %> : <%= data.question %></p>
-    <p>1. <%= data.answer_1 %></p>
-    <p>2. <%= data.answer_2 %></p>
-    <p>3. <%= data.answer_3 %></p>
-    <p>4. <%= data.answer_4 %></p>
-    <p><p>Result : <%= data.result %></p></p>
-   <form action="/question/deleteQuestion/<%= idCourse %>/<%= data._id %>?_method=DELETE" method="post">
-    <button class="btn btn-danger">DELETE</button>
-   </form>
-  </div>
+  <% if(questions.length === 0 || questions === null) {%>
+    <h5>You do not have any questions</h5>
+  <% } else { %>
+  <%questions.forEach(function(data, index) { %>
+    <div class="quenstion p-3 mt-5" style="background-color: rgb(231, 231, 231); border-radius: 20px;">
+      <p>Question <%= index + 1 %> : <%= data.question %></p>
+      <p>1. <%= data.answer_1 %></p>
+      <p>2. <%= data.answer_2 %></p>
+      <p>3. <%= data.answer_3 %></p>
+      <p>4. <%= data.answer_4 %></p>
+      <p><p>Result : <%= data.result %></p></p>
+    <form action="/question/deleteQuestion/<%= idCourse %>/<%= data._id %>?_method=DELETE" method="post">
+      <button class="btn btn-danger">DELETE</button>
+    </form>
+    </div>
   <%}) %>
-  <a href="/instructor" class="btn btn-warning my-3">Back</a>
+  <% } %>
+ <a href="/instructor" class="btn btn-warning my-3">Back</a>
 </div>
 <style>
     
