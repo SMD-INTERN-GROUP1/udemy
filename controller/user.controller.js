@@ -61,29 +61,42 @@ const getListVideoToLearn = async (req, res, next) => {
     const course = await Course.findOne({ slug: req.params.slug });
 
     let userId = req.cookies.user._id;
-    let totalVideo = 0;
-    let courseId = course._id;
-
     let isLearningProcessOfUser = await Progress.findOne({ userId: userId });
-
-    for(let i = 0; i < course.list_chapter.length; i++){
-      totalVideo += course.list_chapter[i].list_video.length;
-      console.log('count:', i ,':', totalVideo);
-    }
+    let user = await User.findOne({ _id : userId });
+    // console.log('list', user);
 
     if(isLearningProcessOfUser === null) {
+      let formData;
+      let listProcessCourse = [];
+      
+      //lấy danh sách khóa học của user 
+      for(let iCourses = 0; iCourses < user.courses.length; iCourses++){
+        let totalVideo = 0;
+        
+        let userCouser = await Course.findOne({ _id: user.courses[iCourses]});
+        // console.log(userCouser);
+
+        //đếm số lượng video có trong khóa học 
+        for(let iChapter = 0; iChapter < userCouser.list_chapter.length; iChapter++){
+          totalVideo += userCouser.list_chapter[iChapter].list_video.length;
+          console.log('count:', iChapter ,':', totalVideo);
+        }
+
+        listProcessCourse.push({
+          couserId: userCouser._id,
+          totalVideo: totalVideo
+        })
+      }
+      // console.log('process:', listProcessCourse);
+
       formData = {
         userId: req.cookies.user._id,
-        listProcessCourse: {
-          couserId: courseId,
-          totalVideo: totalVideo
-        }
+        listProcessCourse: listProcessCourse
       }
 
+      //save in db
       const createProcessCouser = new Progress(formData);
       await createProcessCouser.save();
-      
-      console.log('idhello', userId);
     }
 
     const list_chapter = await course.list_chapter;
