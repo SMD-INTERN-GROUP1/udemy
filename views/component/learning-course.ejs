@@ -24,7 +24,7 @@
                     <li class="chapter-item">
                         <span class="chapter-position">Chapter <%= list_chapter[i].position%>:</span> <%= list_chapter[i].title %>
                         <ul>
-                            <% list_chapter[i].list_video.forEach((video, index) => {%>
+                            <% list_chapter[i].list_video.forEach(video => {%>                           
                                 <li class="video-item" data-url="<%=video.video_url%>;<%=video.video_position%>">
                                     <span class="video-position">Video <%= video.position %>:</span>
                                     <%= video.title %>
