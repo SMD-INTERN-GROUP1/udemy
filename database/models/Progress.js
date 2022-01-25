@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-const processCouser = new mongoose.Schema(
+const processCourse = new mongoose.Schema(
     {
-        couserId: {
+        courseId: {
             type: mongoose.Types.ObjectId,
             default: ""
         },
@@ -24,7 +24,7 @@ const proccess = new mongoose.Schema({
     userId:{
         type: mongoose.Types.ObjectId,
     },
-    listProcessCourse: [processCouser],
+    listProcessCourse: [processCourse],
 },{timestamps:true}
 );
 

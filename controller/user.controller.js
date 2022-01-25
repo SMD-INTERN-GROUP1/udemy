@@ -75,16 +75,16 @@ const getListVideoToLearn = async (req, res, next) => {
       for(let iCourses = 0; iCourses < user.courses.length; iCourses++){
         let totalVideo = 0;
         
-        let userCouser = await Course.findOne({ _id: user.courses[iCourses]});
+        let userCourse = await Course.findOne({ _id: user.courses[iCourses]});
 
         //đếm số lượng video có trong khóa học 
-        for(let iChapter = 0; iChapter < userCouser.list_chapter.length; iChapter++){
-          totalVideo += userCouser.list_chapter[iChapter].list_video.length;
+        for(let iChapter = 0; iChapter < userCourse.list_chapter.length; iChapter++){
+          totalVideo += userCourse.list_chapter[iChapter].list_video.length;
           console.log('count:', iChapter ,':', totalVideo);
         }
 
         listProcessCourse.push({
-          couserId: userCouser._id,
+          courseId: userCourse._id,
           totalVideo: totalVideo
         })
       }
@@ -96,25 +96,17 @@ const getListVideoToLearn = async (req, res, next) => {
       }
 
       //save in db
-      const createProcessCouser = new Progress(formData);
-      await createProcessCouser.save();
+      const createProcessCourse = new Progress(formData);
+      await createProcessCourse.save();
     } else {
-      // totalVideoFinish = learningProcessOfUser.totalVideoFinish;
-      //
-      // console.log('id 1', learningProcessOfUser);
-
-      // getCourse = await Progress.find({ listProcessCourse : [courseId] });
-      // console.log('id 1', getCourse);
-
-      // console.log('id 1', learningProcessOfUser.listProcessCourse.length);
 
       for(let i = 0; i < learningProcessOfUser.listProcessCourse.length; i++) {
         // console.log('parser',  typeof courseId)
         // console.log('parser 2', courseId.toString())
 
         // console.log('get id', courseId);
-        // console.log('id', learningProcessOfUser.listProcessCourse[i].couserId);
-        if(learningProcessOfUser.listProcessCourse[i].couserId.toString() == courseId.toString()) {
+        // console.log('id', learningProcessOfUser.listProcessCourse[i].courseId);
+        if(learningProcessOfUser.listProcessCourse[i].courseId.toString() == courseId.toString()) {
           console.log('ok');
           console.log(learningProcessOfUser.listProcessCourse[i].totalVideoFinish);
         }
