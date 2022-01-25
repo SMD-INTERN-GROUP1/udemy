@@ -22,7 +22,7 @@ const createQuestion = async (req, res) => {
   course.questions.push(newQuestion);
   console.log(course);
   await course.save();
-  return res.redirect("back")
+  return res.redirect("back");
 };
 
 const checkQuestion = async (req, res) => {
@@ -45,7 +45,7 @@ const checkQuestion = async (req, res) => {
   console.log(mark);
   return res.render("quizforuser/checkanswer", {
     trueNumber,
-    mark
+    mark,
   });
 };
 
@@ -89,9 +89,12 @@ const admintest = async (req, res) => {
     return res
       .status(400)
       .json({ success: false, msg: "Couse is not found !" });
-  res.render("quizforuser/adminquiz", {
+  res.render("dashboard_instructor/master", {
+    title: "Instructor page",
+    content: "../quizforuser/adminquiz",
     questions: course.questions,
     idCourse: course._id,
+    slug: course.slug,
   });
 };
 module.exports = {
