@@ -62,7 +62,6 @@ const forceDestroy = async (req, res, next) => {
   const forceCourse = await Course.deleteOne({ _id: req.params.id });
   res.redirect("/admin/trash/courses");
 };
-
 const getListCourserOfInstructor = async (req, res, next) => {
   const getCoursesOfInstructor = await Course.find({
     author: req.cookies.user.username,
@@ -148,7 +147,7 @@ const showCourse = async (req, res, next) => {
     .catch(next);
 };
 
-const renderUpdateView = (req, res, next) => {
+const renderUpdatePage = (req, res, next) => {
   Promise.all([
     Course.findOne({ slug: req.params.slug }).populate("topic_id"),
     Topic.find(),
@@ -476,7 +475,7 @@ module.exports = {
   create,
   showCourse,
   destroy,
-  renderUpdateView,
+  renderUpdatePage,
   update,
   search,
   pieChart,

@@ -1,7 +1,7 @@
 <div class="container">
   <!-- Banner section -->
   <h3 class="">Tables of banners</h3>
-  <table class="table" id="table_2">
+  <table class="table table-bordered border-dark" id="table_2">
     <div class="">
       <a
         href="/admin/addbanner"
@@ -21,8 +21,8 @@
     <tbody class="text-center">
       <% banners.forEach((banner, index)=> { %>
       <tr>
-        <th scope="row"><%= index+1 %></th>
-        <td><%= banner.title%></td>
+        <th scope="row" class="banner-pding"><%= index+1 %></th>
+        <td class="banner-pding title"><%= banner.title%></td>
         <td>
           <figure class="figure">
             <img
@@ -32,7 +32,7 @@
             />
           </figure>
         </td>
-        <td style="text-align: center">
+        <td style="text-align: center" class="banner-pding">
           <a href="" class="btn btn-primary" title="update category"
             ><i class="far fa-check-square"></i>
           </a>

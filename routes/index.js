@@ -2,8 +2,8 @@ const homeRouter = require("./home");
 const courseDetailRoute = require("./courses_detail");
 const authRouter = require("./auth.route");
 const adminRouter = require("./admin");
-const trashRouter = require("./trash");
 const registerRouter = require("./register");
+const trashRouter = require("./trash");
 const instructorRouter = require("./instructor");
 const paypalRouter = require("./payment");
 const authenticateToken = require("../middlerwares/auth.middleware");
@@ -21,6 +21,8 @@ function route(app) {
   app.use("/course", courseDetailRoute);
   app.use("/pay", paypalRouter);
   app.use("/admin", adminRouter);
+  app.use("/register", registerRouter);
+  app.use("/", homeRouter);
   app.use("/cart", cartRouter);
   app.use("/login", authRouter);
   app.use("/register", registerRouter);

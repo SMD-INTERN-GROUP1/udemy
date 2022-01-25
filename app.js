@@ -5,9 +5,8 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const methodOverride = require('method-override')
+const methodOverride = require("method-override");
 const mongoose = require("mongoose");
-
 
 dotenv.config();
 
@@ -23,7 +22,7 @@ mongoose.connect(process.env.MONGO_DB, function (err) {
 
 //sesstion
 
-// app.set('trust proxy', 1) 
+// app.set('trust proxy', 1)
 // app.use(session({
 //   secret: 'keyboard cat',
 //   resave: false,
@@ -32,9 +31,6 @@ mongoose.connect(process.env.MONGO_DB, function (err) {
 // }))
 
 const app = express();
-
-
-
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -65,11 +61,9 @@ route(app);
 //   res.locals.message = err.message;
 //   res.locals.error = req.app.get("env") === "development" ? err : {};
 
-
 //   // render the error page
 //   res.status(err.status || 500);
 //   res.render("error");
 // });
-
 
 module.exports = app;
