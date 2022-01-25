@@ -14,6 +14,21 @@ const getDetailCourse = async (req, res, next) => {
   if (!req.cookies.user) {
     isLogin = true;
   }
+  const userID=req.cookies.user?._id;
+  let isCheck = false;
+  if(userID)
+  {
+    const user = await UserModal.findOne({_id:userID});
+    const {courses}=user;
+    for(let i=0;i<courses.length;i++)
+    {
+      if(courses[i].toString()===course._id.toString())
+      {
+        isCheck=true;
+      }
+    }
+  }
+  
   course.reviews &&
     course.reviews.sort(function (a, b) {
       return new Date(b.createdAt) - new Date(a.createdAt);
@@ -23,6 +38,7 @@ const getDetailCourse = async (req, res, next) => {
     course,
     categories,
     isLogin,
+    isCheck,
     format,
     user: (await UserModal.findById(req.cookies.user?._id)) || null,
   });
@@ -319,9 +335,9 @@ const createReview = async (req, res) => {
   if (!comment || !rate) {
     return res.redirect("back");
   }
+  
   const course = await Course.findById(req.params.id);
   const user = await UserModal.findOne({ username: req.cookies.user.username });
-
   if (!course) {
     return res.status(400).json({ err: "course is not exist !" });
   }

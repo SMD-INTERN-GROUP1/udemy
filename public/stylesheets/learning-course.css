@@ -60,8 +60,71 @@ li {
 .btn-star {
   display: block;
   padding: 6px;
-  margin: 10px 0;
+  margin: 10px 5px 10px 0;
   border: 2px solid black;
   border-radius: 5px;
   background-color: #fdcb6e;
+}
+.create-note {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+  border: 1px solid #000000;
+  opacity: 0.5;
+  padding: 10px;
+  width: auto;
+}
+.create-note:hover {
+  opacity: 1;
+}
+#form-submit {
+  display: none;
+}
+
+.form-btn {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+.form-btn > button {
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid #000000;
+}
+.form-btn > button:hover {
+  opacity: 0.5;
+  outline: none;
+}
+#textarea {
+  width: 100%;
+}
+.title-content {
+  display: flex;
+  justify-content: space-between;
+}
+.time-note {
+  border-radius: 10px;
+  background-color: turquoise;
+  font-weight: 700;
+  margin-right: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+  color: #ffffff;
+}
+.time-note:hover {
+  opacity: 0.5;
+}
+.title-note {
+  display: inline-block;
+  font-weight: 500;
+}
+#show-note {
+  background-color: lightblue;
+  min-height: 40px;
+  line-height: 40px;
+  padding-left: 20px;
+  margin-bottom: 50px;
+  overflow-wrap: break-word;
 }
