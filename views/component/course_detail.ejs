@@ -211,7 +211,7 @@
     </div>
     <div class="feedback">
       <h3>Reviews</h3>
-      <% if(isLogin) {%>
+      <% if(!isCheck) {%>
         <h5>You need to <a style="color: blueviolet !important;" href="/login">login</a> and purchase this course to rate it</h5>
         <% } else {%>
           <div><%- include('rate-star')%></div>

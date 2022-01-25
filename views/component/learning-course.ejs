@@ -83,7 +83,7 @@
           <%= list_chapter[i].title %>
           <ul>
             <% list_chapter[i].list_video.forEach(video => {%>
-            <li class="video-item" data-url="<%=video.video_url%>">
+            <li class="video-item" data-url="<%=video.video_url%>" data-id="<%=video._id%>">
               <span class="video-position">Video <%= video.position %>:</span>
               <%= video.title %>
             </li>

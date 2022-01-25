@@ -68,9 +68,10 @@ const getListVideoToLearn = async (req, res, next) => {
       video_id:list_chapter[0].list_video[0]._id
     })
     const list_note = await note[0].note_lists;
-    console.log(note,list_note[0].time)
+    console.log(note);
     res.render("component/learning-course", { course, list_chapter,list_note });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ msg: error });
   }
 };
@@ -124,6 +125,7 @@ module.exports = {
   renderUserPage,
   getMyLearning,
   getListVideoToLearn,
+  createNoteVideo,
   createProgress,
   toggleWish,
 };

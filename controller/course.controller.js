@@ -10,9 +10,20 @@ const getDetailCourse = async (req, res, next) => {
   const slug = req.params.slug;
   const categories = await categoryService.getListCategory();
   const course = await Course.findOne({ slug: slug });
+  const userID=req.cookies.user._id;
+  const user = await UserModal.findOne({_id:userID});
   let isLogin = false;
   if (!req.cookies.user) {
     isLogin = true;
+  }
+  const {courses}=user;
+  let isCheck =false;
+  for(let i=0;i<courses.length;i++)
+  {
+    if(courses[i].toString()===course._id.toString())
+    {
+      isCheck=true;
+    }
   }
   course.reviews &&
     course.reviews.sort(function (a, b) {
@@ -23,6 +34,7 @@ const getDetailCourse = async (req, res, next) => {
     course,
     categories,
     isLogin,
+    isCheck,
     format,
     user: (await UserModal.findById(req.cookies.user?._id)) || null,
   });
@@ -273,9 +285,9 @@ const createReview = async (req, res) => {
   if (!comment || !rate) {
     return res.redirect("back");
   }
+  
   const course = await Course.findById(req.params.id);
   const user = await UserModal.findOne({ username: req.cookies.user.username });
-
   if (!course) {
     return res.status(400).json({ err: "course is not exist !" });
   }
