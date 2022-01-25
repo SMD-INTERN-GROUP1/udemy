@@ -7,7 +7,7 @@
 <div class="container">
   <h1>Question Management</h1>
   <% if(questions.length === 0 || questions === null) {%>
-    <h5>You do not have any questions</h5>
+    <h5 class="mt-4 text-center">You do not have any questions!!!  &nbsp; <span><a href="/instructor/courses/<%= slug %>/quiz">Please add some questions</a></span> </h5>
   <% } else { %>
   <%questions.forEach(function(data, index) { %>
     <div class="quenstion p-3 mt-5" style="background-color: rgb(231, 231, 231); border-radius: 20px;">
@@ -23,7 +23,7 @@
     </div>
   <%}) %>
   <% } %>
- <a href="/instructor" class="btn btn-warning my-3">Back</a>
+ <a href="/instructor" class="btn btn-dark my-3">Back</a>
 </div>
 <style>
     
