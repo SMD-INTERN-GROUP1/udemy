@@ -34,8 +34,7 @@
       <%for(let i = 0; i < list_chapter.length; i++) { %>
       <li class="chapter-item">
         <span class="chapter-position"
-          >Chapter <%= list_chapter[i].position%>:</span
-        >
+          >Chapter <%= list_chapter[i].position%>:</span>
         <%= list_chapter[i].title %>
         <ul>
           <% list_chapter[i].list_video.forEach(video => {%>

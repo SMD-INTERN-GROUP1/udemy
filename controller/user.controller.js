@@ -99,11 +99,37 @@ const getListVideoToLearn = async (req, res, next) => {
       const createProcessCourse = new Progress(formData);
       await createProcessCourse.save();
     } else {
+      let totalVideoInCourse = 0;
+      let totalVideoInProcess = 0;
+
+      //đếm số lượng video có trong khóa học user đã mua
+      for(let iChapter = 0; iChapter < course.list_chapter.length; iChapter++){
+        totalVideoInCourse += course.list_chapter[iChapter].list_video.length;
+        console.log('count:', iChapter ,':', totalVideoInCourse);
+      }
+
+      //tổng số video có trong process
+      for(let i = 0; i < learningProcessOfUser.listProcessCourse.length; i++) {
+        if(learningProcessOfUser.listProcessCourse[i].courseId.toString() == courseId.toString()) {
+          totalVideoInProcess = learningProcessOfUser.listProcessCourse[i].totalVideo;
+          break;
+        }
+      }
+      console.log('totalVideoInCourse: ', totalVideoInCourse, 'totalVideoInProcess: ', totalVideoInProcess );
+
+      if(totalVideoInCourse === totalVideoInCourse) {
+        Progress.updateOne(
+          { userId : userId, 'listProcessCourse.courseId': courseId}, 
+          {$set: {"listProcessCourse.$.totalVideo": totalVideoInCourse}}, 
+          function(err, data) {
+            if(err)
+              console.log(err);
+          }
+        );
+      }
 
       for(let i = 0; i < learningProcessOfUser.listProcessCourse.length; i++) {
         if(learningProcessOfUser.listProcessCourse[i].courseId.toString() == courseId.toString()) {
-          console.log('ok');
-          console.log(learningProcessOfUser.listProcessCourse[i].totalVideoFinish);
           totalVideoFinish = learningProcessOfUser.listProcessCourse[i].totalVideoFinish;
           break;
         }
