@@ -44,6 +44,7 @@ router.put("/accounts/:id", adminController.updateAccount);
 
 // Users section
 router.get("/users", userController.renderUserPage);
+router.delete("/users/:id", adminController.blockUser);
 
 // Categories section
 router.get("/categories", categoriesController.renderCategoriesPage);
@@ -65,7 +66,8 @@ router.get("/courses", courseController.renderCoursePage);
 
 // Banner section
 router.get("/banners", bannerController.renderBannerPage);
-router.get("/addbanner", bannerController.renderCreateView);
-router.post("/createbanner", bannerController.create);
+router.get("/banners/new", bannerController.renderCreateView);
+router.post("/banners", bannerController.create);
+router.delete("/banners/:id", bannerController.destroy);
 
 module.exports = router;
