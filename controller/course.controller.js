@@ -158,9 +158,9 @@ const update = async (req, res, next) => {
   try {
     const formData = req.body;
     formData.image = `https://img.youtube.com/vi/${req.body.video_id}/sddefault.jpg`;
-    const updateCourse = await Course.where({ slug: req.params.slug }).update(
-      formData
-    );
+    const updateCourse = await Course.where({
+      slug: req.params.slug,
+    }).updateOne(formData);
     res.redirect("/instructor");
   } catch (error) {
     res.status(500).send(error);
@@ -175,6 +175,53 @@ const destroy = async (req, res, next) => {
     .catch((error) => {
       res.status(500).json({ msg: error });
     });
+};
+
+// Search couser of instructor -> Duy Tuan
+const search = (req, res, next) => {
+  const { courses } = req.query;
+  Course.find({
+    title: {
+      $regex: courses,
+      $options: "$i",
+    },
+    author: req.cookies.user.username,
+  }).then((data) => {
+    // res.send(data);
+    let isLogin = true;
+    let user;
+    if (req.cookies.user) {
+      isLogin = false;
+      console.log("cookies", req.cookies.user);
+      user = req.cookies.user;
+    }
+    let page = parseInt(req.query.page) || 1;
+    let perPage = 3;
+    let start = (page - 1) * perPage;
+    let end = page * perPage;
+    Course.countDocuments((err, count) => {
+      if (err) return next(err);
+      res.render("dashboard_instructor/master", {
+        title: "Instructor page",
+        content: "../instructor_view/search",
+        data: data.slice(start, end),
+        isLogin,
+        user,
+        current: page,
+        pages: Math.ceil(count / perPage),
+      });
+    });
+  });
+};
+
+// Pie chart:
+const pieChart = async (req, res, next) => {
+  const pieChart = await UserModal.find({}).populate("courses");
+  res.render("dashboard_instructor/master", {
+    title: "Instructor page",
+    content: "../instructor_view/chart",
+    pieChart: pieChart.courses,
+  });
 };
 
 //chapter
@@ -253,7 +300,7 @@ const wishListFunc = async (req, res) => {
   const user = await UserModal.findOne({
     username: req.user.username,
   }).populate("wishList");
-   // {
+  // {
   //   wishList : [{ khoa 1} , { khoa 2}]
   //  }
   const newUser = await UserModal.findOne({
@@ -292,7 +339,7 @@ const createReview = async (req, res) => {
   // await course.save();
 
   course.reviews.push(newReview);
-   // so binh luan
+  // so binh luan
   course.numberReview = course.reviews.length;
   // rate tong
   course.rating =
@@ -399,7 +446,12 @@ const getSearch = async (req, res, next) => {
 };
 const quizcontroller = async (req, res, next) => {
   const course = await Course.findOne({ slug: req.params.slug });
-  return res.render("quizforuser/quiz", { idCourse: course._id });
+  return res.render("dashboard_instructor/master", {
+    title: "Instructor page",
+    content: "../quizforuser/quiz",
+    idCourse: course._id,
+  });
+  // res.render("quizforuser/quiz", { idCourse: course._id });
 };
 
 module.exports = {
@@ -414,6 +466,8 @@ module.exports = {
   destroy,
   renderUpdateView,
   update,
+  search,
+  pieChart,
   createChapter,
   createVideo,
   wishListFunc,
