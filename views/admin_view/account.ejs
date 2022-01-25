@@ -1,15 +1,15 @@
 <table class="table table-bordered border-dark" id="table_2">
-  <h3>Table of categories</h3>
+  <h3>Table of accounts</h3>
   <div class="row mt-3">
     <div class="col-9">
-      <a
+      <!-- <a
         href=""
         class="btn btn-success rounded-pill mb-4"
         data-bs-toggle="modal"
         data-bs-target="#create-category-modal"
         data-bs-id=""
         >Create</a
-      >
+      > -->
     </div>
     <div class="col-3 d-flex flex-row-reverse">
       <a
@@ -22,22 +22,24 @@
   <thead class="table-dark text-center">
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Category</th>
-      <th scope="col">Description</th>
-      <th scope="col" class="text-center">Action</th>
+      <th scope="col">Username</th>
+      <th scope="col">Email</th>
+      <th scope="col">Role Admin</th>
+      <th scope="col" class="text-center">Actions</th>
     </tr>
   </thead>
   <tbody class="text-center">
-    <% getAllCategories.forEach((category,index)=> { %>
+    <% admins.forEach((admin, index) => { %>
     <tr>
       <th scope="row"><%= index+1 %></th>
-      <td><%= category.category%></td>
-      <td><%= category.description%></td>
+      <td><%= admin.username %></td>
+      <td><%= admin.email %></td>
+      <td><%= admin.isAdmin %></td>
       <td style="text-align: center">
         <a
-          href="/admin/categories/<%= category.id %>"
+          href="/admin/accounts/<%= admin._id %>"
           class="btn btn-primary"
-          title="update category"
+          title="update account"
           ><i class="far fa-check-square"></i>
         </a>
         <a
@@ -45,7 +47,7 @@
           title="Delete"
           data-bs-toggle="modal"
           data-bs-target="#delete-category-modal"
-          data-bs-id="<%= category.id %>"
+          data-bs-id=""
           ><i class="fas fa-window-close"></i
         ></a>
       </td>
@@ -65,7 +67,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Create category</h5>
+        <h5 class="modal-title" id="exampleModalLabel">New account</h5>
         <button
           type="button"
           class="btn-close"
@@ -74,27 +76,63 @@
         ></button>
       </div>
       <div class="modal-body">
-        <form class="mt-4" action="/admin/categories" method="POST">
+        <form class="mt-4" action="" method="POST">
           <div class="form-group">
-            <label for="exampleInputEmail1" class="fw-bold mb-2">Name:</label>
+            <label for="exampleInputEmail1" class="fw-bold mb-2"
+              >Username:</label
+            >
             <input
               type="text"
               class="form-control mb-2"
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
-              name="category"
+              name="username"
             />
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1" class="fw-bold mb-2"
-              >Description:</label
+              >Email:</label
             >
-            <textarea
+            <!-- <textarea
               class="form-control"
               id="exampleInputPassword1"
               name="description"
-            ></textarea>
+            ></textarea> -->
+            <input
+              type="email"
+              class="form-control mb-2"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              name="email"
+            />
           </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1" class="fw-bold mb-2"
+              >Password:</label
+            >
+            <!-- <textarea
+              class="form-control"
+              id="exampleInputPassword1"
+              name="description"
+            ></textarea> -->
+            <input
+              type="password"
+              class="form-control mb-2"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              name="password"
+            />
+          </div>
+          <label for="exampleInputPassword1" class="fw-bold mb-2">Role:</label>
+          <select
+            class="form-select"
+            aria-label="Default select example"
+            name="role_id"
+          >
+            <% roles.forEach(role => { %>
+            <option value="<%= role._id %>"><%= role.name %></option>
+            <% }) %>
+          </select>
           <div class="d-flex flex-row-reverse">
             <button
               type="button"

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-
 const mongooseDelete = require("mongoose-delete");
+
 const topic = new mongoose.Schema(
   {
     name: {
@@ -20,7 +20,6 @@ const topic = new mongoose.Schema(
 );
 
 // Add plugins
-
 topic.plugin(mongooseDelete, { deletedAt: true, overrideMethods: "all" });
 
 module.exports = mongoose.model("Topic", topic);
