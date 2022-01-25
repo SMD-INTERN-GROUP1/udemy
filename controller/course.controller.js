@@ -10,21 +10,25 @@ const getDetailCourse = async (req, res, next) => {
   const slug = req.params.slug;
   const categories = await categoryService.getListCategory();
   const course = await Course.findOne({ slug: slug });
-  const userID=req.cookies.user._id;
-  const user = await UserModal.findOne({_id:userID});
   let isLogin = false;
   if (!req.cookies.user) {
     isLogin = true;
   }
-  const {courses}=user;
-  let isCheck =false;
-  for(let i=0;i<courses.length;i++)
+  const userID=req.cookies.user?._id;
+  let isCheck = false;
+  if(userID)
   {
-    if(courses[i].toString()===course._id.toString())
+    const user = await UserModal.findOne({_id:userID});
+    const {courses}=user;
+    for(let i=0;i<courses.length;i++)
     {
-      isCheck=true;
+      if(courses[i].toString()===course._id.toString())
+      {
+        isCheck=true;
+      }
     }
   }
+  
   course.reviews &&
     course.reviews.sort(function (a, b) {
       return new Date(b.createdAt) - new Date(a.createdAt);
