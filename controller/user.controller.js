@@ -74,7 +74,6 @@ const getListVideoToLearn = async (req, res, next) => {
         let totalVideo = 0;
         
         let userCouser = await Course.findOne({ _id: user.courses[iCourses]});
-        // console.log(userCouser);
 
         //đếm số lượng video có trong khóa học 
         for(let iChapter = 0; iChapter < userCouser.list_chapter.length; iChapter++){
