@@ -1,5 +1,17 @@
-const CourseModel = require("../database/models/Courses");
 const UserModel = require("../database/models/Users");
+const RoleModel = require("../database/models/Roles");
+const CourseModel = require("../database/models/Courses");
+
+const renderAccountPage = async (req, res, next) => {
+  const admins = await UserModel.find({ username: "admin" });
+  const roles = await RoleModel.find();
+  res.render("dashboard_admin/master", {
+    title: "Admin page",
+    content: "../admin_view/account",
+    roles,
+    admins,
+  });
+};
 
 const renderAdminPage = async (req, res, next) => {
   try {
