@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const mongooseDelete = require("mongoose-delete");
 
 const banner = new mongoose.Schema(
   {
@@ -19,5 +20,5 @@ const banner = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
+banner.plugin(mongooseDelete, { deletedAt: true, overrideMethods: "all" });
 module.exports = mongoose.model("Banners", banner);

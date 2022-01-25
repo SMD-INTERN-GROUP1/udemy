@@ -24,12 +24,22 @@ const create = async (req, res, next) => {
   await createBanner
     .save()
     .then((banner) => {
-      res.send(banner);
-      // res.redirect("/admin/banners");
+      // res.send(banner);
+      res.redirect("/admin/banners");
     })
     .catch((error) => {
       res.status(500).send(error);
     });
 };
 
-module.exports = { renderBannerPage, renderCreateView, create };
+const destroy = async function (req, res, next) {
+  const deleteBanner = await BannersModel.delete({ _id: req.params.id })
+    .then(() => {
+      res.redirect("/admin/banners");
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+};
+
+module.exports = { renderBannerPage, renderCreateView, create, destroy };
