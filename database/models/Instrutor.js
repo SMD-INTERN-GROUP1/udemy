@@ -35,7 +35,7 @@ const instructor = new mongoose.Schema(
     course_id: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Courses",
+        ref: "Course",
       },
     ],
     list_social: [social],

@@ -1,22 +1,24 @@
+const CourseModel = require("../database/models/Courses");
 const UserModel = require("../database/models/Users");
-const RoleModel = require("../database/models/Roles");
 
-// const renderAccountPage = (req, res) => {
-//   res.render("dashboard_admin/master", {
-//     title: "Admin page",
-//     content: "../admin_view/",
-//   });
-// };
+const renderAdminPage = async (req, res, next) => {
+  try {
+    const countUsers = await UserModel.find({
+      isTeacher: false,
+    }).countDocuments();
+    console.log(
+      "🚀 ~ file: admin.controler.js ~ line 7 ~ renderAdminPage ~ countUsers",
+      countUsers
+    );
 
-const renderAccountPage = async (req, res, next) => {
-  const admins = await UserModel.find({ username: "admin" });
-  const roles = await RoleModel.find();
-  res.render("dashboard_admin/master", {
-    title: "Admin page",
-    content: "../admin_view/account",
-    roles,
-    admins,
-  });
+    res.render("dashboard_admin/master", {
+      title: "Admin page",
+      content: "../dashboard_admin/main_content",
+      countUsers,
+    });
+  } catch (e) {
+    res.status(500).json({ message: "Server error" });
+  }
 };
 
 const renderUpdatePage = async (req, res, next) => {

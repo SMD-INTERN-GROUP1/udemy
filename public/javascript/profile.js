@@ -54,7 +54,7 @@ function validateConfirmPasswrd() {
   let passwrdValue = $('#new-password').val();
   if (passwrdValue !== confirmPasswordValue) {
       $('#re-type-password-check').show();
-      $('#re-type-password-check').html("* Password didn't Match");
+      $('#re-type-password-check').html("* Password didn't match");
       $('#re-type-password-check');
   } else {
       $('#re-type-password-check').hide();

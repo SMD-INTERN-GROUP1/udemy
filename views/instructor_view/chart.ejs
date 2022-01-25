@@ -1,0 +1,96 @@
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js
+"></script>
+  <style>
+    .chart-wrapper {
+      height: 850px;
+      width: 850px;
+      margin: 0 auto;
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <div class="title mb-4">
+    <h3>Chart of courses</h3>
+  </div>
+  <div class="chart-wrapper">
+    <canvas id="coursesChart"></canvas>
+  </div>
+
+  <div class="chart-wrapper">
+    <canvas id="coursesPieChart"></canvas>
+  </div>
+
+  <script>
+    let canvasElement = document
+      .getElementById("coursesChart")
+      .getContext("2d");
+    let labels = ["Java", "C#", "Nodejs", "PHP"];
+    let colorHex = ["#FB3640", "#EFCA08", "#43AA8B", "#253D5B"];
+
+    let config = {
+      type: "pie",
+      data: {
+        datasets: [
+          {
+            data: [30, 10, 40, 20],
+            backgroundColor: colorHex,
+          },
+        ],
+        labels: labels,
+      },
+      options: {
+        responsive: true,
+        legend: {
+          position: "bottom",
+        },
+        plugins: {
+          datalabels: {
+            color: "#fff",
+            anchor: "end",
+            align: "start",
+            offset: -10,
+            borderWidth: 2,
+            borderColor: "#fff",
+            borderRadius: 25,
+            backgroundColor: (context) => {
+              return context.dataset.backgroundColor;
+            },
+            font: {
+              weight: "bold",
+              size: "10",
+            },
+            formatter: (value) => {
+              return value + " %";
+            },
+          },
+        },
+      },
+    };
+
+    var coursesChart = new Chart(canvasElement, config);
+  </script>
+
+  <!-- <script type="text/javascript">
+    var options = {
+      responsive: true,
+    };
+
+    var data = [
+      {
+        value: pieChart.price(),
+        color: "#F7464A",
+        highlight: "#FF5A5E",
+        label: "pieChart.title",
+      },
+    ];
+
+    window.onload = function () {
+      var ctx = document.getElementById("coursesPieChart").getContext("2d");
+      var CourseChart = new Chart(ctx).Pie(data, options);
+    };
+  </script> -->
+</body>

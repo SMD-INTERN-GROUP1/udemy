@@ -12,6 +12,7 @@ const myLearningRouter = require("./my_learning");
 const logoutRouter = require("./logout");
 const middleware = require("../middlerwares/auth.middleware");
 const userRouter = require("./users");
+const question = require("./question")
 
 function route(app) {
   //write URL here
@@ -28,8 +29,11 @@ function route(app) {
   app.use("/myLearning", myLearningRouter);
   app.use("/logout", logoutRouter);
   app.use("/user", userRouter);
-  app.use("/", homeRouter);
+  //
+   app.use("/question",question)
+  //
   app.use("/admin/trash", trashRouter);
+  app.use("/", homeRouter);
 }
 
 module.exports = route;

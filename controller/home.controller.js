@@ -1,11 +1,11 @@
 const Course = require("../database/models/Courses");
 const Banner = require("../database/models/banners");
-const Instructor = require("../database/models/Instrutor");
+const Instructor = require("../database/models/instructor");
 const User = require("../database/models/Users");
 const categoryService = require("../services/category.services");
-
 const Topic = require("../database/models/Topics");
 const Category = require("../database/models/Categories");
+
 const getHomePage = async (req, res, next) => {
   try {
     let user = req.cookies.user;

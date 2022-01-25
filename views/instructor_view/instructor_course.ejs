@@ -12,8 +12,8 @@
         <div class="new-chapter">
           <form method="POST" action="/instructor/courses/<%= course.slug %>/chapters/store" class="chapter-form">
             <div class="form-group">
-              <label for="position">Chapter</label>
-              <input type="text" name="position" id="chapter-number">
+              <label for="chapter_position">Chapter</label>
+              <input type="text" name="chapter_position" id="chapter-number">
             </div>
             <div class="form-group">
               <label for="title">Title</label>
@@ -24,14 +24,20 @@
         </div>
           <ul class="chapter-list">
             <% for(let i = 0; i < listChapter.length; i++) {%>
-              <li>
-                Chapter <span><%= listChapter[i].position%>: </span><%= listChapter[i].title %>
-                <ul class="list-video">
-                  <% listChapter[i].list_video.forEach(video => {%>
-                    <li>
-                      <iframe src="<%= video.video_url%>" frameborder="0"></iframe>
-                    </li>
-                  <% }) %>
+              <li class="chapter-item">
+                Chapter <span><%= listChapter[i].chapter_position%>: </span><%= listChapter[i].title %>
+                <ul class="list-video">                  
+                    <% listChapter[i].list_video.forEach(video => {%>
+                      <li>
+                        <p><%= video.title%></p>
+                        <!-- <iframe src="<%= video.video_url%>" frameborder="0" auto></iframe> -->
+                        <video id="myVideo" max-width="60%" height="120" controls class="video-tag">
+                          <source id="my_video_url" src="<%= video.video_url%>" type="video/mp4">
+                          <source src="mov_bbb.ogg" type="video/ogg">
+                          Your browser does not support HTML5 video.
+                      </video>
+                      </li>
+                    <% }) %>                 
                 </ul>
               </li>
             <% } %>
@@ -42,15 +48,15 @@
           <form method="POST" action="/instructor/courses/<%= course.slug %>/videos/store" enctype="multipart/form-data" class="video-form">
             <div class="form-group">
               <label for="">Chapter</label>
-              <select name="chapters" id="chapter" class="id">
+              <select name="chapter_id" id="chapter" class="id">
                 <% for(let i = 0; i<  listChapter.length; i++) {%>
                   <option value="<%= listChapter[i]._id %>"><%= listChapter[i].title %></option>
                 <% } %>
               </select>
             </div>
             <div class="form-group">
-              <label for="position">Position</label>
-              <input type="text" name="position" id="chapter-number">
+              <label for="video_position">Position</label>
+              <input type="text" name="video_position" id="chapter-number">
             </div>
             <div class="form-group">
               <label for="title">Title</label>
@@ -64,7 +70,7 @@
               <label for="video_url">Choose video</label>
               <input type="file" name="video_url"/>
             </div>
-            <button type="submit" class="btn-add-video">Add video</button>
+            <button type="submit" class="btn-add-video">Upload video</button>
           </form>
       </div>
     </div>
