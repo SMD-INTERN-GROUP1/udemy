@@ -101,21 +101,13 @@ const getListVideoToLearn = async (req, res, next) => {
     } else {
 
       for(let i = 0; i < learningProcessOfUser.listProcessCourse.length; i++) {
-        // console.log('parser',  typeof courseId)
-        // console.log('parser 2', courseId.toString())
-
-        // console.log('get id', courseId);
-        // console.log('id', learningProcessOfUser.listProcessCourse[i].courseId);
         if(learningProcessOfUser.listProcessCourse[i].courseId.toString() == courseId.toString()) {
           console.log('ok');
           console.log(learningProcessOfUser.listProcessCourse[i].totalVideoFinish);
+          totalVideoFinish = learningProcessOfUser.listProcessCourse[i].totalVideoFinish;
+          break;
         }
       }
-
-
-      // console.log('get od', courseId);
-      // console.log('id', course._id);
-      totalVideoFinish = 2;
     };
 
     console.log('total video finish: ', totalVideoFinish);

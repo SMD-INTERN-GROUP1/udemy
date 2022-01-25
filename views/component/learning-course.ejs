@@ -30,6 +30,7 @@
   </div>
   <div class="col-md-3">
     <ul>
+      <% let countVideo = 0 %>
       <%for(let i = 0; i < list_chapter.length; i++) { %>
       <li class="chapter-item">
         <span class="chapter-position"
@@ -38,10 +39,18 @@
         <%= list_chapter[i].title %>
         <ul>
           <% list_chapter[i].list_video.forEach(video => {%>
-          <li class="video-item" data-url="<%=video.video_url%>">
-            <span class="video-position">Video <%= video.position %>:</span>
-            <%= video.title %>
-          </li>
+            <% if (countVideo < totalVideoFinish) { %>
+              <li class="video-item" data-url="<%=video.video_url%>">
+                <span class="video-position">Video <%= video.position %>:</span>
+                <%= video.title %>
+              </li>
+            <%} else { %>
+              <li class="video-item" data-url="<%=video.video_url%>" style="pointer-events:none; background-color: rgb(248, 241, 231);">
+                <span class="video-position">Video <%= video.position %>:</span>
+                <%= video.title %>
+              </li>
+            <% } %>
+            <% countVideo = countVideo + 1 %>
           <% }) %>
         </ul>
       </li>
