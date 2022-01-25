@@ -1,10 +1,9 @@
+const { ObjectId } = require('mongodb');
 const UsersModel = require("../database/models/Users");
 const User = require("../database/models/Users");
 const Course = require("../database/models/Courses");
-const Proccess = require("../database/models/Proccess");
-const Note = require("../database/models/Note");
-const NoteTime = require("../database/models/NoteTime");
-const Courses = require("../database/models/Courses");
+const Progress = require("../database/models/Progress");
+const Note = require('../database/models/Note');
 
 const renderUserPage = async (req, res, next) => {
   const users = await UsersModel.find();
@@ -23,22 +22,35 @@ const getMyLearning = async (req, res, next) => {
     let isLogin = true;
     let user;
     const userID = req.cookies.user._id;
-   
+
     if (req.cookies.user) {
       isLogin = false;
       user = req.cookies.user;
     }
-    let customer = await User.findOne({_id: userID });
+    let customer = await User.findOne({ _id: userID });
     // let courseCollection = await Course.find({});
-    let {courses} = customer;
-    let list_course=[];
-    for(let i=0;i<courses.length;i++)
-    {
-      let item = await Course.findById({_id:courses[i]});
+    let { courses } = customer;
+    let list_course = [];
+    for (let i = 0; i < courses.length; i++) {
+      let item = await Course.findById({ _id: courses[i] });
       list_course.push(item);
     }
 
-    res.render("component/my-learning", { list_course });
+    let page = parseInt(req.query.page) || 1;
+    let perPage = 4;
+    let start = (page - 1) * perPage;
+    let end = page * perPage;
+    Course.countDocuments((err, count) => {
+      if (err) return next(err);
+      res.render("component/my-learning", {
+        list_course,
+        list_course: list_course.slice(start, end),
+        isLogin,
+        user,
+        current: page,
+        pages: Math.ceil(count / perPage),
+      });
+    });
   } catch (error) {
     console.log("err: ", error);
     res.json({ msg: error });
@@ -50,29 +62,38 @@ const getListVideoToLearn = async (req, res, next) => {
   try {
     const course = await Course.findOne({ slug: req.params.slug });
     const list_chapter = await course.list_chapter;
-    console.log('list chapter: ', list_chapter);
-
-    res.render("component/learning-course", { course, list_chapter });
+    const userID = req.cookies.user._id;
+    const note = await Note.find({
+      user_id:userID,
+      video_id:list_chapter[0].list_video[0]._id
+    })
+    const list_note = await note[0].note_lists;
+    console.log(note,list_note[0].time)
+    res.render("component/learning-course", { course, list_chapter,list_note });
   } catch (error) {
     res.status(500).json({ msg: error });
   }
 };
 
-const createProccess = async (req, res, next) => {
+// add note video
+const createNoteVideo = async(req,res)=>{
+
+};
+
+//progress of course
+const createProgress = async (req, res, next) => {
   try {
     let obj = req.body;
-    obj.user_id = "61d696d0896327cb23460f8c";
-    obj.course_id = "61e2d7cddf1e49b94d069a84";
-    console.log(obj);
-    let proccessObj = new Proccess(obj);
-    console.log("count: ", req.body.count);
+    const userId = req.cookies.user._id;
+    const course = Course.find({ slug: req.param.lug });
+    const courseId = course._id;
     if (req.body.count > 0) {
-      proccessObj.save();
     }
   } catch (error) {
     console.log(error);
   }
 };
+
 const toggleWish = async (req, res, next) => {
   const idCourse = req.params.id;
   const user = await UsersModel.findOne({ username: req.user.username });
@@ -103,6 +124,6 @@ module.exports = {
   renderUserPage,
   getMyLearning,
   getListVideoToLearn,
-  createProccess,
+  createProgress,
   toggleWish,
 };
