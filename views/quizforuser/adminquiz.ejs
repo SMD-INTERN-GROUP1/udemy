@@ -6,8 +6,8 @@
 />
 <div class="container">
   <h1>Question Management</h1>
-<%questions.forEach(function(data, index) { %>
-  <div class="quenstion p-3 mt-5" style="background-color: rgb(231, 231, 231); border-radius: 20px;">
+  <%questions.forEach(function(data, index) { %>
+  <div class="quenstion p-3 mt-3" style="background-color: rgb(231, 231, 231); border-radius: 20px;">
     <p>Question <%= index + 1 %> : <%= data.question %></p>
     <p>1. <%= data.answer_1 %></p>
     <p>2. <%= data.answer_2 %></p>
@@ -19,7 +19,7 @@
    </form>
   </div>
   <%}) %>
-  <a href="/instructor" class="btn btn-warning my-3">Back</a>
+  <a href="/instructor" class="btn btn-dark my-3">Back</a>
 </div>
 <style>
     
