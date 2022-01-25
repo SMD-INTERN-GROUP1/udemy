@@ -41,9 +41,18 @@ const user = new mongoose.Schema(
     },
     avatar: {
       type: String,
-      default: "",
+      default: "/images/profile/user-member-avatar-default.jpg",
     },
-    wishList: [{ type: mongoose.Types.ObjectId, ref: "Courses" }],
+    list_social: {
+      type: Array,
+      default: [
+        { name: "Website", url: "" },
+        { name: "Twitter", url: "" },
+        { name: "LinkedIn", url: "" },
+        { name: "Facebook", url: "" },
+      ],
+    }, // ["1",",2"]
+    wishList: [{ type: mongoose.Types.ObjectId, ref: "Courses" }], // populate("wishList")
     courses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Courses" }],
   },
   { timestamps: true }

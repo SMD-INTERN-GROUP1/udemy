@@ -1,64 +1,160 @@
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices -->
-  </head>
-
-  <body>
-    <!-- Include the PayPal JavaScript SDK; replace "test" with your own sandbox Business account app client ID -->
-    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
-
-    <!-- Set up a container element for the button -->
-    <div id="paypal-button-container"></div>
-
-    <script>
-      paypal.Buttons({
-
-        // Sets up the transaction when a payment button is clicked
-        createOrder: function(data, actions) {
-      return actions.order.create({
-         "purchase_units": [{
-            "amount": {
-              "currency_code": "USD",
-              "value": "100",
-              "breakdown": {
-                "item_total": {  /* Required when including the `items` array */
-                  "currency_code": "USD",
-                  "value": "100"
-                }
-              }
-            },
-            "items": [
-              {
-                "name": "First Product Name", /* Shows within upper-right dropdown during payment approval */
-                "description": "Optional descriptive text..", /* Item details will also be in the completed paypal.com transaction view */
-                "unit_amount": {
-                  "currency_code": "USD",
-                  "value": "50"
-                },
-                "quantity": "2"
-              },
-            ]
-          }]
-      });
-    },
-
-        // Finalize the transaction after payer approval
-        onApprove: function(data, actions) {
-          return actions.order.capture().then(function(orderData) {
-            // Successful capture! For dev/demo purposes:
-                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-                var transaction = orderData.purchase_units[0].payments.captures[0];
-                alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
-
-            // When ready to go live, remove the alert and show a success message within this page. For example:
-            // var element = document.getElementById('paypal-button-container');
-            // element.innerHTML = '';
-            // element.innerHTML = '<h3>Thank you for your payment!</h3>';
-            // Or go to another URL:  actions.redirect('thank_you.html');
-          });
-        }
-      }).render('#paypal-button-container');
-
-    </script>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pay</title>
+</head>
+<style>
+  *{
+    padding: 0;
+    margin: 0;
+  }
+  h1{
+    font-size: 50px;
+  }
+  .wrapper{
+    width: 1200px;
+    margin: 50px auto;
+  }
+  .container{
+    display: flex;
+    justify-content: space-between;
+  }
+  .container-title{
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+  .container-empty{
+    border:1px solid rgb(239, 239, 243);
+    width: 1200px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .product{
+      width: 850px;
+      margin: 30px 0;
+  }
+  .product-card{
+    display: flex;
+    height: 80px;
+    border: 1px solid rgb(239, 239, 243);
+    margin-bottom: 5px;
+  }
+  .product-card-img{
+    flex: 1;
+    width: 150px;
+    object-fit: cover;
+    margin-right: 5px;
+  }
+  .product-card-content{
+    flex: 4;
+    padding: 10px 5px 0 0;
+  }
+  .product-card-price{
+    display: flex;
+    flex: 1;
+    padding: 10px 15px;
+  }
+  span{
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .remove{
+    padding-right: 10px;
+    border: transparent;
+    background-color: transparent;
+    color:#a435f0;
+  }
+  .remove-product{
+    display: inline-block;
+  }
+  .payment{
+    margin: 30px 0;
+    width: 300px;
+    height: 300px;
+  }
+  .payment-price{
+    font-size: 50px;
+    font-weight: 700;
+    margin-top: 10px;
+  }
+  .payment-price-discount{
+    text-decoration: line-through;
+    color: #aaaaaa;
+    margin-bottom: 10px;
+  }
+  .product-price{
+    padding: 0 20px;
+  }
+  .product-price-first{
+      display: block;
+      font-size: 16px;
+      font-weight: 600;
+  }
+  .product-price-last{
+      text-decoration: line-through;
+      display: block;
+      color: #aaaaaa;
+      font-size: 16px;
+      font-weight: 600;
+  }
+  .btn{
+    width: 100%;
+    height: 60px;
+    padding: 10px;
+    border: 1px solid transparent;
+    background-color: #a435f0;
+    font-size: 18px;
+    font-weight: bold;
+    color:#FFFFFF;
+    }
+  .btn:hover{
+    background-color: #7f0fc9;
+  }
+</style>
+<body>
+  <div class="wrapper">
+    <div class="container">
+        <div class="product">
+          <p class="container-title">Order Details
+          </p>
+          <% for(let i=0 ; i < listProducts.length ; i++){ %>
+            <div class="product-card">
+              <img class="product-card-img" src="<%= listProducts[i].img %>" alt="">
+              <div class="product-card-content">
+                <h3><%=listProducts[i].name%></h3>
+              </div>
+              <div  class="product-card-price">
+                <div class="product-price">
+                    <span class="product-price-first">
+                     <%= listProducts[i].price %> <%= listProducts[i].currency %>
+                    </span>
+                </div>
+              </div>
+          </div>
+          <%}%>
+        </div>
+        <div class="payment">
+          <p class="container-title">Total:</p>
+          <p class="payment-price">$100</p>
+          <!-- <p class="payment-price-discount">$50</p> -->
+          <form action="/pay/thanhtoan" method="post">
+            <button class="btn">Complete Payment</button>
+          </form>
+        </div>
+    </div>
+  </div>
+</body>
+  <script>
+    let price = document.querySelectorAll('.product-price-first');
+    let showPrice =document.querySelector('.payment-price');
+    let sumTotal=0;
+    price.forEach(e=> sumTotal+=Number(e.innerHTML.slice(1).trim().split(" ")[0]));
+    showPrice.innerHTML = `$${sumTotal}`;
+  </script>
 </html>

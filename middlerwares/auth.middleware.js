@@ -1,9 +1,13 @@
 const jwt = require("jsonwebtoken");
+const User = require("../database/models/Users");
 
 const middlewareController = {
+
     verifyToken:(req,res,next)=>{
         // const token = decodeURIComponent(req.headers.cookie);
         const token = decodeURIComponent(req.cookies.accessToken);
+        // Authrization : 
+        // token 
         if(token){
             const accessToken=token;
            try{
@@ -27,4 +31,3 @@ const middlewareController = {
 };
 
 module.exports=middlewareController.verifyToken;
-

@@ -1,0 +1,95 @@
+<link
+  rel="stylesheet"
+  href="<%= process.env.BASE_URL %>/stylesheets/course-detail.css"
+/>
+<div class="container">
+  <div class="row g-3">
+    <div class="col-lg">
+      <h3><%= course.title %></h3>
+    </div>
+    <div class="col-md-12 d-flex">
+      <div class="col-md-6">
+        <div class="new-chapter">
+          <form method="POST" action="/instructor/courses/<%= course.slug %>/chapters/store" class="chapter-form">
+            <div class="form-group">
+              <label for="chapter_position">Chapter</label>
+              <input type="text" name="chapter_position" id="chapter-number">
+            </div>
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text" name="title">
+            </div>
+            <button type="submit" class="btn-add-chapter">Add chapter</button>
+          </form>
+        </div>
+          <ul class="chapter-list">
+            <% for(let i = 0; i < listChapter.length; i++) {%>
+              <li class="chapter-item">
+                Chapter <span><%= listChapter[i].chapter_position%>: </span><%= listChapter[i].title %>
+                <ul class="list-video">                  
+                    <% listChapter[i].list_video.forEach(video => {%>
+                      <li>
+                        <p><%= video.title%></p>
+                        <!-- <iframe src="<%= video.video_url%>" frameborder="0" auto></iframe> -->
+                        <video id="myVideo" max-width="60%" height="120" controls class="video-tag">
+                          <source id="my_video_url" src="<%= video.video_url%>" type="video/mp4">
+                          <source src="mov_bbb.ogg" type="video/ogg">
+                          Your browser does not support HTML5 video.
+                      </video>
+                      </li>
+                    <% }) %>                 
+                </ul>
+              </li>
+            <% } %>
+          </ul>
+      </div>
+      <div class="col-md-6">
+          <!-- form upload video -->
+          <form method="POST" action="/instructor/courses/<%= course.slug %>/videos/store" enctype="multipart/form-data" class="video-form">
+            <div class="form-group">
+              <label for="">Chapter</label>
+              <select name="chapter_id" id="chapter" class="id">
+                <% for(let i = 0; i<  listChapter.length; i++) {%>
+                  <option value="<%= listChapter[i]._id %>"><%= listChapter[i].title %></option>
+                <% } %>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="video_position">Position</label>
+              <input type="text" name="video_position" id="chapter-number">
+            </div>
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text" name="title">
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <input type="text" name="description">
+            </div>
+            <div class="form-group">
+              <label for="video_url">Choose video</label>
+              <input type="file" name="video_url"/>
+            </div>
+            <button type="submit" class="btn-add-video">Upload video</button>
+          </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const $ = document.querySelector.bind(document);
+    const $$ = document.querySelectorAll.bind(document);
+    const buttons = $$(".tab-button");
+    const lists = $$(".tab-list");
+
+    buttons.forEach((button, index) => {
+      const list = lists[index];
+      button.onclick = function () {
+        // $(".tab-button.active").classList.remove("active");
+        // $(".tab-list.active").classList.remove("active");
+        this.classList.toggle("active");
+        list.classList.toggle("active");
+      };
+    });
+  </script>
+</body>

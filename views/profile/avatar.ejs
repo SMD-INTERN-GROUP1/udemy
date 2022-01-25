@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://image.winudf.com/v2/image1/Y29tLnVkZW15LmFuZHJvaWRfaWNvbl8xNjI2MjkxNzQzXzAxMA/icon.png?w=&fakeurl=1" />
+    <title><%= title%></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/profile.css" />     
+  </head>
+  <body>
+    <%- include('../component/header')%>
+    <div class="container">
+      <div class="view-account">
+        <section class="module">
+          <div class="module-inner">
+            <div class="side-bar">
+              <div class="user-info">
+                <img class="img-profile img-responsive center-block" src="<%= user.avatar %>" alt="">
+                <ul class="meta list list-unstyled">
+                  <% if (user.fullName) { %>
+                  <li class="name"> <%=user.fullName%>
+                    <% if (user.headLine) { %>
+                    <label class="label label-info"><%=user.headLine%></label>
+                    <% } %>
+                  </li>
+                  <% } %>
+                </ul>
+              </div>
+              <nav class="side-menu">
+                <ul class="nav">
+                  <li><a href="edit-profile"><span class="fa fa-user"></span> Profile</a></li>
+                  <li><a href="edit-account"><span class="fa fa-key"></span> Account</a></li>
+                  <li class="active"><a href="edit-photo"><span class="fa fa-picture-o"></span> Photo </a></li>
+                  <li><a href="close-account"><span class="fa fa-window-close"></span> Close account </a></li>
+                </ul>
+              </nav>
+            </div>
+            <div class="content-panel">
+              <div class="content-title">
+                <h2 class="title">Photo</h2>
+                <h4 class="sub-title">Add a nice photo of yourself for your profile.</h4>
+              </div>
+              <hr>
+              <div class="container">
+                <div>
+                    <form method="post" action="edit-photo?_method=PATCH" enctype="multipart/form-data">
+                      <div class="form-group">
+                          <div class="container-preview-img">
+                            <div class="preview">
+                              <img id="img-preview" src="https://img-c.udemycdn.com/user/200_H/anonymous_3.png" />
+                              <label for="file-input" class="upload-image">Upload image</label>
+                              <!-- accept="image/*" => chỉ chấp nhận các file dạng hình ảnh -->
+                              <input type="file" accept="image/*" name="avatar" class="input-group input-file" id="file-input" required/>
+                            </div>
+                          </div>
+                          <hr>
+                          <div style="text-align: center;">
+                            <button type="submit" class="btn btn-primary pull-center">Save</button>
+                          </div>
+                          <hr>
+                      </div>
+                    </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <footer><%- include('../component/footer.ejs')%></footer>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+      const input = document.getElementById("file-input");
+      const image = document.getElementById("img-preview");
+
+      input.addEventListener("change", (e) => {
+        if (e.target.files.length) {
+          const src = URL.createObjectURL(e.target.files[0]);
+          image.src = src;
+        }
+      });
+    </script>
+  </body>
+</html>

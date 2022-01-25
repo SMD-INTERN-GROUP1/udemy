@@ -1,0 +1,101 @@
+<div class="container">
+  <form class="row g-3" action="/instructor/createcourse" method="POST">
+    <h2>Create Course page</h2>
+
+    <div class="form-group col-12" style="display: none">
+      <label for="exampleInputEmail1" class="fw-bold">Instructor ID:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        name="instructor_id"
+        value="<%= getInstructor._id %>"
+        readonly
+      />
+    </div>
+    <div class="form-group col-12">
+      <label for="exampleInputEmail1" class="fw-bold mb-2">Title:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        name="title"
+      />
+    </div>
+    <div class="form-group col-12">
+      <label for="exampleInputPassword1" class="fw-bold mb-2"
+        >Description:</label
+      >
+      <textarea
+        class="form-control"
+        id="exampleInputPassword1"
+        name="description"
+      ></textarea>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="exampleInputPassword1" class="fw-bold mb-2"
+        >Image using video id:</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="exampleInputPassword1"
+        name="video_id"
+      />
+    </div>
+    <!-- <div class="form-group col-md-6">
+      <label class="fw-bold mb-2">File image:</label>
+      <input
+        type="file"
+        class="form-control"
+        id="inputGroupFile02"
+        name="course_image"
+        accept="image/*"
+      />
+    </div> -->
+    <div class="form-group col-md-6">
+      <label for="exampleInputPassword1" class="fw-bold mb-2">Author:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="exampleInputPassword1"
+        name="author"
+        value="<%= getInstructor.user_id.username %>"
+      />
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="exampleInputPassword1" class="fw-bold mb-2">Price:</label>
+      <input
+        type="number"
+        class="form-control"
+        id="exampleInputPassword1"
+        name="price"
+      />
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="exampleInputPassword1" class="fw-bold mb-2">Discount:</label>
+      <input
+        type="number"
+        class="form-control"
+        id="exampleInputPassword1"
+        name="price_discount"
+      />
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="exampleInputPassword1" class="fw-bold mb-2">Topic:</label>
+      <select class="form-control" name="topic_id">
+        <% getTopics.forEach(topic => { %>
+        <option value="<%= topic._id %>"><%= topic.name%></option>
+        <% }); %>
+      </select>
+    </div>
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary fw-bold mt-4">Submit</button>
+    </div>
+  </form>
+</div>
