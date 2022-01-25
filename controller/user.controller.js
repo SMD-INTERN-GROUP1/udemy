@@ -1,7 +1,9 @@
+const { ObjectId } = require('mongodb');
 const UsersModel = require("../database/models/Users");
 const User = require("../database/models/Users");
 const Course = require("../database/models/Courses");
 const Progress = require("../database/models/Progress");
+const Note = require('../database/models/Note');
 
 const renderUserPage = async (req, res, next) => {
   const users = await UsersModel.find();
@@ -59,12 +61,24 @@ const getMyLearning = async (req, res, next) => {
 const getListVideoToLearn = async (req, res, next) => {
   try {
     const course = await Course.findOne({ slug: req.params.slug });
-
     const list_chapter = await course.list_chapter;
-    res.render("component/learning-course", { course, list_chapter });
+    const userID = req.cookies.user._id;
+    const note = await Note.find({
+      user_id:userID,
+      video_id:list_chapter[0].list_video[0]._id
+    })
+    const list_note = await note[0].note_lists;
+    console.log(note);
+    res.render("component/learning-course", { course, list_chapter,list_note });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ msg: error });
   }
+};
+
+// add note video
+const createNoteVideo = async(req,res)=>{
+
 };
 
 //progress of course
@@ -111,6 +125,7 @@ module.exports = {
   renderUserPage,
   getMyLearning,
   getListVideoToLearn,
+  createNoteVideo,
   createProgress,
   toggleWish,
 };

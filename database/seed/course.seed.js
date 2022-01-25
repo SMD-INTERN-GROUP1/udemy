@@ -1,15 +1,15 @@
-const seed = require('seed')
+const seed = require("seed");
 //const faker = require('faker');
-const Course = require('../models/Courses');
-console.log('This is seed: ',seed);
-console.log('This is faker: ', faker);
-console.log('Course seed start...');
+const Course = require("../models/Courses");
+console.log("This is seed: ", seed);
+console.log("This is faker: ", faker);
+console.log("Course seed start...");
 
-Course.find({}, function(err, courses) {
-    if(!err) console.log('This is list_course: ', courses);
-    else console.log('This is err: ',err);
-})
-console.log('Course seed end...');
+Course.find({}, function (err, courses) {
+  if (!err) console.log("This is list_course: ", courses);
+  else console.log("This is err: ", err);
+});
+console.log("Course seed end...");
 // let courses = [];
 // for(i = 0; i < 20; i++) {
 //     courses.push({
@@ -31,7 +31,7 @@ console.log('Course seed end...');
 
 // seeder.connect(process.env.MONGODB, function() {
 //     seeder.loadModels([
-//       '../models/Courses'  // load mongoose model 
+//       '../models/Courses'  // load mongoose model
 //     ]);
 //     seeder.clearModels(['Category'], function() {
 //       seeder.populateModels(data, function() {

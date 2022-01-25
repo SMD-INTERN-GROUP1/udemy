@@ -74,12 +74,13 @@ router.post('/thanhtoan', async (req, res) => {
 
 // router.post('/thanhtoan', (req, res) => {
 //     const items=req.cookies.listPaypal;
+//     let newItems=items.map(x=>delete x.img);
 //     let total=0;
 //     for(let i=0;i<items.length;i++)
 //     {
 //         total+=items[i].price;
 //     }
-//     console.log(total);
+//     console.log(total,items);
 //     const create_payment_json = {
 //       "intent": "sale",
 //       "payer": {
@@ -113,7 +114,6 @@ router.post('/thanhtoan', async (req, res) => {
 //         console.log('payment',payment,payment.transactions[0].item_list,'amount',payment.transactions[0].amount);
 //     }
 //   });
-
 // });
 // router.get('/success', (req, res) => {
 //   const payerId = req.query.PayerID;
