@@ -4,7 +4,7 @@ const User = require("../database/models/Users");
 const Course = require("../database/models/Courses");
 const Progress = require("../database/models/Progress");
 const Note = require('../database/models/Note');
-
+const NoteVideo = require('../database/models/NoteVideo');
 const renderUserPage = async (req, res, next) => {
   const users = await UsersModel.find();
   res.render("dashboard_admin/master", {
@@ -63,13 +63,18 @@ const getListVideoToLearn = async (req, res, next) => {
     const course = await Course.findOne({ slug: req.params.slug });
     const list_chapter = await course.list_chapter;
     const userID = req.cookies.user._id;
+    const note_video = await NoteVideo.findOne({
+      user_id:userID,
+      course_id:course._id
+    });
+    const {note_list} = note_video;
+    console.log(note_video ,'list',note_list);
     const note = await Note.find({
       user_id:userID,
       video_id:list_chapter[0].list_video[0]._id
     })
     const list_note = await note[0].note_lists;
-    console.log(note);
-    res.render("component/learning-course", { course, list_chapter,list_note });
+    res.render("component/learning-course", { course, list_chapter,list_note,note_list});
   } catch (error) {
     console.log(error);
     res.status(500).json({ msg: error });

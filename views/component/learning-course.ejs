@@ -45,11 +45,11 @@
             <button type="button" id="save">Save note</button>
            </div>
         </form>
-        <div id="text-note">
-            <% for(let i=0 ; i < list_note.length ;i++){%>
+        <div id="text-note" data-list="<%= note_list %>">
+            <% for(let i=0 ; i <= note_list.length ;i++){%>
             <div class="title-content">
                 <div>
-                    <span class="time-note"><%= list_note[i].time %></span>
+                    <span class="time-note"><%= note_list[0].note_time[0].time %></span>
                     <p class="title-note">video : var keywork</p>
                 </div>
                 <div class="icon-note">
@@ -59,7 +59,7 @@
                 
             </div>
             <div id="show-note">
-                <p ><%= list_note[i].content %></p>
+                <p ><%= note_list[0].note_time[0].content %></p>
             </div>
             <form action="" method="post" id="form-submit">
                 <textarea name="" id="textarea" rows="2" cols="50">
@@ -169,13 +169,29 @@
   //  setInterval(() => {
   //      load_ajax();
   //  }, 1000);
-     //change video when click to another video by Dung, Nguyen Anh    
+     //change video when click to another video by Dung, Nguyen Anh 
+    let note_list = document.querySelector('#text-note').getAttribute('data-list');
+    console.log('123',typeof note_list);
+    console.log(note_list);
+    
     Array.prototype.forEach.call(listVideo, video => {
         video.addEventListener('click', function(e) {
             let url_video = e.target.getAttribute('data-url');
+            let id_video = e.target.getAttribute('data-id');
             console.log('url video: ',url_video);
+            console.log('id video: ',id_video);
             let index = url_video.split(';');
             source.setAttribute("src", index[0]);
+            // for(let i=0;i<note_list.length;i++)
+            // {
+            //     if(note_list[i].video_id.toString() === id_video)
+            //     {
+            //         for(let i=0;i<note_list[i].note_time.length;i++)
+            //         {
+            //             showTimeNote.innerHTML=handleTimeNote(note_list[i].note_time[i]);
+            //         }
+            //     }
+            // }
             vid.load();
         })
     });
@@ -218,6 +234,13 @@
             console.log(e.innerHTML)
         })
     })
+
+        function handleTimeNote(e){
+        let second=Math.floor(e%60);
+        let minute=Math.floor(e/60);
+        let formatTime= `0${minute}`.slice(-2)+':'+`0${second}`.slice(-2);
+        return formatTime;
+    }
 
     setInterval(changeTimeNote, 1000);
 
