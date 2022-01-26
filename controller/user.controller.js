@@ -20,6 +20,18 @@ const getMyLearning = async (req, res, next) => {
     let isLogin = true;
     let user;
     const userID = req.cookies.user._id;
+    let progressMyLearning = await Progress.find({userId: userID});
+    console.log(progressMyLearning[0].listProcessCourse);
+    let processCourse = [];
+
+    if(progressMyLearning[0].listProcessCourse.length !== 0){
+      for(let i = 0; i < progressMyLearning[0].listProcessCourse.length; i++) {
+        let percent = progressMyLearning[0].listProcessCourse[i].totalVideoFinish / progressMyLearning[0].listProcessCourse[i].totalVideo;
+        percent = Math.round(percent * 100);
+        processCourse.push(percent);
+      }
+    }
+    console.log(processCourse)
 
     if (req.cookies.user) {
       isLogin = false;
@@ -47,6 +59,7 @@ const getMyLearning = async (req, res, next) => {
         user,
         current: page,
         pages: Math.ceil(count / perPage),
+        processCourse
       });
     });
   } catch (error) {
@@ -164,7 +177,6 @@ const getProgress = async (req,res) => {
   let finishVideo = !!req.body.finishVideo;
 
   if(finishVideo === true) {
-    console.log('ok');
     let userId = req.cookies.user._id;
     let courseId = course._id;
     let totalVideoFinish = 1;
@@ -177,9 +189,7 @@ const getProgress = async (req,res) => {
         break;
       }
     }
-    console.log('before',totalVideoFinish);
     totalVideoFinish++;
-    console.log('1', totalVideoFinish);
 
     Progress.updateOne(
       { userId : userId, 'listProcessCourse.courseId': courseId}, 
@@ -189,7 +199,6 @@ const getProgress = async (req,res) => {
           console.log(err);
       }
     );
-
   }
 };
 
