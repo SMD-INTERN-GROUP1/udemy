@@ -165,12 +165,14 @@ input[type=text] {
 .container {
   position: relative;
 }
+.container-chapter-list {
+  width: 100%;
+}
 .chapter-list {
+  width: 100%;
   min-height: 800px;
   overflow: hidden;
-  background-color: #ffeaa7;
   border-radius: 5px;
-
 }
 li {
   list-style-type: none;
@@ -179,6 +181,11 @@ li {
   font-size: 20px;
   font-weight: 600;
   margin: 10px 0;
+}
+.title-chapter {
+  display: inline-block;
+  border-radius: 5px;
+  padding: 4px 6px;
 }
 .list-video .video-tag {
   margin-left: 20px;
