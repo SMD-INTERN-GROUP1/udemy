@@ -9,7 +9,7 @@
   <% } else { %>
   <div class="col-md-9">
     <% if (list_chapter[0].list_video.length !== 0) { %>
-      <video id="myVideo" width="100%" height="400" controls>
+      <video id="myVideo" width="100%" height="400" data-slug="<%= course.slug %>" controls>
         <source
           id="my_video_url"
           src="<%= list_chapter[0].list_video[0].video_url%>"
@@ -121,10 +121,24 @@
         totalTimeWatched+=timeLoadedVideo;
         console.log('Total time: ', totalTimeWatched);
         console.log('Total time of video: ', vid.duration);
-        timeOfnightyPercent = (vid.duration *10)/100;
-        console.log(timeOfnightyPercent);
+        timeOfnightyPercent = (vid.duration *99)/100;
+        console.log('90%', timeOfnightyPercent);
+        let slugCourse = vid.getAttribute("data-slug");
+        console.log('10%', slugCourse);
+
         if(totalTimeWatched > (vid.duration - timeOfnightyPercent) || totalTimeWatched === (vid.duration - timeOfnightyPercent)) {
+            let finishVideo = {"finishVideo": true, "slugCourse": slugCourse}; 
+            
             console.log("video finished");
+            $.ajax({
+                url : "/myLearning/process/store",
+                type : "PUT",
+                dataType:"json",
+                data : finishVideo,
+                success : function (result){
+                    console.log("Successful");
+                }
+            });
         }
     })
     // get current time when click on video

@@ -155,6 +155,44 @@ const getListVideoToLearn = async (req, res, next) => {
   }
 };
 
+//get progress
+const getProgress = async (req,res) => {
+  const course = await Course.findOne({ slug: req.body.slugCourse });
+
+  console.log(req.body);
+
+  let finishVideo = !!req.body.finishVideo;
+
+  if(finishVideo === true) {
+    console.log('ok');
+    let userId = req.cookies.user._id;
+    let courseId = course._id;
+    let totalVideoFinish = 1;
+    
+    const learningProcessOfUser = await Progress.findOne({ userId: userId });
+
+    for(let i = 0; i < learningProcessOfUser.listProcessCourse.length; i++) {
+      if(learningProcessOfUser.listProcessCourse[i].courseId.toString() == courseId.toString()) {
+        totalVideoFinish = learningProcessOfUser.listProcessCourse[i].totalVideoFinish;
+        break;
+      }
+    }
+    console.log('before',totalVideoFinish);
+    totalVideoFinish++;
+    console.log('1', totalVideoFinish);
+
+    Progress.updateOne(
+      { userId : userId, 'listProcessCourse.courseId': courseId}, 
+      {$set: {"listProcessCourse.$.totalVideoFinish": totalVideoFinish}}, 
+      function(err, data) {
+        if(err)
+          console.log(err);
+      }
+    );
+
+  }
+};
+
 // add note video
 const createNoteVideo = async(req,res)=>{
 
@@ -207,4 +245,5 @@ module.exports = {
   createNoteVideo,
   createProgress,
   toggleWish,
+  getProgress
 };
