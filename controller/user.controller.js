@@ -62,10 +62,10 @@ const getListVideoToLearn = async (req, res, next) => {
 
     let userId = req.cookies.user._id;
     let courseId = course._id;
-    let learningProcessOfUser = await Progress.findOne({ userId: userId });
-    let user = await User.findOne({ _id : userId });
     let totalVideoFinish = 1;
-    // console.log('list', user);
+
+    const learningProcessOfUser = await Progress.findOne({ userId: userId });
+    const user = await User.findOne({ _id : userId });
 
     if(learningProcessOfUser === null) {
       let formData;
@@ -74,8 +74,7 @@ const getListVideoToLearn = async (req, res, next) => {
       //lấy danh sách khóa học của user 
       for(let iCourses = 0; iCourses < user.courses.length; iCourses++){
         let totalVideo = 0;
-        
-        let userCourse = await Course.findOne({ _id: user.courses[iCourses]});
+        const userCourse = await Course.findOne({ _id: user.courses[iCourses]});
 
         //đếm số lượng video có trong khóa học 
         for(let iChapter = 0; iChapter < userCourse.list_chapter.length; iChapter++){
@@ -102,7 +101,7 @@ const getListVideoToLearn = async (req, res, next) => {
       let totalVideoInCourse = 0;
       let totalVideoInProcess = 0;
 
-      //tổng số lượng video hiện có
+      //tổng số lượng video có trong course
       for(let iChapter = 0; iChapter < course.list_chapter.length; iChapter++){
         totalVideoInCourse += course.list_chapter[iChapter].list_video.length;
         console.log('count:', iChapter + 1 ,':', totalVideoInCourse);
@@ -118,7 +117,8 @@ const getListVideoToLearn = async (req, res, next) => {
       console.log('totalVideoInCourse: ', totalVideoInCourse, 'totalVideoInProcess: ', totalVideoInProcess );
 
       //check số lượng video giữa course và process
-      if(totalVideoInCourse === totalVideoInCourse) {
+      //nếu khác nhau thì update số lượng trong Process
+      if(totalVideoInCourse !== totalVideoInProcess) {
         Progress.updateOne(
           { userId : userId, 'listProcessCourse.courseId': courseId}, 
           {$set: {"listProcessCourse.$.totalVideo": totalVideoInCourse}}, 
