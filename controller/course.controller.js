@@ -14,6 +14,21 @@ const getDetailCourse = async (req, res, next) => {
   if (!req.cookies.user) {
     isLogin = true;
   }
+  const userID=req.cookies.user?._id;
+  let isCheck = false;
+  if(userID)
+  {
+    const user = await UserModal.findOne({_id:userID});
+    const {courses}=user;
+    for(let i=0;i<courses.length;i++)
+    {
+      if(courses[i].toString()===course._id.toString())
+      {
+        isCheck=true;
+      }
+    }
+  }
+  
   course.reviews &&
     course.reviews.sort(function (a, b) {
       return new Date(b.createdAt) - new Date(a.createdAt);
@@ -23,6 +38,7 @@ const getDetailCourse = async (req, res, next) => {
     course,
     categories,
     isLogin,
+    isCheck,
     format,
     user: (await UserModal.findById(req.cookies.user?._id)) || null,
   });
@@ -50,7 +66,6 @@ const forceDestroy = async (req, res, next) => {
   const forceCourse = await Course.deleteOne({ _id: req.params.id });
   res.redirect("/admin/trash/courses");
 };
-
 const getListCourserOfInstructor = async (req, res, next) => {
   const getCoursesOfInstructor = await Course.find({
     author: req.cookies.user.username,
@@ -136,7 +151,7 @@ const showCourse = async (req, res, next) => {
     .catch(next);
 };
 
-const renderUpdateView = (req, res, next) => {
+const renderUpdatePage = (req, res, next) => {
   Promise.all([
     Course.findOne({ slug: req.params.slug }).populate("topic_id"),
     Topic.find(),
@@ -158,9 +173,9 @@ const update = async (req, res, next) => {
   try {
     const formData = req.body;
     formData.image = `https://img.youtube.com/vi/${req.body.video_id}/sddefault.jpg`;
-    const updateCourse = await Course.where({ slug: req.params.slug }).update(
-      formData
-    );
+    const updateCourse = await Course.where({
+      slug: req.params.slug,
+    }).updateOne(formData);
     res.redirect("/instructor");
   } catch (error) {
     res.status(500).send(error);
@@ -175,6 +190,53 @@ const destroy = async (req, res, next) => {
     .catch((error) => {
       res.status(500).json({ msg: error });
     });
+};
+
+// Search couser of instructor -> Duy Tuan
+const search = (req, res, next) => {
+  const { courses } = req.query;
+  Course.find({
+    title: {
+      $regex: courses,
+      $options: "$i",
+    },
+    author: req.cookies.user.username,
+  }).then((data) => {
+    // res.send(data);
+    let isLogin = true;
+    let user;
+    if (req.cookies.user) {
+      isLogin = false;
+      console.log("cookies", req.cookies.user);
+      user = req.cookies.user;
+    }
+    let page = parseInt(req.query.page) || 1;
+    let perPage = 3;
+    let start = (page - 1) * perPage;
+    let end = page * perPage;
+    Course.countDocuments((err, count) => {
+      if (err) return next(err);
+      res.render("dashboard_instructor/master", {
+        title: "Instructor page",
+        content: "../instructor_view/search",
+        data: data.slice(start, end),
+        isLogin,
+        user,
+        current: page,
+        pages: Math.ceil(count / perPage),
+      });
+    });
+  });
+};
+
+// Pie chart:
+const pieChart = async (req, res, next) => {
+  const pieChart = await UserModal.find({}).populate("courses");
+  res.render("dashboard_instructor/master", {
+    title: "Instructor page",
+    content: "../instructor_view/chart",
+    pieChart: pieChart.courses,
+  });
 };
 
 //chapter
@@ -253,7 +315,7 @@ const wishListFunc = async (req, res) => {
   const user = await UserModal.findOne({
     username: req.user.username,
   }).populate("wishList");
-   // {
+  // {
   //   wishList : [{ khoa 1} , { khoa 2}]
   //  }
   const newUser = await UserModal.findOne({
@@ -273,9 +335,9 @@ const createReview = async (req, res) => {
   if (!comment || !rate) {
     return res.redirect("back");
   }
+  
   const course = await Course.findById(req.params.id);
   const user = await UserModal.findOne({ username: req.cookies.user.username });
-
   if (!course) {
     return res.status(400).json({ err: "course is not exist !" });
   }
@@ -292,7 +354,7 @@ const createReview = async (req, res) => {
   // await course.save();
 
   course.reviews.push(newReview);
-   // so binh luan
+  // so binh luan
   course.numberReview = course.reviews.length;
   // rate tong
   course.rating =
@@ -399,7 +461,12 @@ const getSearch = async (req, res, next) => {
 };
 const quizcontroller = async (req, res, next) => {
   const course = await Course.findOne({ slug: req.params.slug });
-  return res.render("quizforuser/quiz", { idCourse: course._id });
+  return res.render("dashboard_instructor/master", {
+    title: "Instructor page",
+    content: "../quizforuser/quiz",
+    idCourse: course._id,
+  });
+  // res.render("quizforuser/quiz", { idCourse: course._id });
 };
 
 module.exports = {
@@ -412,8 +479,10 @@ module.exports = {
   create,
   showCourse,
   destroy,
-  renderUpdateView,
+  renderUpdatePage,
   update,
+  search,
+  pieChart,
   createChapter,
   createVideo,
   wishListFunc,

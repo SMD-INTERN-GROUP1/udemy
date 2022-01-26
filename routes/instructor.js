@@ -53,52 +53,20 @@ router.get("/", courseController.getListCourserOfInstructor);
 router.get("/courses/:slug/quizz/admin", questionController.admintest);
 router.get("/addcourse", courseController.renderCreateCoursePage);
 router.post("/createcourse", courseController.create);
-router.get("/courses/:slug/quiz",courseController.quizcontroller );
-router.post(
-  "/createcourse",
-  uploadImage.single("course_image"),
-  courseController.create
-);
+router.get("/courses/:slug/quiz", courseController.quizcontroller);
+// router.post(
+//   "/createcourse",
+//   uploadImage.single("course_image"),
+//   courseController.create
+// );
 router.get("/courses/:slug", courseController.showCourse);
-router.get("/courses/:slug/update", courseController.renderUpdateView);
+router.get("/courses/:slug/update", courseController.renderUpdatePage);
 router.put("/courses/:slug/updated", courseController.update);
 router.delete("/courses/:slug/delete", courseController.destroy);
-router.get("/search", (req, res, next) => {
-  const { courses } = req.query;
+router.get("/search", courseController.search);
 
-  Course.find({
-    title: {
-      $regex: courses,
-      $options: "$i",
-    },
-    author: req.cookies.user.username,
-  }).then((data) => {
-    // res.send(data);
-    let isLogin = true;
-    let user;
-    if (req.cookies.user) {
-      isLogin = false;
-      console.log("cookies", req.cookies.user);
-      user = req.cookies.user;
-    }
-    let page = parseInt(req.query.page) || 1;
-    let perPage = 3;
-    let start = (page - 1) * perPage;
-    let end = page * perPage;
-    Course.countDocuments((err, count) => {
-      if (err) return next(err);
-      res.render("dashboard_instructor/master", {
-        title: "Instructor page",
-        content: "../instructor_view/search",
-        data: data.slice(start, end),
-        isLogin,
-        user,
-        current: page,
-        pages: Math.ceil(count / perPage),
-      });
-    });
-  });
-});
+// Chart
+router.get("/charts", courseController.pieChart);
 
 //chapter
 //[POST] chapters/store

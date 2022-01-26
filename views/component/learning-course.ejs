@@ -1,17 +1,103 @@
-
-<link
-  rel="stylesheet"
-  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-  crossorigin="anonymous"
-/>
-<link rel="stylesheet" href="/stylesheets/learning-course.css" />
-
-
+<link rel="stylesheet" href="/stylesheets/learning-course.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <div class="col-md-12 d-flex">
-  <% if(list_chapter.length === 0 || list_chapter === null) { %>
-  <div class="col-md-12">
-    <p>This course not has any videos</p>
+    <% if(list_chapter.length === 0 || list_chapter === null) { %>
+    <div class="col-md-12">
+      <p>This course not has any videos</p>
+    </div>
+    <% } else { %>
+    <div class="col-md-9">
+      <video id="myVideo" width="100%" height="400" controls>
+        <source
+          id="my_video_url"
+          src="<%= list_chapter[0].list_video[0].video_url%>"
+          type="video/mp4"
+        />
+        Your browser does not support HTML5 video.
+      </video>
+      
+      <!-- <iframe src="" frameborder="0"></iframe> -->
+      <div class="d-flex">
+        <a href="#" class="btn btn-star" onclick="handleNoteVideo('overview')">Overview</a>
+        <a href="#" class="btn btn-star" onclick="handleNoteVideo('notes')" >Notes</a>
+        <a href="/course/<%-course.slug%>" class="btn btn-star" onclick="handleNoteVideo('ratestar')" >Rate Star</a>
+      </div>
+      <div id="overview" class="note">
+        <p><%= list_chapter[0].list_video[0].title %></p>
+        <p><%= list_chapter[0].list_video[0].description %></p>
+      </div>
+      <div  id="notes" class="note" style="display:none">
+        <div class="create-note">
+            <span>
+                Create a new note
+            </span>
+            <i class="fas fa-plus-circle"></i>
+        </div>
+        <form action="" method="post" id="form-submit">
+            <div class="d-flex align-items-center">
+                <span class="time-note create-time"></span>
+                <textarea name="" id="textarea" rows="2" cols="50">
+                </textarea>
+            </div>
+           <div class="form-btn">
+            <button type="button" id="cancel">Cancel</button>
+            <button type="button" id="save">Save note</button>
+           </div>
+        </form>
+        <div id="text-note">
+            <% for(let i=0 ; i < list_note.length ;i++){%>
+            <div class="title-content">
+                <div>
+                    <span class="time-note"><%= list_note[i].time %></span>
+                    <p class="title-note">video : var keywork</p>
+                </div>
+                <div class="icon-note">
+                    <i class="fas fa-edit"></i>
+                    <i class="fas fa-trash"></i>
+                </div>
+                
+            </div>
+            <div id="show-note">
+                <p ><%= list_note[i].content %></p>
+            </div>
+            <form action="" method="post" id="form-submit">
+                <textarea name="" id="textarea" rows="2" cols="50">
+                </textarea>
+               <div class="form-btn">
+                <button type="button" id="cancel">Cancel</button>
+                <button type="button" id="save">Save note</button>
+               </div>
+            </form>
+            <%}%>
+        </div>    
+      </div>
+    </div>
+    <div class="col-md-3">
+      <ul>
+        <%for(let i = 0; i < list_chapter.length; i++) { %>
+        <li class="chapter-item">
+          <span class="chapter-position"
+            >Chapter <%= list_chapter[i].position%>:</span
+          >
+          <%= list_chapter[i].title %>
+          <ul>
+            <% list_chapter[i].list_video.forEach(video => {%>
+            <li class="video-item" data-url="<%=video.video_url%>" data-id="<%=video._id%>">
+              <span class="video-position">Video <%= video.position %>:</span>
+              <%= video.title %>
+            </li>
+            <% }) %>
+          </ul>
+        </li>
+        <% } %>
+      </ul>
+      <p>
+        Test your knowledge here
+        <a href="/myLearning/quiz/<%-course.slug%>">FINAL EXAM</a>
+      </p>
+    </div>
+    <% } %>
   </div>
   <% } else { %>
   <div class="col-md-9">
@@ -64,8 +150,6 @@
 </div>
 
 <script>
-
-    //line 41 to 107 written by Dung and Hanh
     var vid = document.getElementById("myVideo");
     var source = document.getElementById("my_video_url");
     let listVideo = document.getElementsByClassName("video-item");
@@ -76,6 +160,14 @@
     let countSecond;
     let timeStopedVideo;
     let timeOfnightyPercent;
+    let createNote= document.querySelector('.create-note');
+    let cancel=document.querySelector('#cancel');
+    let save=document.querySelector('#save');
+    let formNote= document.querySelector('#form-submit');
+    let overView= document.querySelectorAll('.btn-star')[0];
+    let notes= document.querySelectorAll('.btn-star')[1];
+    let rateStar= document.querySelectorAll('.btn-star')[2];
+    let showTimeNote=document.querySelectorAll('.time-note');
     vid.addEventListener('play', function() {
         console.log('playing video...');
         countSecond = setInterval(() => {
@@ -107,8 +199,6 @@
             console.log('Total time watched video: ', totalTimeWatched);
         }
     })
-
-
   // When video watched than 90 percent, it's finish.
   // function load_ajax() {
   //     let percent;
@@ -129,8 +219,6 @@
   //  setInterval(() => {
   //      load_ajax();
   //  }, 1000);
-
-
      //change video when click to another video by Dung, Nguyen Anh    
     Array.prototype.forEach.call(listVideo, video => {
         video.addEventListener('click', function(e) {
@@ -141,24 +229,71 @@
             vid.load();
         })
     });
+    // handle note video
+    function handleNoteVideo(e){
+        let note=document.querySelectorAll('.note');
+        for (i = 0; i < note.length; i++) {
+            note[i].style.display = "none";
+        }
+        document.getElementById(e).style.display = "block";
+    }
+    createNote.addEventListener('click',function(){
+        createNote.style.display="none";
+        formNote.style.display = "block";
+    });
+    cancel.addEventListener('click',function(){
+        formNote.style.display = "none";
+        createNote.style.display = "flex";
+        // vid.currentTime=5;
+        // alert(vid.currentTime);
+        let text1=document.querySelector('#textarea');
+        console.log(text1.value.trim().length);
+    });
+    console.log(listVideo);
+
+    let time = showTimeNote[0].innerHTML;
+    let second=Math.floor(time%60);
+    let minute=Math.floor(time/60);
+    let formatTime= `0${minute}`.slice(-2)+':'+`0${second}`.slice(-2);
+
+    showTimeNote.forEach(e=>{
+        let time = e.innerHTML;
+        let second=Math.floor(time%60);
+        let minute=Math.floor(time/60);
+        let formatTime= `0${minute}`.slice(-2)+':'+`0${second}`.slice(-2);
+        e.innerHTML=formatTime;
+        e.addEventListener('click',function(){
+            vid.currentTime=time;
+            vid.play();
+            console.log(e.innerHTML)
+        })
+    })
+
+    setInterval(changeTimeNote, 1000);
+
+    function changeTimeNote(){
+        let show=document.querySelector('.create-time');
+        let time=vid.currentTime;
+        let second=Math.floor(time%60);
+        let minute=Math.floor(time/60);
+        let formatTime= `0${minute}`.slice(-2)+':'+`0${second}`.slice(-2);
+        show.innerHTML=formatTime;
+    }
+
+    save.addEventListener('click',function(){
+        let show=document.querySelector('.create-time');
+        let time=vid.currentTime;
+        let second=Math.floor(time%60);
+        let minute=Math.floor(time/60);
+        let formatTime= `0${minute}`.slice(-2)+':'+`0${second}`.slice(-2);
+        show.innerHTML=formatTime;
+        console.log(time,minute,second,formatTime)
+    }); 
+
 </script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script
-  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-  crossorigin="anonymous"
-></script>
-<script
-  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-  crossorigin="anonymous"
-></script>
-<script
-  src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-  crossorigin="anonymous"
-></script>
-<script
-  type="text/javascript"
-  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"
-></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+

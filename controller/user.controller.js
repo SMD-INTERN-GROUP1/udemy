@@ -1,7 +1,9 @@
+const { ObjectId } = require('mongodb');
 const UsersModel = require("../database/models/Users");
 const User = require("../database/models/Users");
 const Course = require("../database/models/Courses");
 const Progress = require("../database/models/Progress");
+const Note = require('../database/models/Note');
 
 const renderUserPage = async (req, res, next) => {
   const users = await UsersModel.find();
@@ -15,8 +17,6 @@ const renderUserPage = async (req, res, next) => {
 //my learning
 const getMyLearning = async (req, res, next) => {
   try {
-    //get user id
-    //find course by user id
     let isLogin = true;
     let user;
     const userID = req.cookies.user._id;
@@ -26,14 +26,14 @@ const getMyLearning = async (req, res, next) => {
       user = req.cookies.user;
     }
     let customer = await User.findOne({ _id: userID });
-    // let courseCollection = await Course.find({});
     let { courses } = customer;
     let list_course = [];
     for (let i = 0; i < courses.length; i++) {
       let item = await Course.findById({ _id: courses[i] });
-      list_course.push(item);
+      if(item !== null) {
+        list_course.push(item);
+      }
     }
-
     let page = parseInt(req.query.page) || 1;
     let perPage = 4;
     let start = (page - 1) * perPage;
@@ -63,6 +63,14 @@ const getListVideoToLearn = async (req, res, next) => {
     let userId = req.cookies.user._id;
     let courseId = course._id;
     let totalVideoFinish = 1;
+
+    const list_chapter = await course.list_chapter;
+    const note = await Note.find({
+      user_id:userId,
+      video_id:list_chapter[0].list_video[0]._id
+    })
+    const list_note = await note[0].note_lists;
+    console.log(note);
 
     const learningProcessOfUser = await Progress.findOne({ userId: userId });
     const user = await User.findOne({ _id : userId });
@@ -140,11 +148,16 @@ const getListVideoToLearn = async (req, res, next) => {
 
     console.log('total video finish: ', totalVideoFinish);
 
-    const list_chapter = await course.list_chapter;
-    res.render("component/learning-course", { course, list_chapter, totalVideoFinish });
+    res.render("component/learning-course", { course, list_chapter, totalVideoFinish, list_note });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ msg: error });
   }
+};
+
+// add note video
+const createNoteVideo = async(req,res)=>{
+
 };
 
 //progress of course
@@ -191,6 +204,7 @@ module.exports = {
   renderUserPage,
   getMyLearning,
   getListVideoToLearn,
+  createNoteVideo,
   createProgress,
   toggleWish,
 };
