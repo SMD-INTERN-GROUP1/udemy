@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon --inspect ./bin/www",
-    "seed": " node  ./database/seed/category.seed.js"
+    "seed": " node  ./database/models/Roles.js"
   },
   "dependencies": {
     "@videojs/http-streaming": "^2.13.1",

@@ -191,6 +191,14 @@ main {
   min-height: calc(100vh - 90px);
 }
 
+.banner-pding {
+  padding-top: 10% !important;
+}
+
+.banner-pding.title {
+  font-size: 18px !important;
+}
+
 .cards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

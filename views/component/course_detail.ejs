@@ -214,7 +214,11 @@
       <% if(isLogin) {%>
         <h5>You need to <a style="color: blueviolet !important;" href="/login">login</a> and purchase this course to rate it</h5>
         <% } else {%>
-          <div><%- include('rate-star')%></div>
+            <% if(!isCheck) {%>
+                <h2 class="text-center">you need to buy course</h2>
+            <%} else { %>
+              <div><%- include('rate-star')%></div>
+            <%}%>
         <% } %>
      
       <%course.reviews.forEach(function(data) { %>

@@ -4,19 +4,26 @@
   <table class="table" id="table_1">
     <thead class="table-dark text-center">
       <tr>
+        <th scope="col">#</th>
         <th scope="col">Username</th>
         <th scope="col">Email</th>
-        <th scope="col" class="text-center">Function</th>
+        <th scope="col" class="text-center">Action</th>
       </tr>
     </thead>
     <tbody class="text-center">
-      <% users.forEach(user=> { %>
+      <% users.forEach((user, index)=> { %>
       <tr>
+        <th scope="row"><%= index+1 %></th>
         <td><%= user.username%></td>
         <td><%= user.email%></td>
         <td style="text-align: center">
-          <a href="" class="btn btn-primary" title="view details"
-            ><i class="fas fa-info-circle"></i
+          <a
+            class="btn btn-danger"
+            title="Block"
+            data-bs-toggle="modal"
+            data-bs-target="#delete-category-modal"
+            data-bs-id="<%= user.id %>"
+            ><i class="fas fa-window-close"></i
           ></a>
         </td>
       </tr>
@@ -24,3 +31,62 @@
     </tbody>
   </table>
 </div>
+
+<!-- Modal delete -->
+<div
+  class="modal fade"
+  id="delete-category-modal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Block users</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">Do you want to block this user?</div>
+      <div class="modal-footer">
+        <button id="btn-delete-category" type="button" class="btn btn-danger">
+          Block
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete hidden form -->
+<form class="mt-4" name="delete-category-form" method="POST"></form>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+  crossorigin="anonymous"
+></script>
+<script>
+  var categoryId;
+  var btnDeleteCategory = document.getElementById("btn-delete-category");
+  var deleteForm = document.forms["delete-category-form"];
+
+  var deleteCategoryModal = document.getElementById("delete-category-modal");
+  deleteCategoryModal.addEventListener("show.bs.modal", function (event) {
+    var button = event.relatedTarget;
+
+    userId = button.getAttribute("data-bs-id");
+  });
+
+  btnDeleteCategory.onclick = function () {
+    // alert(topicId);
+    deleteForm.action = "/admin/users/" + userId + "?_method=DELETE";
+    deleteForm.submit();
+  };
+</script>

@@ -60,7 +60,7 @@ router.get("/courses/:slug/quiz", courseController.quizcontroller);
 //   courseController.create
 // );
 router.get("/courses/:slug", courseController.showCourse);
-router.get("/courses/:slug/update", courseController.renderUpdateView);
+router.get("/courses/:slug/update", courseController.renderUpdatePage);
 router.put("/courses/:slug/updated", courseController.update);
 router.delete("/courses/:slug/delete", courseController.destroy);
 router.get("/search", courseController.search);
