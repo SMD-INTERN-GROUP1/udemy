@@ -2,77 +2,156 @@
   rel="stylesheet"
   href="<%= process.env.BASE_URL %>/stylesheets/course-detail.css"
 />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <div class="container">
   <div class="row g-3">
     <div class="col-lg">
       <h3><%= course.title %></h3>
+      <button class="btn-create-chapter" id="createBtn">Add chapter</button>
     </div>
     <div class="col-md-12 d-flex">
-      <div class="col-md-6">
-        <div class="new-chapter">
-          <form method="POST" action="/instructor/courses/<%= course.slug %>/chapters/store" class="chapter-form">
-            <div class="form-group">
-              <label for="chapter_position">Chapter</label>
-              <input type="text" name="chapter_position" id="chapter-number">
-            </div>
-            <div class="form-group">
-              <label for="title">Title</label>
-              <input type="text" name="title">
-            </div>
-            <button type="submit" class="btn-add-chapter">Add chapter</button>
-          </form>
-        </div>
-          <ul class="chapter-list">
-            <% for(let i = 0; i < listChapter.length; i++) {%>
-              <li class="chapter-item">
-                Chapter <span><%= listChapter[i].chapter_position%>: </span><%= listChapter[i].title %>
-                <ul class="list-video">                  
-                    <% listChapter[i].list_video.forEach(video => {%>
-                      <li>
-                        <p><%= video.title%></p>
-                        <!-- <iframe src="<%= video.video_url%>" frameborder="0" auto></iframe> -->
-                        <video id="myVideo" max-width="60%" height="120" controls class="video-tag">
-                          <source id="my_video_url" src="<%= video.video_url%>" type="video/mp4">
-                          <source src="mov_bbb.ogg" type="video/ogg">
-                          Your browser does not support HTML5 video.
-                      </video>
-                      </li>
-                    <% }) %>                 
-                </ul>
-              </li>
-            <% } %>
-          </ul>
-      </div>
-      <div class="col-md-6">
-          <!-- form upload video -->
-          <form method="POST" action="/instructor/courses/<%= course.slug %>/videos/store" enctype="multipart/form-data" class="video-form">
-            <div class="form-group">
-              <label for="">Chapter</label>
-              <select name="chapter_id" id="chapter" class="id">
-                <% for(let i = 0; i<  listChapter.length; i++) {%>
-                  <option value="<%= listChapter[i]._id %>"><%= listChapter[i].title %></option>
+      
+        <div class="">
+          <!-- Create chapter -->
+          <div class="form-modal-container" id="new-chapter">
+            <form method="POST" action="/instructor/courses/<%= course.slug %>/chapters/store" class="update-chapter-form">
+              <div class="form-group">
+                <label for="chapter_position" class="modal-label">Chapter</label>
+                <input type="text" name="chapter_position" id="chapter-number">
+              </div>
+              <div class="form-group">
+                <label for="title" class="modal-label">Title</label>
+                <input type="text" name="title">
+              </div>
+              <button type="submit" class="btn-add-chapter btn-modal">Add chapter</button>
+            </form>
+          </div>
+            <ul class="chapter-list">
+              <% if(listChapter.length === 0 || listChapter.length === null) { %>
+                <div></div>
+              <% } else {%>
+                <% for(let i = 0; i < listChapter.length; i++) {%>
+                  <li class="chapter-item">
+                    Chapter <span><%= listChapter[i].chapter_position%>: </span><%= listChapter[i].title %>
+                    <button class="listBtnCreateVideo" id="btn-create-video" data-id="<%=listChapter[i]._id%>" data-slug="<%= course.slug %>" >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                      </svg>
+                    </button>
+                    <button class="listBtnUpdate" id="btn-update" data-index="<%=listChapter[i].chapter_position%>" data-id="<%=listChapter[i]._id%>" data-slug="<%= course.slug %>">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+                        <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+                      </svg>
+                    </button>
+                    <button class="listBtnDelete" id="btn-delete" data-id="<%=listChapter[i]._id%>" data-slug="<%= course.slug %>">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                      </svg>
+                    </button>
+                    <ul class="list-video">                  
+                        <% listChapter[i].list_video.forEach(video => {%>
+                          <li>
+                            <p><%= video.title%></p>
+                            <!-- <iframe src="<%= video.video_url%>" frameborder="0" auto></iframe> -->
+                            <video id="myVideo" max-width="60%" height="120" controls class="video-tag">
+                              <source id="my_video_url" src="<%= video.video_url%>" type="video/mp4">
+                              <source src="mov_bbb.ogg" type="video/ogg">
+                              Your browser does not support HTML5 video.
+                          </video>
+                          <button class="listBtnUpdateVideo" id="btn-update-video" data-index="<%=listChapter[i].chapter_position%>" data-id="<%=listChapter[i]._id%>" data-slug="<%= course.slug %>" data-video="<%= listChapter[i].list_video[i]._id%>">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+                              <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+                            </svg>
+                          </button>
+                          <button class="listBtnDeleteVideo" id="btn-delete-video" data-id="<%=listChapter[i]._id%>" data-slug="<%= course.slug %>" data-video="<%= listChapter[i].list_video[i]._id%>">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                              <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                            </svg>
+                          </button>
+                          </li>
+                        <% }) %>                 
+                    </ul>
+                  </li>
                 <% } %>
-              </select>
-            </div>
+              <% } %>
+            </ul>
+        </div>
+        <!-- Create video -->
+        <div class="form-modal-container" id="new-video">
+            <!-- form upload video -->
+            <form method="POST" action="" enctype="multipart/form-data" class="update-chapter-form" id="uploadVideo">
+              <div class="form-group">
+                <label for="video_position" class="modal-label">Position</label>
+                <input type="text" name="video_position" id="chapter-number">
+              </div>
+              <div class="form-group">
+                <label for="title" class="modal-label">Title</label>
+                <input type="text" name="title">
+              </div>
+              <div class="form-group">
+                <label for="description" class="modal-label">Description</label>
+                <input type="text" name="description">
+              </div>
+              <div class="form-group">
+                <label for="video_url" class="modal-label">Choose video</label>
+                <input type="file" name="video_url"/>
+              </div>
+              <button type="submit" class="btn-add-chapter btn-modal">Upload video</button>
+            </form>
+        </div>
+        <!-- Update Video -->
+        <div class="form-modal-container" id="update-video">
+          <form method="POST" action="" enctype="multipart/form-data" class="update-chapter-form" id="edit-video">
             <div class="form-group">
-              <label for="video_position">Position</label>
+              <label for="video_position" class="modal-label">Position</label>
               <input type="text" name="video_position" id="chapter-number">
             </div>
             <div class="form-group">
-              <label for="title">Title</label>
+              <label for="title" class="modal-label">Title</label>
               <input type="text" name="title">
             </div>
             <div class="form-group">
-              <label for="description">Description</label>
+              <label for="description" class="modal-label">Description</label>
               <input type="text" name="description">
             </div>
             <div class="form-group">
-              <label for="video_url">Choose video</label>
+              <label for="video_url" class="modal-label">Choose video</label>
               <input type="file" name="video_url"/>
             </div>
-            <button type="submit" class="btn-add-video">Upload video</button>
+            <button type="submit" class="btn-add-chapter btn-modal">Update video</button>
           </form>
-      </div>
+        </div>
+        <!-- Delete Video -->
+        <div class="form-modal-container" id="delete-video">
+          <form method="POST" action="" enctype="multipart/form-data" class="update-chapter-form" id="myDeleteVideoForm">
+            <div>Do you want to delete this video</div>
+            <button type="submit" class="btn-add-chapter btn-modal">Yes</button>
+            <button type="submit" class="btn-add-chapter btn-modal">No</button>
+          </form>
+        </div>
+        <!-- Update chapter -->
+        <div class="form-modal-container" id="update-container">
+          <form method="POST" action="" class="update-chapter-form" id="updateChapterForm">
+            <div class="form-group">
+              <label for="chapter_position" class="modal-label">Chapter</label>
+              <input type="text" name="chapter_position" id="chapter-number" id="update-chapter-input">
+            </div>
+            <div class="form-group">
+              <label for="title" class="modal-label">Title</label>
+              <input type="text" name="title" placeholder="Enter chapter title">
+            </div>
+            <button type="submit" class="btn-add-chapter btn-modal" onclick="closeUpdateModal()">Save</button>
+          </form>
+        </div>
+        <!-- Delete chapter -->
+        <div class="form-modal-container" id="delete-container">
+          <form method="POST" action="" class="update-chapter-form" id="deleteChapterForm">
+            <div>If you delete this chapter, all videos in this chapter will be deleted</div>
+            <div>Do you want to continue</div>
+            <button type="submit" class="btn-add-chapter btn-modal" onclick="closeUpdateModal()">Yes</button>
+            <button type="submit" class="btn-add-chapter btn-modal" onclick="closeUpdateModal()">No</button>
+          </form>
+        </div>
     </div>
   </div>
 
@@ -91,5 +170,97 @@
         list.classList.toggle("active");
       };
     });
+    const createChapterBtn = document.getElementById("createBtn");
+    console.log(createChapterBtn);
+    createChapterBtn.addEventListener('click', function() {
+      const modalFormCreate = document.getElementById("new-chapter");
+      console.log(modalFormCreate);
+      modalFormCreate.classList.add("open-modal");
+    })
+
+    const modalFormUpdate = document.getElementById("update-container");
+    const listBtnUpdate = document.getElementsByClassName("listBtnUpdate");
+    Array.prototype.forEach.call(listBtnUpdate, (btnUpdate)  => {
+      btnUpdate.addEventListener("click", function(e) {
+        console.log('cái này');
+        const position = btnUpdate.getAttribute("data-index");
+        const chapterId = btnUpdate.getAttribute("data-id");
+        const slug = btnUpdate.getAttribute("data-slug");
+        let actionForm = slug + "/" + chapterId + "/chapters/edit?_method=PUT";
+        const formUpdate = document.getElementById("updateChapterForm");
+        formUpdate.setAttribute("action", actionForm);
+        modalFormUpdate.classList.add("open-modal");
+      })
+    })
+    function closeUpdateModal() {
+      modalFormUpdate.classList.remove("open-modal");
+    }
+
+    const modalFormDelete = document.getElementById("delete-container");
+    const listBtnDelete = document.getElementsByClassName("listBtnDelete");
+    console.log(listBtnDelete);
+    Array.prototype.forEach.call(listBtnDelete, (btnDelete) => {
+      btnDelete.addEventListener('click', function (e) {
+        modalFormDelete.classList.add("open-modal");
+        const chapterId = btnDelete.getAttribute("data-id");
+        const slug = btnDelete.getAttribute("data-slug");
+        let actionForm = slug + "/" + chapterId + "/chapters/delete?_method=DELETE";
+        const formDelete = document.getElementById("deleteChapterForm");
+        formDelete.setAttribute("action", actionForm);
+      })
+    })
+    function closeUpdateModal() {
+      modalFormDelete.classList.remove("open-modal");
+    }
+
+//video
+    const listBtnOpenFormCreateVideo = document.getElementsByClassName("listBtnCreateVideo");
+    Array.prototype.forEach.call(listBtnOpenFormCreateVideo, (btnCreateVideo) => {
+      btnCreateVideo.addEventListener('click', function() {
+        const chapterId = btnCreateVideo.getAttribute("data-id");
+        const slug = btnCreateVideo.getAttribute("data-slug");
+        ///instructor/courses/<%= course.slug %>/chapterId/videos/store
+        let actionForm = slug + "/" + chapterId + "/videos/store";
+        console.log(actionForm);
+        const formCreateVideo = document.getElementById("new-video");
+        formCreateVideo.classList.add("open-modal");
+        const createVideo = document.getElementById("uploadVideo");
+        createVideo.setAttribute("action", actionForm);
+      })
+    })
+
+    const listBtnUpdateVideo = document.getElementsByClassName("listBtnUpdateVideo");
+    Array.prototype.forEach.call(listBtnUpdateVideo, (updateVideo) => {
+      updateVideo.addEventListener('click', function() {
+        const formUpdateVideo = document.getElementById("update-video");
+        formUpdateVideo.classList.add("open-modal");
+        const chapterId = updateVideo.getAttribute("data-id");
+        const slug = updateVideo.getAttribute("data-slug");
+        const videoId = updateVideo.getAttribute("data-video");
+        let actionFormUpdate = slug + "/" + chapterId + "/" + videoId + "/videos/update?_method=PUT";
+        const editVideo = document.getElementById("edit-video");
+        editVideo.setAttribute("action", actionFormUpdate);
+      })
+    });
+
+    //delete video
+    const listBtnDeleteVideo = document.getElementsByClassName("listBtnDeleteVideo");
+    const myDeleteVideo = document.getElementById("myDeleteVideoForm");
+    Array.prototype.forEach.call(listBtnDeleteVideo, (btnDeleteVideo) => {
+      btnDeleteVideo.addEventListener("click", function() {
+        const deleteVideoForm = document.getElementById("delete-video");
+        deleteVideoForm.classList.add("open-modal");
+        const chapterId = btnDeleteVideo.getAttribute("data-id");
+        const slug = btnDeleteVideo.getAttribute("data-slug");
+        const videoId = btnDeleteVideo.getAttribute("data-video");
+        let actionFormDelete = slug + "/" + chapterId + "/" + videoId + "/videos/delete?_method=DELETE";
+        console.log('delete video form: ', myDeleteVideo);
+        myDeleteVideo.setAttribute("action", actionFormDelete);
+      })
+    })
+
   </script>
-</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

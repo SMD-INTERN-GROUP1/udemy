@@ -27,9 +27,7 @@ const getHomePage = async (req, res, next) => {
             else return 0;
           });
           for (let i = 0; i < courses.length; i++) {
-            let category_name = await Category.findById(
-              courses[i].topic_id.category_id
-            );
+            let category_name = await Category.findById(courses[i].topic_id.category_id);    
             if (i === 0) {
               listCategory.push({
                 category_id: courses[i].topic_id.category_id,
