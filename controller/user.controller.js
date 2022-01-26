@@ -17,8 +17,6 @@ const renderUserPage = async (req, res, next) => {
 //my learning
 const getMyLearning = async (req, res, next) => {
   try {
-    //get user id
-    //find course by user id
     let isLogin = true;
     let user;
     const userID = req.cookies.user._id;
@@ -28,14 +26,14 @@ const getMyLearning = async (req, res, next) => {
       user = req.cookies.user;
     }
     let customer = await User.findOne({ _id: userID });
-    // let courseCollection = await Course.find({});
     let { courses } = customer;
     let list_course = [];
     for (let i = 0; i < courses.length; i++) {
       let item = await Course.findById({ _id: courses[i] });
-      list_course.push(item);
+      if(item !== null) {
+        list_course.push(item);
+      }
     }
-
     let page = parseInt(req.query.page) || 1;
     let perPage = 4;
     let start = (page - 1) * perPage;
@@ -61,20 +59,22 @@ const getMyLearning = async (req, res, next) => {
 const getListVideoToLearn = async (req, res, next) => {
   try {
     const course = await Course.findOne({ slug: req.params.slug });
+
+    let userId = req.cookies.user._id;
+    let courseId = course._id;
+    let totalVideoFinish = 1;
+
     const list_chapter = await course.list_chapter;
-    const userID = req.cookies.user._id;
-    const note_video = await NoteVideo.findOne({
-      user_id:userID,
-      course_id:course._id
-    });
-    const {note_list} = note_video;
-    console.log(note_video ,'list',note_list);
-    const note = await Note.find({
-      user_id:userID,
-      video_id:list_chapter[0].list_video[0]._id
-    })
-    const list_note = await note[0].note_lists;
-    res.render("component/learning-course", { course, list_chapter,list_note,note_list});
+    // const note_video = await NoteVideo.findOne({
+    //   user_id:userId,
+    //   course_id:course._id
+    // });
+    // const {note_list} = note_video;
+    // console.log(note_video ,'list',note_list);
+    // const note = await Note.find({
+    // })
+    // const list_note = await note[0].note_lists;
+    res.render("component/learning-course", { course, list_chapter});
   } catch (error) {
     console.log(error);
     res.status(500).json({ msg: error });

@@ -2,12 +2,13 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <div class="col-md-12 d-flex">
-    <% if(list_chapter.length === 0 || list_chapter === null) { %>
-    <div class="col-md-12">
-      <p>This course not has any videos</p>
-    </div>
-    <% } else { %>
-    <div class="col-md-9">
+  <% if(list_chapter.length === 0 || list_chapter === null) { %>
+  <div class="col-md-12">
+    <p>This course not has any videos</p>
+  </div>
+  <% } else { %>
+  <div class="col-md-9">
+    <% if (list_chapter[0].list_video.length !== 0) { %>
       <video id="myVideo" width="100%" height="400" controls>
         <source
           id="my_video_url"
@@ -45,21 +46,19 @@
             <button type="button" id="save">Save note</button>
            </div>
         </form>
-        <div id="text-note" data-list="<%= note_list %>">
-            <% for(let i=0 ; i <= note_list.length ;i++){%>
+        <div id="text-note">
             <div class="title-content">
                 <div>
-                    <span class="time-note"><%= note_list[0].note_time[0].time %></span>
+                    <span class="time-note">20</span>
                     <p class="title-note">video : var keywork</p>
                 </div>
                 <div class="icon-note">
                     <i class="fas fa-edit"></i>
                     <i class="fas fa-trash"></i>
                 </div>
-                
             </div>
             <div id="show-note">
-                <p ><%= note_list[0].note_time[0].content %></p>
+                <p >abc</p>
             </div>
             <form action="" method="post" id="form-submit">
                 <textarea name="" id="textarea" rows="2" cols="50">
@@ -69,8 +68,7 @@
                 <button type="button" id="save">Save note</button>
                </div>
             </form>
-            <%}%>
-        </div>    
+        </div>
       </div>
     </div>
     <div class="col-md-3">
@@ -97,8 +95,13 @@
         <a href="/myLearning/quiz/<%-course.slug%>">FINAL EXAM</a>
       </p>
     </div>
+    <% } else {%>
+      <div>This course not has any videos</div>
     <% } %>
-  </div>
+    <!-- <iframe src="" frameborder="0"></iframe> -->
+  <% } %>
+</div>
+
 <script>
     var vid = document.getElementById("myVideo");
     var source = document.getElementById("my_video_url");
@@ -169,29 +172,13 @@
   //  setInterval(() => {
   //      load_ajax();
   //  }, 1000);
-     //change video when click to another video by Dung, Nguyen Anh 
-    let note_list = document.querySelector('#text-note').getAttribute('data-list');
-    console.log('123',typeof note_list);
-    console.log(note_list);
-    
+     //change video when click to another video by Dung, Nguyen Anh    
     Array.prototype.forEach.call(listVideo, video => {
         video.addEventListener('click', function(e) {
             let url_video = e.target.getAttribute('data-url');
-            let id_video = e.target.getAttribute('data-id');
             console.log('url video: ',url_video);
-            console.log('id video: ',id_video);
             let index = url_video.split(';');
             source.setAttribute("src", index[0]);
-            // for(let i=0;i<note_list.length;i++)
-            // {
-            //     if(note_list[i].video_id.toString() === id_video)
-            //     {
-            //         for(let i=0;i<note_list[i].note_time.length;i++)
-            //         {
-            //             showTimeNote.innerHTML=handleTimeNote(note_list[i].note_time[i]);
-            //         }
-            //     }
-            // }
             vid.load();
         })
     });
@@ -235,13 +222,6 @@
         })
     })
 
-        function handleTimeNote(e){
-        let second=Math.floor(e%60);
-        let minute=Math.floor(e/60);
-        let formatTime= `0${minute}`.slice(-2)+':'+`0${second}`.slice(-2);
-        return formatTime;
-    }
-
     setInterval(changeTimeNote, 1000);
 
     function changeTimeNote(){
@@ -269,4 +249,3 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-

@@ -183,7 +183,7 @@ router.get(`/success`, (req, res) => {
     "transactions": [{
         "amount": {
             "currency": "USD",
-            "total": `${128}.00`
+            "total": `${150}.00`
         }
     }]
   };
