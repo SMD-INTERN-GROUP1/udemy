@@ -4,7 +4,7 @@ const User = require("../database/models/Users");
 const Course = require("../database/models/Courses");
 const Progress = require("../database/models/Progress");
 const Note = require('../database/models/Note');
-
+const NoteVideo = require('../database/models/NoteVideo');
 const renderUserPage = async (req, res, next) => {
   const users = await UsersModel.find();
   res.render("dashboard_admin/master", {
@@ -21,16 +21,24 @@ const getMyLearning = async (req, res, next) => {
     let user;
     const userID = req.cookies.user._id;
     let progressMyLearning = await Progress.find({userId: userID});
-    console.log(progressMyLearning[0].listProcessCourse);
+    console.log(progressMyLearning);
     let processCourse = [];
 
-    if(progressMyLearning[0].listProcessCourse.length !== 0){
-      for(let i = 0; i < progressMyLearning[0].listProcessCourse.length; i++) {
-        let percent = progressMyLearning[0].listProcessCourse[i].totalVideoFinish / progressMyLearning[0].listProcessCourse[i].totalVideo;
-        percent = Math.round(percent * 100);
-        processCourse.push(percent);
+    if(progressMyLearning.length !== 0) {
+      if(progressMyLearning[0].listProcessCourse !== undefined){
+        if(progressMyLearning[0].listProcessCourse.length !== 0){
+          for(let i = 0; i < progressMyLearning[0].listProcessCourse.length; i++) {
+            if(progressMyLearning[0].listProcessCourse[i].totalVideo === 0) {
+              progressMyLearning[0].listProcessCourse[i].totalVideo = 1;
+            }
+            let percent = progressMyLearning[0].listProcessCourse[i].totalVideoFinish / progressMyLearning[0].listProcessCourse[i].totalVideo;
+            percent = Math.round(percent * 100);
+            processCourse.push(percent);
+          }
+        }
       }
     }
+
     console.log(processCourse)
 
     if (req.cookies.user) {
@@ -98,15 +106,22 @@ const getListVideoToLearn = async (req, res, next) => {
         const userCourse = await Course.findOne({ _id: user.courses[iCourses]});
 
         //đếm số lượng video có trong khóa học 
-        for(let iChapter = 0; iChapter < userCourse.list_chapter.length; iChapter++){
-          totalVideo += userCourse.list_chapter[iChapter].list_video.length;
-          console.log('count:', iChapter + 1 ,':', totalVideo);
+        console.log(userCourse);
+        if(userCourse !== null) {
+          if(userCourse.list_chapter !== null) {
+            for(let iChapter = 0; iChapter < userCourse.list_chapter.length; iChapter++){
+              totalVideo += userCourse.list_chapter[iChapter].list_video.length;
+              console.log('count:', iChapter + 1 ,':', totalVideo);
+            }
+          } 
+          else {
+            totalVideo = 0;
+          }
+          listProcessCourse.push({
+            courseId: userCourse._id,
+            totalVideo: totalVideo
+          })
         }
-
-        listProcessCourse.push({
-          courseId: userCourse._id,
-          totalVideo: totalVideo
-        })
       }
       // console.log('process:', listProcessCourse);
 
