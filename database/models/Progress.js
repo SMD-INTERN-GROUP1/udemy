@@ -1,19 +1,31 @@
 const mongoose = require('mongoose');
 
-const progress = new mongoose.Schema({
-    user_id:{
-        type: mongoose.Types.ObjectId,
-    },
-    course_id: {
-        type: mongoose.Types.ObjectId,
-    },
-    videoFinish: {
-        type: Number,
-    },
-    totalVideo: {
-        type: Number,
+const processCourse = new mongoose.Schema(
+    {
+        courseId: {
+            type: mongoose.Types.ObjectId,
+            default: ""
+        },
+        totalVideo: {
+            type: Number
+        },
+        totalVideoFinish: {
+            type: Number,
+            default: 1
+        },
+        processOfVideo: {
+            type: Number, 
+            default: 0
+        }
     }
+);
+
+const proccess = new mongoose.Schema({
+    userId:{
+        type: mongoose.Types.ObjectId,
+    },
+    listProcessCourse: [processCourse],
 },{timestamps:true}
 );
 
-module.exports=mongoose.model("Progress", progress);
+module.exports=mongoose.model("Proccess", proccess);
