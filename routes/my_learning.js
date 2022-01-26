@@ -7,6 +7,6 @@ router.get("/:slug", userController.getListVideoToLearn);
 
 router.post("/check/:idCourse", questionController.checkQuestion);
 router.get("/quiz/:slug", questionController.test);
-router.post("/process/store", userController.createProgress);
+router.put("/process/store", userController.getProgress);
 
 module.exports = router;

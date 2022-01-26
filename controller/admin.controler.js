@@ -54,4 +54,19 @@ const updateAccount = async (req, res, next) => {
   } catch (e) {}
 };
 
-module.exports = { renderAccountPage, renderUpdatePage, updateAccount };
+const blockUser = async (req, res, next) => {
+  const blockUser = await UserModel.delete({ _id: req.params.id })
+    .then(() => {
+      res.redirect("/admin/users");
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+};
+
+module.exports = {
+  renderAccountPage,
+  renderUpdatePage,
+  updateAccount,
+  blockUser,
+};
