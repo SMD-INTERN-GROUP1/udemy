@@ -46,48 +46,29 @@
             <button type="button" id="save">Save note</button>
            </div>
         </form>
-        <div id="text-note">
-            <% for(let i=0 ; i < list_note.length ;i++){%>
-            <div class="title-content">
-                <div>
-                    <span class="time-note"><%= list_note[i].time %></span>
-                    <p class="title-note">video : var keywork</p>
-                </div>
-                <div class="icon-note">
-                    <i class="fas fa-edit"></i>
-                    <i class="fas fa-trash"></i>
-                </div>
-                
-            </div>
-            <div id="show-note">
-                <p ><%= list_note[i].content %></p>
-            </div>
-            <form action="" method="post" id="form-submit">
-                <textarea name="" id="textarea" rows="2" cols="50">
-                </textarea>
-               <div class="form-btn">
-                <button type="button" id="cancel">Cancel</button>
-                <button type="button" id="save">Save note</button>
-               </div>
-            </form>
-            <%}%>
-        </div>    
-      </div>
     </div>
     <div class="col-md-3">
       <ul>
+        <% let countVideo = 0 %>
         <%for(let i = 0; i < list_chapter.length; i++) { %>
         <li class="chapter-item">
           <span class="chapter-position"
-            >Chapter <%= list_chapter[i].position%>:</span
-          >
+            >Chapter <%= list_chapter[i].position%>:</span>
           <%= list_chapter[i].title %>
           <ul>
             <% list_chapter[i].list_video.forEach(video => {%>
-            <li class="video-item" data-url="<%=video.video_url%>" data-id="<%=video._id%>">
-              <span class="video-position">Video <%= video.position %>:</span>
-              <%= video.title %>
-            </li>
+              <% if (countVideo < totalVideoFinish) { %>
+                <li class="video-item" data-url="<%=video.video_url%>">
+                  <span class="video-position">Video <%= video.position %>:</span>
+                  <%= video.title %>
+                </li>
+              <%} else { %>
+                <li class="video-item" data-url="<%=video.video_url%>" style="pointer-events:none; background-color: rgb(248, 241, 231);">
+                  <span class="video-position">Video <%= video.position %>:</span>
+                  <%= video.title %>
+                </li>
+              <% } %>
+              <% countVideo = countVideo + 1 %>
             <% }) %>
           </ul>
         </li>
@@ -101,54 +82,7 @@
     <% } else {%>
       <div>This course not has any videos</div>
     <% } %>
-  </div>
-  <% } else { %>
-  <div class="col-md-9">
-    <video id="myVideo" width="100%" height="400" controls>
-      <source
-        id="my_video_url"
-        src="<%= list_chapter[0].list_video[0].video_url%>"
-        type="video/mp4"
-      />
-      Your browser does not support HTML5 video.
-    </video>
     <!-- <iframe src="" frameborder="0"></iframe> -->
-    <a href="/course/<%-course.slug%>" class="btn btn-star">Rate Star</a>
-    <p><%= list_chapter[0].list_video[0].title %></p>
-    <p><%= list_chapter[0].list_video[0].description %></p>
-  </div>
-  <div class="col-md-3">
-    <ul>
-      <% let countVideo = 0 %>
-      <%for(let i = 0; i < list_chapter.length; i++) { %>
-      <li class="chapter-item">
-        <span class="chapter-position"
-          >Chapter <%= list_chapter[i].position%>:</span>
-        <%= list_chapter[i].title %>
-        <ul>
-          <% list_chapter[i].list_video.forEach(video => {%>
-            <% if (countVideo < totalVideoFinish) { %>
-              <li class="video-item" data-url="<%=video.video_url%>">
-                <span class="video-position">Video <%= video.position %>:</span>
-                <%= video.title %>
-              </li>
-            <%} else { %>
-              <li class="video-item" data-url="<%=video.video_url%>" style="pointer-events:none; background-color: rgb(248, 241, 231);">
-                <span class="video-position">Video <%= video.position %>:</span>
-                <%= video.title %>
-              </li>
-            <% } %>
-            <% countVideo = countVideo + 1 %>
-          <% }) %>
-        </ul>
-      </li>
-      <% } %>
-    </ul>
-    <p>
-      Test your knowledge here
-      <a href="/myLearning/quiz/<%-course.slug%>">FINAL EXAM</a>
-    </p>
-  </div>
   <% } %>
 </div>
 

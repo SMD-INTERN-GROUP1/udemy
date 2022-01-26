@@ -65,12 +65,12 @@ const getListVideoToLearn = async (req, res, next) => {
     let totalVideoFinish = 1;
 
     const list_chapter = await course.list_chapter;
-    const note = await Note.find({
-      user_id:userId,
-      video_id:list_chapter[0].list_video[0]._id
-    })
-    const list_note = await note[0].note_lists;
-    console.log(note);
+    // const note = await Note.find({
+    //   user_id:userId,
+    //   video_id:list_chapter[0].list_video[0]._id
+    // })
+    // const list_note = await note[0].note_lists;
+    // console.log(note);
 
     const learningProcessOfUser = await Progress.findOne({ userId: userId });
     const user = await User.findOne({ _id : userId });
@@ -148,7 +148,7 @@ const getListVideoToLearn = async (req, res, next) => {
 
     console.log('total video finish: ', totalVideoFinish);
 
-    res.render("component/learning-course", { course, list_chapter, totalVideoFinish, list_note });
+    res.render("component/learning-course", { course, list_chapter, totalVideoFinish });
   } catch (error) {
     console.log(error);
     res.status(500).json({ msg: error });
