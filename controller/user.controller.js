@@ -17,8 +17,6 @@ const renderUserPage = async (req, res, next) => {
 //my learning
 const getMyLearning = async (req, res, next) => {
   try {
-    //get user id
-    //find course by user id
     let isLogin = true;
     let user;
     const userID = req.cookies.user._id;
@@ -28,14 +26,14 @@ const getMyLearning = async (req, res, next) => {
       user = req.cookies.user;
     }
     let customer = await User.findOne({ _id: userID });
-    // let courseCollection = await Course.find({});
     let { courses } = customer;
     let list_course = [];
     for (let i = 0; i < courses.length; i++) {
       let item = await Course.findById({ _id: courses[i] });
-      list_course.push(item);
+      if(item !== null) {
+        list_course.push(item);
+      }
     }
-
     let page = parseInt(req.query.page) || 1;
     let perPage = 4;
     let start = (page - 1) * perPage;
