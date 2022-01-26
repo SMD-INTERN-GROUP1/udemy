@@ -123,7 +123,6 @@ const showCourse = async (req, res, next) => {
   const course = await Course.findOne({ slug: slug });
   const listChapter = course.list_chapter;
   const listVideo = listChapter.list_video;
-  console.log(listVideo);
   const findCourseBySlug = await Course.findOne({ slug: req.params.slug })
     .then((course) => {
       res.render("dashboard_instructor/master", {
@@ -228,7 +227,6 @@ const pieChart = async (req, res, next) => {
 
 const createChapter = async (req, res, next) => {
   try {
-    //get course id
     const slug = req.params.slug;
     const course = await Course.findOne({ slug: slug });
     let formData = req.body;
@@ -259,15 +257,67 @@ const createChapter = async (req, res, next) => {
   }
 };
 
+const updateChapter = async (req, res, next) => {
+  try {
+    const slug = req.params.slug;
+    const course = await Course.findOne({ slug: slug });
+    const chapterId = req.params.id;
+    const formData = req.body;
+    Course.updateOne(
+      { _id: course._id },
+      { 
+        $set: {
+          "list_chapter.$[c].title": formData.title,
+          "list_chapter.$[c].chapter_position": formData.chapter_position
+        }
+      },
+      { arrayFilters: [{ "c._id": chapterId }] },
+      function(err, data) {
+        if(!err) console.log("update successful!");
+        else console.log(err);
+      }
+    )
+    res.redirect("/instructor/courses/" + slug);
+  } catch (error) {
+    console.log('catch error: ',error);
+    res.status(500).json({ msg: error });
+  }
+}
+
+const deleteChapter = async (req, res, next) => {
+  try {
+    const slug = req.params.slug;
+    const course = await Course.findOne({ slug: slug });
+    const chapterId = req.params.id;
+    console.log('Chapter id: ', chapterId);
+    console.log(chapterId);
+     Course.update(
+       { _id: course._id},
+       { 
+         $pull: {
+           "list_chapter" : { "_id": chapterId}
+         }
+       },
+       function(err, data) {
+         if(!err) console.log("delete successful!");
+         else console.log(err);
+       }
+     )
+     res.redirect("/instructor/courses/" + slug);
+  } catch (error) {
+    console.log(err);
+    res.status(500).json({ "msg": error })
+  }
+}
+
 //video
 const createVideo = async (req, res, next) => {
   try {
     const slug = req.params.slug;
     const course = await Course.findOne({ slug: slug });
-    let chapter_id = req.body.chapter_id;
+    let chapter_id = req.params.id;
     let video_url = "/" + req.file.path.split("\\").slice(6).join("/");
     let formData = req.body;
-    let a = 2;
     Course.updateOne(
       { _id: course._id, "list_chapter._id": chapter_id },
       {
@@ -282,7 +332,8 @@ const createVideo = async (req, res, next) => {
       },
       { arrayFilters: [{ "c._id": chapter_id }] },
       function (err, data) {
-        if (err) console.log("upload video ko đc: ", err);
+        if (err) console.log(err);
+        else console.log("Create video successfull");
       }
     );
     //res.json(req.body);
@@ -291,6 +342,68 @@ const createVideo = async (req, res, next) => {
     res.json({ msg: error });
   }
 };
+
+const updateVideo = async (req, res, next) => {
+  try {
+    const slug = req.params.slug;
+    const chapter_id = req.params.idChapter;
+    const videoId = req.params.idVideo;
+    const course = await Course.findOne({ slug: slug });
+    const formData = req.body;
+    let video_url = "/" + req.file.path.split("\\").slice(6).join("/");
+    Course.updateOne(
+      { _id: course._id },
+      {
+        $set: {
+          "list_chapter.$[c].list_video.$[v]": {
+            title: formData.title,
+            video_position: formData.video_position,
+            description: formData.description,
+            video_url: video_url,
+          },
+        },
+      },
+      { arrayFilters: [{ "c._id": chapter_id }, {"v._id": videoId}] },
+      function (err, data) {
+        if (err) console.log('err: ', err);
+        else console.log("update video successfull");
+      }
+    );
+    res.redirect("/instructor/courses/" + slug);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ "msg": error });
+  }
+}
+
+const deleteVideo = async (req, res, next) => {
+  try {
+    const slug = req.params.slug;
+    const chapterId = req.params.idChapter;
+    const videoId = req.params.idVideo;
+    const course = await Course.findOne({ slug: slug });
+    Course.update(
+      { _id: course._id},
+      { 
+        $pull: {
+          // "list_chapter" : { "_id": chapterId}
+          "list_chapter.$[c].list_video" : { "_id": videoId}
+        }
+      },
+      { arrayFilters: [{ "c._id": chapterId }] },
+      function(err, data) {
+        if(!err) console.log("delete video successful!");
+        else console.log(err);
+      }
+    )
+    res.redirect("/instructor/courses/" + slug);
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: error });
+  }
+}
+
 const wishListFunc = async (req, res) => {
   const categories = await categoryService.getListCategory();
   let isLogin = false;
@@ -468,11 +581,18 @@ module.exports = {
   update,
   search,
   pieChart,
+
   createChapter,
+  updateChapter,
+  deleteChapter,
+
   createVideo,
+  updateVideo,
+  deleteVideo,
+
   wishListFunc,
   getSearch,
   deleteReview,
   createReview,
-  quizcontroller,
+  quizcontroller
 };

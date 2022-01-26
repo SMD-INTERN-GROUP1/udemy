@@ -69,15 +69,25 @@ router.get("/search", courseController.search);
 router.get("/charts", courseController.pieChart);
 
 //chapter
-//[POST] chapters/store
-router.post("/courses/:slug/chapters/store", courseController.createChapter);
 
+router.post("/courses/:slug/chapters/store", courseController.createChapter);
+router.put("/courses/:slug/:id/chapters/edit", courseController.updateChapter);
+router.delete("/courses/:slug/:id/chapters/delete", courseController.deleteChapter);
 //video
-//[POST] videos/store
+
 router.post(
-  "/courses/:slug/videos/store",
-  upload.single("video_url"),
-  courseController.createVideo
-);
+    "/courses/:slug/:id/videos/store",
+    upload.single("video_url"),
+    courseController.createVideo
+  );
+router.put(
+    "/courses/:slug/:idChapter/:idVideo/videos/update",
+    upload.single("video_url"),
+    courseController.updateVideo
+  );
+router.delete(
+    "/courses/:slug/:idChapter/:idVideo/videos/delete",
+    courseController.deleteVideo
+  );
 
 module.exports = router;
